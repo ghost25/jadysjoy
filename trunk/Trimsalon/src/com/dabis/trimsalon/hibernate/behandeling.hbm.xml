@@ -5,8 +5,8 @@
 <hibernate-mapping package="com.dabis.trimsalon.beans">
   <class name="Behandeling" table="APP.BEHANDELING">
      <id name="id" column="ID">
-            <generator class="native"/>
-        </id>
+		<generator class="native"/>
+     </id>
         <property name="omschrijving" column="OMSCHRIJVING" length="50" />
         <property name="ras" column="RAS" length="20" />
         <property name="prijsExbtw" column="PRIJSEXBTW" type="double" />

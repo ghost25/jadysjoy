@@ -6,9 +6,12 @@
   <class name="Factuur" table="APP.FACTUUR">
      <id name="id" column="ID">
             <generator class="native"/>
-        </id>
-        <property name="factuurregels" column="FACTUURREGELS" lenght="50" />
-        <property name="factuurdatum" column="FACTUURDATUM" type="calendar_date" />
-        <property name="factuurnummer" column="FACTUURNUMMER" length="10" />
+     </id>
+	<set name="boekhouding">
+		<key column="ID" not-null="true"/>
+		<one-to-many class="Boekhouding"/>
+	</set>
+	<property name="factuurdatum" column="FACTUURDATUM" type="calendar_date" />
+	<property name="factuurnummer" column="FACTUURNUMMER" length="10" />
   </class>
 </hibernate-mapping>

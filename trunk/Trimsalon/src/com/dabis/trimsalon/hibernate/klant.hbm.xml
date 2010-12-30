@@ -5,19 +5,19 @@
 <hibernate-mapping package="com.dabis.trimsalon.beans">
   <class name="Afspraak" table="APP.AFSPRAAK">
      <id name="id" column="ID">
-            <generator class="native"/>
-        </id>
-        <property name="naam" column="NAAM" length="20" />
-        <property name="adres" column="ADRES" length="20" />
-        <property name="huisnummer" column="HUISNUMMER" length="6" />
-        <property name="postcode" column="POSTCODE" length="7" />
-        <property name="woonplaats" column="WOONPLAATS" length="20" />
-        <property name="telefoon" column="TELEFOON" length="10" />
-        <property name="mobiel" column="MOBIEL" length="10" />
-        <property name="email" column="EMAIL" length="20" />
-        <property name="woonplaats" column="WOONPLAATS" length="20" />
-        <property name="ophalen" column="OPHALEN" type="boolean" />
-        <property name="opmerkingen" column="OPMERKINGEN" length="50" />
-        <property name="inschrijfdatum" column="INSCHRIJFDATUM" type="calendar_date" />
+    	<generator class="native"/>
+     </id>
+	<property name="naam" column="NAAM" length="20" />
+	<property name="adres" column="ADRES" length="20" />
+	<property name="huisnummer" column="HUISNUMMER" length="6" />
+	<property name="postcode" column="POSTCODE" length="7" />
+	<property name="woonplaats" column="WOONPLAATS" length="20" />
+	<property name="telefoon" column="TELEFOON" length="10" />
+	<property name="mobiel" column="MOBIEL" length="10" />
+	<property name="email" column="EMAIL" length="20" />
+	<property name="woonplaats" column="WOONPLAATS" length="20" />
+	<property name="ophalen" column="OPHALEN" type="boolean" />
+	<property name="opmerkingen" column="OPMERKINGEN" length="50" />
+	<property name="inschrijfdatum" column="INSCHRIJFDATUM" type="calendar_date" />
   </class>
 </hibernate-mapping>

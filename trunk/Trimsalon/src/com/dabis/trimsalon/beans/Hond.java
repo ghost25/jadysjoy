@@ -13,7 +13,7 @@ public class Hond
 	private boolean gecastreerd;
 	private Calendar geboortedatum;
 	private List<Opmerking> opmerkingen;
-	private long klant;
+	private Klant klant;
 	
 	public void setId(long id) {
 		this.id = id;
@@ -124,14 +124,14 @@ public class Hond
 	/**
 	 * @return the klant
 	 */
-	public long getKlant() {
+	public Klant getKlant() {
 		return klant;
 	}
 
 	/**
 	 * @param klant the klant to set
 	 */
-	public void setKlant(long klant) {
+	public void setKlant(Klant klant) {
 		this.klant = klant;
 	}
 	

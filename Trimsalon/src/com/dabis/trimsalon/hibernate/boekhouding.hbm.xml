@@ -8,7 +8,10 @@
             <generator class="native"/>
         </id>
         <property name="boekingsdatum" column="BOEKINGSDATUM" type="calendar_date" />
-        <property name="afspraak" column="AFSPRAAK" type="long" />
+       <set name="afspraak">
+        	<key column="ID" not-null="true"/>
+        	<one-to-many class="Afspraak"/>
+        </set>
         <property name="prijsExbtw" column="PRIJSEXBTW" type="double" />
         <property name="btw" column="BTW" type="double" />
         <property name="betaalt" column="BETAALT" type="boolean" />

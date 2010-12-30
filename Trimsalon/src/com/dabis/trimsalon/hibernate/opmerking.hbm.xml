@@ -5,11 +5,11 @@
 <hibernate-mapping package="com.dabis.trimsalon.beans">
   <class name="Opmerking" table="APP.OPMERKING">
      <id name="id" column="ID">
-            <generator class="native"/>
-        </id>
-        <property name="advies" column="ADVIES" length="50" />
-        <property name="gedrag" column="GEDRAG" length="50" />
-        <property name="medischeKenmerken" column="MEDISCH" length="50" />
-        <property name="datum" column="DATUM" type="calendar_date" />
+        <generator class="native"/>
+	</id>
+	<property name="advies" column="ADVIES" length="50" />
+	<property name="gedrag" column="GEDRAG" length="50" />
+	<property name="medischeKenmerken" column="MEDISCH" length="50" />
+	<property name="datum" column="DATUM" type="calendar_date" />
   </class>
 </hibernate-mapping>

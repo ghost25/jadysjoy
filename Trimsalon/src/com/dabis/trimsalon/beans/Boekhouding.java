@@ -13,7 +13,7 @@ public class Boekhouding {
 	
 	private long id;
 	private Calendar boekingsdatum;
-	private long afspraak;
+	private Afspraak afspraak;
 	private double prijsExbtw;
 	private double btw;
 	private boolean betaalt;
@@ -45,13 +45,13 @@ public class Boekhouding {
 	/**
 	 * @return the afspraak
 	 */
-	public long getAfspraak() {
+	public Afspraak getAfspraak() {
 		return afspraak;
 	}
 	/**
 	 * @param afspraak the afspraak to set
 	 */
-	public void setAfspraak(long afspraak) {
+	public void setAfspraak(Afspraak afspraak) {
 		this.afspraak = afspraak;
 	}
 	/**

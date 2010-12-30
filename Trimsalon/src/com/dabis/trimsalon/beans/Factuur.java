@@ -1,6 +1,7 @@
 package com.dabis.trimsalon.beans;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class Factuur
 {

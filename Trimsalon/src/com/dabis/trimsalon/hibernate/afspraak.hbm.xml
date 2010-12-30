@@ -4,16 +4,25 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dabis.trimsalon.beans">
   <class name="Afspraak" table="APP.AFSPRAAK">
-     <id name="id" column="ID">
-            <generator class="native"/>
-        </id>
-        <property name="begintijd" column="BEGINTIJD" type="calendar" />
-        <property name="eindtijd" column="EINDTIJD" type="calendar" />
-        <property name="behandeling" column="BEHANDELING" type="long" />
-        <property name="klant" column="KLANT" type="long" />
-        <property name="hond" column="HOND" type="long" />
-        <property name="opmerkingen" column="OPMERKINGEN" length="50" />
-        <property name="ophalen" column="OPHALEN" type="boolean" />
-        <property name="afgehandeld" column="AFGEHANDELD" type="boolean" />
-  </class>
+	<id name="id" column="ID">
+	    <generator class="native"/>
+	</id>
+	<property name="begintijd" column="BEGINTIJD" type="calendar" />
+	<property name="eindtijd" column="EINDTIJD" type="calendar" />
+	<property name="opmerkingen" column="OPMERKINGEN" length="50" />
+	<property name="ophalen" column="OPHALEN" type="boolean" />
+	<property name="afgehandeld" column="AFGEHANDELD" type="boolean" />
+	 <set name="hond">
+		<key column="ID" not-null="true"/>
+		<one-to-many class="Hond"/>
+	</set>
+	<set name="klant">
+	 	<key column="ID" not-null="true"/>
+	 	<one-to-many class="Klant"/>
+	 </set>
+	<set name="behandeling">
+	 	<key column="ID" not-null="true"/>
+	 	<one-to-many class="Behandeling"/>
+	 </set>
+ </class>
 </hibernate-mapping>

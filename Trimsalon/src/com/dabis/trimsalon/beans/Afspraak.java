@@ -7,9 +7,9 @@ public class Afspraak
 	private long id;
 	private Calendar begintijd;
 	private Calendar eindtijd;
-	private long behandeling;
-	private long klant;
-	private long hond;
+	private Behandeling behandeling;
+	private Klant klant;
+	private Hond hond;
 	private String opmerkingen;
 	private boolean ophalen;
 	private boolean afgehandeld;
@@ -53,37 +53,37 @@ public class Afspraak
 	/**
 	 * @return the behandeling
 	 */
-	public long getBehandeling() {
+	public Behandeling getBehandeling() {
 		return behandeling;
 	}
 	/**
 	 * @param behandeling the behandeling to set
 	 */
-	public void setBehandeling(long behandeling) {
+	public void setBehandeling(Behandeling behandeling) {
 		this.behandeling = behandeling;
 	}
 	/**
 	 * @return the klant
 	 */
-	public long getKlant() {
+	public Klant getKlant() {
 		return klant;
 	}
 	/**
 	 * @param klant the klant to set
 	 */
-	public void setKlant(long klant) {
+	public void setKlant(Klant klant) {
 		this.klant = klant;
 	}
 	/**
 	 * @return the hond
 	 */
-	public long getHond() {
+	public Hond getHond() {
 		return hond;
 	}
 	/**
 	 * @param hond the hond to set
 	 */
-	public void setHond(long hond) {
+	public void setHond(Hond hond) {
 		this.hond = hond;
 	}
 	/**

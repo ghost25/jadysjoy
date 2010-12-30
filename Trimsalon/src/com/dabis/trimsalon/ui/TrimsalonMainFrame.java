@@ -19,7 +19,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
-import com.dabis.trimsalon.beans.Client;
+import com.dabis.trimsalon.beans.Hond;
 import com.dabis.trimsalon.utils.HibernateUtil;
 import com.dabis.trimsalon.utils.QueryTableModel;
 
@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 /**
- * Example of a ToDoList.  Use the Add button to add entries that will be displayed in the list and the table
+ * Scherm om een Hond te toevoegen/wijzigen/verwijderen
  */
 public class TrimsalonMainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -38,12 +38,12 @@ public class TrimsalonMainFrame extends JFrame {
 	private JLabel idLabel = null;
 	private JTextField idTextField = null;
 	private JTabbedPane ivjJTabbedPane = null;
-	private JTextField soortTextField = null;
 	private JTextField naamTextField = null;
-	private JLabel naamLabel = null;
+	private JTextField rasTextField = null;
+	private JLabel rasLabel = null;
 	private JButton clearButton = null;
 	private JButton exitButton = null;
-	private JLabel woonplaatsLabel = null;
+	private JLabel Label = null;
 	private JLabel leeftijdLabel = null;
 	private JLabel gewichtLabel = null;
 	private JTextField woonplaatsTextField = null;
@@ -73,11 +73,15 @@ public class TrimsalonMainFrame extends JFrame {
 					// If id is empty then its a new client
 					if(getIdTextField().getText().equalsIgnoreCase("")) {
 						// New client
-						c.setSoort(getSoortTextField().getText());
 						c.setNaam(getNaamTextField().getText());
-						c.setWoonplaats(getWoonplaatsTextField().getText());
-						c.setLeeftijd(Integer.parseInt(getLeeftijdTextField().getText()));
-						c.setGewicht(Integer.parseInt(getGewichtTextField().getText()));
+						c.setRas(getRasTextField().getText());
+						c.setRt(getRtTextField().getText());
+						c.setKleur(getKleurTextField().getText());
+						c.setGecas(getGecasTextField().getText());
+						c.setGeboren(getGeborenTextField().getText());
+						c.setMk(getMkTextField().getText());
+						c.setGedrag(getGedragTextField().getText());
+						c.setAdvies(getAdviesTextField().getText());
 				        
 						Session session = HibernateUtil.getSessionFactory("").getCurrentSession();
 				        session.beginTransaction();
@@ -91,11 +95,15 @@ public class TrimsalonMainFrame extends JFrame {
 						c = (Client) session.createQuery("from Client where id="+id).list().get(0);
 				        session.getTransaction().commit();
 
-						c.setSoort(getSoortTextField().getText());
-						c.setNaam(getNaamTextField().getText());
-						c.setWoonplaats(getWoonplaatsTextField().getText());
-						c.setLeeftijd(Integer.parseInt(getLeeftijdTextField().getText()));
-						c.setGewicht(Integer.parseInt(getGewichtTextField().getText()));
+				        c.setNaam(getNaamTextField().getText());
+						c.setRas(getRasTextField().getText());
+						c.setRt(getRtTextField().getText());
+						c.setKleur(getKleurTextField().getText());
+						c.setGecas(getGecasTextField().getText());
+						c.setGeboren(getGeborenTextField().getText());
+						c.setMk(getMkTextField().getText());
+						c.setGedrag(getGedragTextField().getText());
+						c.setAdvies(getAdviesTextField().getText());
 						
 				        session.beginTransaction();
 				        session.save(c);

@@ -11,6 +11,12 @@
         <property name="hibernate.connection.password">admin</property>
         <property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
-		<mapping resource="com/dabis/trimsalon/hibernate/client.hbm.xml"/>
+		<mapping resource="com/dabis/trimsalon/hibernate/afspraak.hbm.xml"/>
+		<mapping resource="com/dabis/trimsalon/hibernate/behandeling.hbm.xml"/>
+		<mapping resource="com/dabis/trimsalon/hibernate/boekhouding.hbm.xml"/>
+		<mapping resource="com/dabis/trimsalon/hibernate/factuur.hbm.xml"/>
+		<mapping resource="com/dabis/trimsalon/hibernate/hond.hbm.xml"/>
+		<mapping resource="com/dabis/trimsalon/hibernate/klant.hbm.xml"/>
+		<mapping resource="com/dabis/trimsalon/hibernate/opmerking.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

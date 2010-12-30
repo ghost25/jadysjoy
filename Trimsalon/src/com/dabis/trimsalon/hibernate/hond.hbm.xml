@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.dabis.trimsalon.beans">
+	<class name="Hond" table="APP.HOND">
+        <id name="id" column="ID">
+            <generator class="native"/>
+        </id>
+        <property name="naam" column="NAAM" length="20" />
+        <property name="ras" column="RAS" length="20" />
+        <property name="rue" column="RUE" type="boolean" />
+        <property name="kleur" column="KLEUR" length="20" />
+        <property name="gecastreerd" column="GECASTREERD" type="boolean" />
+        <property name="geboortedatum" column="GEBOORTEDATUM" type="calendar_date" />
+        <property name="opmerkingen" column="OPMERKINGEN" type= />
+        <property name="klant" column="KLANT" type="long" />
+     </class>
+</hibernate-mapping>

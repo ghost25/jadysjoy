@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dabis.trimsalon.beans">
+  <class name="Boekhouding" table="APP.BOEKHOUDING">
+     <id name="id" column="ID">
+            <generator class="native"/>
+        </id>
+        <property name="boekingsdatum" column="BOEKINGSDATUM" type="calendar_date" />
+        <property name="afspraak" column="AFSPRAAK" type="long" />
+        <property name="prijsExbtw" column="PRIJSEXBTW" type="double" />
+        <property name="btw" column="BTW" type="double" />
+        <property name="betaalt" column="BETAALT" type="boolean" />
+  </class>
+</hibernate-mapping>

@@ -1,13 +1,14 @@
 package com.dabis.trimsalon.beans;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class Afspraak
 {
 	private long id;
 	private Calendar begintijd;
 	private Calendar eindtijd;
-	private Behandeling behandeling;
+	private List<Behandeling> behandelingen;
 	private Klant klant;
 	private Hond hond;
 	private String opmerkingen;
@@ -53,14 +54,14 @@ public class Afspraak
 	/**
 	 * @return the behandeling
 	 */
-	public Behandeling getBehandeling() {
-		return behandeling;
+	public List<Behandeling> getBehandelingen() {
+		return behandelingen;
 	}
 	/**
 	 * @param behandeling the behandeling to set
 	 */
-	public void setBehandeling(Behandeling behandeling) {
-		this.behandeling = behandeling;
+	public void setBehandelingen(List<Behandeling> behandelingen) {
+		this.behandelingen = behandelingen;
 	}
 	/**
 	 * @return the klant

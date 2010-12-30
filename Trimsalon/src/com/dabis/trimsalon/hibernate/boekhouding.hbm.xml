@@ -4,14 +4,11 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dabis.trimsalon.beans">
   <class name="Boekhouding" table="APP.BOEKHOUDING">
-     <id name="id" column="ID">
+     <id name="id" column="BHID">
             <generator class="native"/>
         </id>
         <property name="boekingsdatum" column="BOEKINGSDATUM" type="calendar_date" />
-       <set name="afspraak">
-        	<key column="ID" not-null="true"/>
-        	<one-to-many class="Afspraak"/>
-        </set>
+        <many-to-one name="afspraak" column="AID" unique="true" not-null="true"/>
         <property name="prijsExbtw" column="PRIJSEXBTW" type="double" />
         <property name="btw" column="BTW" type="double" />
         <property name="betaalt" column="BETAALT" type="boolean" />

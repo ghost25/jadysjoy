@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dabis.trimsalon.beans">
   <class name="Opmerking" table="APP.OPMERKING">
-     <id name="id" column="ID">
+     <id name="id" column="OID">
         <generator class="native"/>
 	</id>
 	<property name="advies" column="ADVIES" length="50" />

@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dabis.trimsalon.beans">
   <class name="Afspraak" table="APP.AFSPRAAK">
-	<id name="id" column="ID">
+	<id name="id" column="AID">
 	    <generator class="native"/>
 	</id>
 	<property name="begintijd" column="BEGINTIJD" type="calendar" />
@@ -12,17 +12,12 @@
 	<property name="opmerkingen" column="OPMERKINGEN" length="50" />
 	<property name="ophalen" column="OPHALEN" type="boolean" />
 	<property name="afgehandeld" column="AFGEHANDELD" type="boolean" />
-	 <set name="hond">
-		<key column="ID" not-null="true"/>
-		<one-to-many class="Hond"/>
-	</set>
-	<set name="klant">
-	 	<key column="ID" not-null="true"/>
-	 	<one-to-many class="Klant"/>
-	 </set>
-	<set name="behandeling">
-	 	<key column="ID" not-null="true"/>
-	 	<one-to-many class="Behandeling"/>
-	 </set>
+	<many-to-one name="hond" column="HID" unique="true" not-null="true"/>
+	<many-to-one name="klant" column="KLANTID" not-null="true" class="Klant"/>
+	 <set name="behandelingen" table="APP.AFSPRAAKBEHANDELINGEN">
+        <key column="AID"/>
+        <many-to-many column="BID" unique="true" class="Behandeling"/>
+    </set>
+	 
  </class>
 </hibernate-mapping>

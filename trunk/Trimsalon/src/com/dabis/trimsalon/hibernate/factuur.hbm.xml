@@ -4,13 +4,13 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dabis.trimsalon.beans">
   <class name="Factuur" table="APP.FACTUUR">
-     <id name="id" column="ID">
+     <id name="id" column="FID">
             <generator class="native"/>
      </id>
-	<set name="boekhouding">
-		<key column="ID" not-null="true"/>
-		<one-to-many class="Boekhouding"/>
-	</set>
+	 <set name="factuurregels" table="APP.FACTUURBOEK">
+        <key column="BHID"/>
+        <many-to-many column="FID" unique="true" class="Factuur"/>
+    </set>
 	<property name="factuurdatum" column="FACTUURDATUM" type="calendar_date" />
 	<property name="factuurnummer" column="FACTUURNUMMER" length="10" />
   </class>

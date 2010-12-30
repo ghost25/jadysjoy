@@ -5,19 +5,19 @@
 
 <hibernate-mapping package="com.dabis.trimsalon.beans">
 	<class name="Hond" table="APP.HOND">
-	<id name="id" column="ID">
+	<id name="id" column="HID">
 	    <generator class="native"/>
 	</id>
 	<property name="naam" column="NAAM" length="20" />
 	<property name="ras" column="RAS" length="20" />
-	<property name="rue" column="RUE" type="boolean" />
+	<property name="reu" column="REU" type="boolean" />
 	<property name="kleur" column="KLEUR" length="20" />
 	<property name="gecastreerd" column="GECASTREERD" type="boolean" />
 	<property name="geboortedatum" column="GEBOORTEDATUM" type="calendar_date" />
-	<set name="opmerkingen">
-		<key column="ID" not-null="true"/>
-		<one-to-many class="Opmerking"/>
-	</set>
-	<many-to-one name="klant" column="KLANTID" not-null="true" class="Klant"/>  
+	 <set name="opmerkingen" table="APP.OPMERKINGHOND">
+        <key column="HID"/>
+        <many-to-many column="OID" unique="true" class="Opmerking"/>
+    </set>
+	<many-to-one name="klant" column="KID" not-null="true" class="Klant"/>  
      </class>
 </hibernate-mapping>

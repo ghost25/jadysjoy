@@ -3,8 +3,8 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dabis.trimsalon.beans">
-  <class name="Afspraak" table="APP.AFSPRAAK">
-     <id name="id" column="ID">
+  <class name="Klant" table="APP.KLANT">
+     <id name="id" column="KID">
     	<generator class="native"/>
      </id>
 	<property name="naam" column="NAAM" length="20" />
@@ -15,7 +15,6 @@
 	<property name="telefoon" column="TELEFOON" length="10" />
 	<property name="mobiel" column="MOBIEL" length="10" />
 	<property name="email" column="EMAIL" length="20" />
-	<property name="woonplaats" column="WOONPLAATS" length="20" />
 	<property name="ophalen" column="OPHALEN" type="boolean" />
 	<property name="opmerkingen" column="OPMERKINGEN" length="50" />
 	<property name="inschrijfdatum" column="INSCHRIJFDATUM" type="calendar_date" />

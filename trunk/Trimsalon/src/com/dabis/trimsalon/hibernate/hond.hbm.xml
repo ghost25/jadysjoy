@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC
-        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dabis.trimsalon.beans">
-	<class name="Hond" table="APP.HOND">
-	<id name="id" column="HID">
-	    <generator class="native"/>
-	</id>
-	<property name="naam" column="NAAM" length="20" />
-	<property name="ras" column="RAS" length="20" />
-	<property name="reu" column="REU" type="boolean" />
-	<property name="kleur" column="KLEUR" length="20" />
-	<property name="gecastreerd" column="GECASTREERD" type="boolean" />
-	<property name="geboortedatum" column="GEBOORTEDATUM" type="calendar_date" />
-	 <set name="opmerkingen" table="APP.OPMERKINGHOND">
-        <key column="HID"/>
-        <many-to-many column="OID" unique="true" class="Opmerking"/>
-    </set>
-	<many-to-one name="klant" column="KID" not-null="true" class="Klant"/>  
-     </class>
+ <class name="Hond" table="APP.HOND">
+  <id column="HID" name="id">
+   <generator class="native"/>
+  </id>
+  <property column="NAAM" generated="never" lazy="false" length="20" name="naam"/>
+  <property column="RAS" generated="never" lazy="false" length="20" name="ras"/>
+  <property column="REU" generated="never" lazy="false" name="reu" type="boolean"/>
+  <property column="KLEUR" generated="never" lazy="false" length="20" name="kleur"/>
+  <property column="GECASTREERD" generated="never" lazy="false"
+   name="gecastreerd" type="boolean"/>
+  <property column="GEBOORTEDATUM" generated="never" lazy="false"
+   name="geboortedatum" type="date"/>
+  <set cascade="delete-orphan" inverse="true" lazy="false" name="opmerkingen" table="APP.OPMERKINGHOND">
+   <key column="HID"/>
+   <many-to-many class="Opmerking" column="OID" unique="true"/>
+  </set>
+  <many-to-one class="Klant" column="KID" lazy="false" name="klant" not-null="true"/>
+ </class>
 </hibernate-mapping>

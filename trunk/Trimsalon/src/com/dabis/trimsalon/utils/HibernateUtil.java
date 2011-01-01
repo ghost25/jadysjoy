@@ -7,6 +7,7 @@ package com.dabis.trimsalon.utils;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Settings;
@@ -19,37 +20,60 @@ import org.hibernate.connection.ConnectionProvider;
  */
 public class HibernateUtil {
 	
+	private static String db = "";
     private static SessionFactory sessionFactory;
-    private static SessionFactory testSessionFactory;
+    
+    private HibernateUtil() { }
+    
+	static {
+	}
 
-    public static SessionFactory getSessionFactory(String db) {
-    	if( db.equalsIgnoreCase("TEST") ) {
-    		if( testSessionFactory == null ) {
-                try {
-                    // Create the SessionFactory from test-hibernate.cfg.xml
-                    testSessionFactory = new Configuration().configure("test-hibernate.cfg.xml").buildSessionFactory();
-                } catch (Throwable ex) {
-                    // Make sure you log the exception, as it might be swallowed
-                    System.err.println("Initial SessionFactory creation failed." + ex);
-                    throw new ExceptionInInitializerError(ex);
-                }
-    		}
-    		return testSessionFactory;
-    	} else {
-    		if( sessionFactory == null ) {
-    	        try {
-    	            // Create the SessionFactory from hibernate.cfg.xml
-    	            sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-    	        } catch (Throwable ex) {
-    	            // Make sure you log the exception, as it might be swallowed
-    	            System.err.println("Initial SessionFactory creation failed." + ex);
-    	            throw new ExceptionInInitializerError(ex);
-    	        }
+	public static SessionFactory getInstance() {
+		return sessionFactory;
+	}
 
-    		}
-    		return sessionFactory;
-    	}
-    }
+	/**
+	 * Sets the environment.
+	 */
+	public static void setDB(String environment) { 
+		db = environment; 
+		if( db.equalsIgnoreCase("TEST") )
+			sessionFactory = new Configuration().configure("test-hibernate.cfg.xml").buildSessionFactory();
+		else
+			sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+	}
+	
+	/**
+	 * Opens a session and will not bind it to a session context
+	 * @return the session
+	 */
+	public Session openSession() {
+		return sessionFactory.openSession();
+	}
+
+	/**
+	* Returns a session from the session context. If there is no session in the context
+	* it opens a session, stores it in the context and returns it.
+	* This factory is intended to be used with a hibernate.cfg.xml
+	* including the following property 
+	* <property name="current_session_context_class">thread</property>
+	* This would return the current open session or if this does not exist, 
+	* will create a new session
+	* 
+	* @return the session
+	*/
+	public Session getCurrentSession() {
+		return sessionFactory.getCurrentSession();
+	}
+
+	/**
+	* closes the session factory
+	*/
+	public static void close(){
+		if (sessionFactory != null)
+			sessionFactory.close();
+		sessionFactory = null;
+	}
 
     public static Connection getDBConnection(String db) {
     	Connection con = null;

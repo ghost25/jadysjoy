@@ -17,6 +17,6 @@
 	<property name="email" column="EMAIL" length="20" />
 	<property name="ophalen" column="OPHALEN" type="boolean" />
 	<property name="opmerkingen" column="OPMERKINGEN" length="50" />
-	<property name="inschrijfdatum" column="INSCHRIJFDATUM" type="calendar_date" />
+	<property name="inschrijfdatum" column="INSCHRIJFDATUM" type="date" />
   </class>
 </hibernate-mapping>

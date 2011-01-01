@@ -1,7 +1,8 @@
 package com.dabis.trimsalon.beans;
 
-import java.util.Calendar;
-import java.util.List;
+import java.util.Date;
+
+import org.hibernate.collection.PersistentSet;
 
 public class Hond
 {
@@ -11,8 +12,8 @@ public class Hond
 	private boolean reu;
 	private String kleur;
 	private boolean gecastreerd;
-	private Calendar geboortedatum;
-	private List<Opmerking> opmerkingen;
+	private Date geboortedatum;
+	private PersistentSet opmerkingen;
 	private Klant klant;
 	
 	public void setId(long id) {
@@ -96,28 +97,28 @@ public class Hond
 	/**
 	 * @return the geboortedatum
 	 */
-	public Calendar getGeboortedatum() {
+	public Date getGeboortedatum() {
 		return geboortedatum;
 	}
 
 	/**
 	 * @param geboortedatum the geboortedatum to set
 	 */
-	public void setGeboortedatum(Calendar geboortedatum) {
+	public void setGeboortedatum(Date geboortedatum) {
 		this.geboortedatum = geboortedatum;
 	}
 
 	/**
 	 * @return the opmerkingen
 	 */
-	public List<Opmerking> getOpmerkingen() {
+	public PersistentSet getOpmerkingen() {
 		return opmerkingen;
 	}
 
 	/**
 	 * @param opmerkingen the opmerkingen to set
 	 */
-	public void setOpmerkingen(List<Opmerking> opmerkingen) {
+	public void setOpmerkingen(PersistentSet opmerkingen) {
 		this.opmerkingen = opmerkingen;
 	}
 

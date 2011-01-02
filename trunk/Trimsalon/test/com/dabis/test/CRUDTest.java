@@ -4,13 +4,14 @@
 package com.dabis.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -24,10 +25,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.dabis.trimsalon.beans.Behandeling;
-import com.dabis.trimsalon.beans.Hond;
-import com.dabis.trimsalon.beans.Klant;
-import com.dabis.trimsalon.beans.Opmerking;
+import com.dabis.trimsalon.beans.*;
 import com.dabis.trimsalon.utils.HibernateUtil;
 
 /**
@@ -184,6 +182,8 @@ public class CRUDTest {
 		opm2.setDatum(new Date());
 		opm2.setGedrag("Vertoont vlucht gedrag");
 		Add(opm2);
+		// Get them again from database
+		
 		// and add them to this Hond
 		hond.addOpmerking(opm1);
 		hond.addOpmerking(opm2);
@@ -195,18 +195,213 @@ public class CRUDTest {
 		assertNotNull("Change:No Honden found",honden2);
 		assertEquals("More than one Hond found:", 1, honden2.size());
 		assertEquals("Value of Naam:","Saartje",honden2.get(0).getNaam());
-		assertNotNull("There are no Opmerkingen:", hond.getOpmerkingen());
-		assertEquals("Opmerkingen:",2,hond.getOpmerkingen().size());
+		assertNotNull("There are no Opmerkingen:", honden2.get(0).getOpmerkingen());
+		assertEquals("Opmerkingen:",2,honden2.get(0).getOpmerkingen().size());
 		
 		// Remove this Hond
-		Delete(honden1.get(0));
+		Delete(honden2.get(0));
+		// Remove also Klant
+		Delete(honden2.get(0).getKlant());
 		
 		// Get all Honden
 		List<Hond> honden3 = GetAll("from Hond");
 		assertNotNull("No Honden found:",honden3);
 		assertEquals("There are still Honden found:",0,honden3.size());
+		// See if the Opmerkingen are also gone
+		List<Opmerking> opmerkingen = GetAll("from Opmerking");
+		assertNotNull("No Opmerkingen found:",opmerkingen);
+		assertEquals("There are still Opmerkingen found:",0,opmerkingen.size());
+		// Get all Klanten. They should also be gone.
+		List<Klant> klanten = GetAll("from Klant");
+		assertNotNull("No Klanten found:",klanten);
+		assertEquals("There are still Klanten found:",0,klanten.size());
+		
 	}
-	//
+	
+	@Test
+	public void AfspraakCRUD() {
+		// Since an Afspraak belongs to a Hond first add a new Hond
+		// Since a Hond belongs to a Klant first add a new Klant
+		Klant klant = CreateKlantPijl();
+		Add(klant);
+		// Now create a Hond
+		Hond hond = CreateHondAiko();
+		// Retrieve the Klant again and add it to the Hond
+		klant = (Klant) GetAll("from Klant k where k.naam='Pijl'").get(0);
+		hond.setKlant(klant);
+		Add(hond);
+		// Now create the Afspraak
+		Afspraak afspraak = CreateAfspraak1();
+		try {
+			Add(afspraak);
+		} catch (HibernateException e) {
+			// Hond is mandatory, so an error should appear.
+			if(! e.getMessage().equalsIgnoreCase("not-null property references a null or transient value: com.dabis.trimsalon.beans.Afspraak.hond") ) {
+				fail("Could not add Afspraak:"+e.getMessage());
+			}
+		}
+		
+		// Now add Hond and save afspraak
+		afspraak.setHond(hond);
+		Add(afspraak);
+		
+		// Get all Afspraken and check if there is just one
+		List<Afspraak> afspraken = GetAll("from Afspraak");
+		assertNotNull("Add:No Afspraken found",afspraken);
+		assertEquals("More than one Afspraak found:", 1, afspraken.size());
+		
+		// Change the retrieved Hond
+		afspraak = afspraken.get(0);
+		afspraak.setOphalen(false);
+		Update(afspraak);
+		
+		// Get all afspraken and check if its still one with Ophalen=false
+		List<Afspraak> afspraken1 = GetAll("from Afspraak");
+		assertNotNull("Change:No afspraken found",afspraken1);
+		assertEquals("More than one Afspraak found:", 1, afspraken1.size());
+		assertFalse("Value of Ophalen:",afspraken1.get(0).isOphalen());
+		
+		//Now add two Behandelingen
+		Behandeling beh1 = CreateBehandelingTrimmen();
+		Add(beh1);
+		Behandeling beh2 = CreateBehandelingWassen();
+		Add(beh2);
+		// and add them to this Afspraak
+		afspraak.addBehandeling(beh1);
+		afspraak.addBehandeling(beh2);
+		// and save the afspraak again;
+		Update(afspraak);
+		// Check if all is stored
+		// Get all afspraken and check if its still one
+		List<Afspraak> afspraken2 = GetAll("from Afspraak");
+		assertNotNull("Change:No Afspraken found",afspraken2);
+		assertEquals("More than one Afspraak found:", 1, afspraken2.size());
+		assertNotNull("There are no Behandelingen:", afspraken2.get(0).getBehandelingen());
+		assertEquals("Behandelingen:",2,afspraken2.get(0).getBehandelingen().size());
+		
+		// Remove this Afspraak
+		Delete(afspraken2.get(0));
+		
+		// Get all Afspraken and check if they are gone
+		List<Afspraak> afspraken3 = GetAll("from Afspraak");
+		assertNotNull("No Afspraken found:",afspraken3);
+		assertEquals("There are still Afspraken found:",0,afspraken3.size());
+
+		// See if the Behandelingen are still there
+		List<Behandeling> behandelingen = GetAll("from Behandeling");
+		assertNotNull("There are no Behandelingen found:",behandelingen);
+		assertEquals("Behandelingen:",2,behandelingen.size());
+		
+		// Remove Hond and Klant
+		Delete(afspraken2.get(0).getHond());
+		Delete(afspraken2.get(0).getHond().getKlant());
+		// Remove both behandelingen
+		for (Behandeling behandeling : behandelingen) {
+			Delete(behandeling);
+		}
+		// See if the Behandelingen are gone
+		List<Behandeling> behandelingen1 = GetAll("from Behandeling");
+		assertNotNull("There are no Behandelingen found:",behandelingen1);
+		assertEquals("There are still Behandelingen:",0,behandelingen1.size());
+		// See if the Hond is gone
+		List<Behandeling> honden = GetAll("from Hond");
+		assertNotNull("There are no honden found:",honden);
+		assertEquals("There are still honden:",0,honden.size());
+		// See if the Klant is gone
+		List<Behandeling> klanten = GetAll("from Behandeling");
+		assertNotNull("There are no klanten found:",klanten);
+		assertEquals("There are still klanten:",0,klanten.size());
+			
+	}
+	
+	@Test
+	public void BoekhoudingAndFactuurCRUD() {
+		//Add two Behandelingen
+		Behandeling beh1 = CreateBehandelingTrimmen();
+		Add(beh1);
+		Behandeling beh2 = CreateBehandelingWassen();
+		Add(beh2);
+		// Make  afspraak
+		Klant klant1 = CreateKlantPijl();
+		Add(klant1);
+		// Now create a Hond
+		Hond hond1 = CreateHondAiko();
+		// Retrieve the Klant again and add it to the Hond
+		klant1 = (Klant) GetAll("from Klant k where k.naam='Pijl'").get(0);
+		hond1.setKlant(klant1);
+		Add(hond1);
+		// Now create the Afspraak
+		Afspraak afspraak1 = CreateAfspraak1();
+		afspraak1.setHond(hond1);
+		// and add two behandelingen to this Afspraak
+		afspraak1.addBehandeling(beh1);
+		afspraak1.addBehandeling(beh2);
+		Add(afspraak1);
+		// First insertion into Boekhouding
+		// The Afspraak contained two Behandelingen, so two Boekhoud records should be created
+		// Use a Utility-method to create the items from an Afspraak
+		for( Boekhouding item : makeBoekhoudingItems(afspraak1) ) {
+			Add(item);
+		}
+		// Check if there are two items created
+		List<Boekhouding> boekhouding = GetAll("from Boekhouding");
+		assertNotNull("No Afspraken found:",boekhouding);
+		assertEquals("Afspraken:",2,boekhouding.size());
+		
+		// Now create the Factuur 
+		Factuur factuur = new Factuur();
+		factuur.setFactuurdatum(new Date());
+		long factuurnummer = 1;
+		factuur.setFactuurnummer(factuurnummer+"");
+		for( Boekhouding item : boekhouding ) {
+			factuur.addFactuurregel(item);
+		}
+		Add(factuur);
+		// Check if one factuur with two regels is created
+		List<Factuur> facturen = GetAll("from Factuur");
+		assertNotNull("No Facturen found:",facturen);
+		assertEquals("Facturen:",1,facturen.size());
+		assertEquals("Factuurregels:", 2, facturen.get(0).getFactuurregels().size());
+		
+		// Now remove Factuur
+		Delete(facturen.get(0));
+		// Check if factuur has gone
+		List<Factuur> facturen1 = GetAll("from Factuur");
+		assertNotNull("No Facturen found:",facturen1);
+		assertEquals("Facturen:",0,facturen1.size());
+		// Check if Boekhouditems are still there
+		List<Boekhouding> boekhouding1 = GetAll("from Boekhouding");
+		assertNotNull("No Boekhouditems found:",boekhouding1);
+		assertEquals("Boekhouditems:",2,boekhouding1.size());
+		
+		// Now cleanup
+		for( Boekhouding item : boekhouding ) {
+			Delete(item);
+		}
+		Delete(afspraak1);
+		Delete(hond1);
+		Delete(klant1);
+		Delete(beh1);
+		Delete(beh2);
+		// See if afspraken are gone
+		List<Afspraak> afspraken = GetAll("from Afspraak");
+		assertNotNull("No Afspraken found:",afspraken);
+		assertEquals("There are still Afspraken found:",0,afspraken.size());
+		// See if the Behandelingen are gone
+		List<Behandeling> behandelingen = GetAll("from Behandeling");
+		assertNotNull("There are no Behandelingen found:",behandelingen);
+		assertEquals("There are still Behandelingen:",0,behandelingen.size());
+		// See if the Hond is gone
+		List<Behandeling> honden = GetAll("from Hond");
+		assertNotNull("There are no honden found:",honden);
+		assertEquals("There are still honden:",0,honden.size());
+		// See if the Klant is gone
+		List<Behandeling> klanten = GetAll("from Behandeling");
+		assertNotNull("There are no klanten found:",klanten);
+		assertEquals("There are still klanten:",0,klanten.size());
+	}
+	
+	//====================================================================================
 	//Supporting methods
 	//
 	private void Add(Object object) throws HibernateException {
@@ -380,5 +575,75 @@ public class CRUDTest {
 		hond.setGecastreerd(false);
 		hond.setReu(false);
 		return hond;
+	}
+	
+	private Afspraak CreateAfspraak1() {
+		Afspraak afspraak = new Afspraak();
+		Date d = new Date();
+		try {
+			d = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse("10-01-2011 10:30");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Calendar begintijd = Calendar.getInstance();
+		begintijd.setTime(d);
+		afspraak.setBegintijd(begintijd);
+		try {
+			d = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse("10-01-2011 12:30");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Calendar eindtijd = Calendar.getInstance();
+		eindtijd.setTime(d);
+		afspraak.setEindtijd(eindtijd);
+		afspraak.setOphalen(true);
+		afspraak.setOpmerkingen("Mogelijk 5 minuten later.");
+		return afspraak;
+	}
+	
+	private Afspraak CreateAfspraak2() {
+		Afspraak afspraak = new Afspraak();
+		Date d = new Date();
+		try {
+			d = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse("11-01-2011 14:30");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Calendar begintijd = Calendar.getInstance();
+		begintijd.setTime(d);
+		afspraak.setBegintijd(begintijd);
+		try {
+			d = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse("11-01-2011 16:30");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Calendar eindtijd = Calendar.getInstance();
+		eindtijd.setTime(d);
+		afspraak.setEindtijd(eindtijd);
+		afspraak.setOphalen(false);
+		afspraak.setOpmerkingen("Bellen wanneer klaar.");
+		return afspraak;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private List<Boekhouding> makeBoekhoudingItems(Afspraak afspraak) {
+		List<Boekhouding> items = new ArrayList<Boekhouding>();
+		Date d = new Date();
+		Calendar boekingsdatum = Calendar.getInstance();
+		boekingsdatum.setTime(d);
+		for ( Iterator<Behandeling> b = afspraak.getBehandelingen().iterator(); b.hasNext(); ) {
+			Behandeling beh = b.next();
+			Boekhouding item = new Boekhouding();
+			item.setBoekingsdatum(boekingsdatum);
+			item.setAfspraak(afspraak);
+			item.setBtw(beh.getBtw());
+			item.setPrijsExbtw(beh.getPrijsExbtw());
+			items.add(item);
+		}
+		return items;
 	}
 }

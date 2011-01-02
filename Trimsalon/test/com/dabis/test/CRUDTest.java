@@ -4,25 +4,30 @@
 package com.dabis.test;
 
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.dabis.trimsalon.beans.*;
+import com.dabis.trimsalon.beans.Behandeling;
+import com.dabis.trimsalon.beans.Hond;
+import com.dabis.trimsalon.beans.Klant;
+import com.dabis.trimsalon.beans.Opmerking;
 import com.dabis.trimsalon.utils.HibernateUtil;
 
 /**
@@ -32,7 +37,6 @@ import com.dabis.trimsalon.utils.HibernateUtil;
 public class CRUDTest {
 
 	final static Logger logger = LoggerFactory.getLogger(CRUDTest.class);
-	private static SessionFactory sessionFactory = null;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -130,7 +134,7 @@ public class CRUDTest {
 	
 	@Test
 	public void HondCRUD() {
-		// Add a new Klant
+		// Since a Hond belongs to a Klant first add a new Klant
 		Klant klant = CreateKlantDaalman();
 		Add(klant);
 		// Now create a Hond
@@ -139,7 +143,7 @@ public class CRUDTest {
 		try {
 			Add(hond);
 		} catch (HibernateException e) {
-			// Klant must be added, so an error should appear.
+			// Klant is mandatory, so an error should appear.
 			if(! e.getMessage().equalsIgnoreCase("not-null property references a null or transient value: com.dabis.trimsalon.beans.Hond.klant") ) {
 				fail("Could not add Hond:"+e.getMessage());
 			}
@@ -147,13 +151,13 @@ public class CRUDTest {
 		// Retrieve it again
 		klant = (Klant) GetAll("from Klant k where k.naam='Daalman'").get(0);
 		hond.setKlant(klant);
-		// Now add it again
+		// Now add the Hond again
 		try {
 			Add(hond);
 		} catch (HibernateException e) {
 			fail("Could not add Hond:"+e.getMessage());
 		}
-		// Get all Honden
+		// Get all Honden and check if there is just one
 		List<Hond> honden = GetAll("from Hond");
 		assertNotNull("Add:No Honden found",honden);
 		assertEquals("More than one Honden found:", 1, honden.size());
@@ -163,19 +167,44 @@ public class CRUDTest {
 		hond.setNaam("Saartje");
 		Update(hond);
 		
-		// Get all Honden
+		// Get all Honden and check if its still one with Naam="Saartje"
 		List<Hond> honden1 = GetAll("from Hond");
 		assertNotNull("Change:No Honden found",honden1);
 		assertEquals("More than one Hond found:", 1, honden1.size());
 		assertEquals("Value of Naam:","Saartje",honden1.get(0).getNaam());
 		
+		//Now add two Opmerkingen
+		Opmerking opm1 = new Opmerking();
+		opm1.setDatum(new Date());
+		opm1.setAdvies("Twee keer wassen");
+		opm1.setGedrag("Is snapperig");
+		opm1.setMedischeKenmerken("Heeft staar in beide ogen");
+		Add(opm1);
+		Opmerking opm2 = new Opmerking();
+		opm2.setDatum(new Date());
+		opm2.setGedrag("Vertoont vlucht gedrag");
+		Add(opm2);
+		// and add them to this Hond
+		hond.addOpmerking(opm1);
+		hond.addOpmerking(opm2);
+		// and save the hond again;
+		Update(hond);
+		// Check if all is stored
+		// Get all Honden and check if its still one with Naam="Saartje"
+		List<Hond> honden2 = GetAll("from Hond");
+		assertNotNull("Change:No Honden found",honden2);
+		assertEquals("More than one Hond found:", 1, honden2.size());
+		assertEquals("Value of Naam:","Saartje",honden2.get(0).getNaam());
+		assertNotNull("There are no Opmerkingen:", hond.getOpmerkingen());
+		assertEquals("Opmerkingen:",2,hond.getOpmerkingen().size());
+		
 		// Remove this Hond
 		Delete(honden1.get(0));
 		
 		// Get all Honden
-		List<Hond> honden2 = GetAll("from Hond");
-		assertNotNull("No Honden found:",honden2);
-		assertEquals("There are still Honden found:",0,honden2.size());
+		List<Hond> honden3 = GetAll("from Hond");
+		assertNotNull("No Honden found:",honden3);
+		assertEquals("There are still Honden found:",0,honden3.size());
 	}
 	//
 	//Supporting methods

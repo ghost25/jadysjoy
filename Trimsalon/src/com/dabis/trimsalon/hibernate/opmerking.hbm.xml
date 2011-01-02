@@ -1,15 +1,14 @@
 <?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC
-	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dabis.trimsalon.beans">
-  <class name="Opmerking" table="APP.OPMERKING">
-     <id name="id" column="OID">
-        <generator class="native"/>
-	</id>
-	<property name="advies" column="ADVIES" length="50" />
-	<property name="gedrag" column="GEDRAG" length="50" />
-	<property name="medischeKenmerken" column="MEDISCH" length="50" />
-	<property name="datum" column="DATUM" type="calendar_date" />
-  </class>
+ <class name="Opmerking" table="APP.OPMERKING">
+  <id column="OID" name="id">
+   <generator class="native"/>
+  </id>
+  <property column="ADVIES" generated="never" lazy="false" length="50" name="advies"/>
+  <property column="GEDRAG" generated="never" lazy="false" length="50" name="gedrag"/>
+  <property column="MEDISCH" generated="never" lazy="false" length="50" name="medischeKenmerken"/>
+  <property column="DATUM" generated="never" lazy="false" name="datum" type="date"/>
+ </class>
 </hibernate-mapping>

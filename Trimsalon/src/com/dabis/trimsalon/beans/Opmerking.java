@@ -3,7 +3,7 @@
  */
 package com.dabis.trimsalon.beans;
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author rdaalman
@@ -15,7 +15,7 @@ public class Opmerking {
 	private String advies;
 	private String gedrag;
 	private String medischeKenmerken;
-	private Calendar datum;
+	private Date datum;
 	
 	/**
 	 * @return the id
@@ -68,13 +68,13 @@ public class Opmerking {
 	/**
 	 * @return the datum
 	 */
-	public Calendar getDatum() {
+	public Date getDatum() {
 		return datum;
 	}
 	/**
 	 * @param datum the datum to set
 	 */
-	public void setDatum(Calendar datum) {
+	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
 	

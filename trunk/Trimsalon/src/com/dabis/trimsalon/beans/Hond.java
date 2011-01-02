@@ -111,7 +111,7 @@ public class Hond
 	/**
 	 * @return the opmerkingen
 	 */
-	public PersistentSet getOpmerkingen() {
+	public PersistentSet getOpmerkingen() { 
 		return opmerkingen;
 	}
 
@@ -122,6 +122,22 @@ public class Hond
 		this.opmerkingen = opmerkingen;
 	}
 
+	/**
+	 * Add one opmerking
+	 */
+	public void addOpmerking(Opmerking opmerking) {
+		if( opmerkingen == null ) opmerkingen = new PersistentSet();
+		opmerkingen.add(opmerking);
+	}
+	
+	/**
+	 * Remove one opmerking
+	 */
+	public void removeOpmerking(Opmerking opmerking) {
+		if( opmerkingen != null ) {
+			opmerkingen.remove(opmerking);
+		}
+	}
 	/**
 	 * @return the klant
 	 */

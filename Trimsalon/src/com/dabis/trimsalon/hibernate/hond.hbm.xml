@@ -6,15 +6,13 @@
   <id column="HID" name="id">
    <generator class="native"/>
   </id>
-  <property column="NAAM" generated="never" lazy="false" length="20" name="naam"/>
-  <property column="RAS" generated="never" lazy="false" length="20" name="ras"/>
-  <property column="REU" generated="never" lazy="false" name="reu" type="boolean"/>
-  <property column="KLEUR" generated="never" lazy="false" length="20" name="kleur"/>
-  <property column="GECASTREERD" generated="never" lazy="false"
-   name="gecastreerd" type="boolean"/>
-  <property column="GEBOORTEDATUM" generated="never" lazy="false"
-   name="geboortedatum" type="date"/>
-  <set cascade="delete-orphan" inverse="true" lazy="false" name="opmerkingen" table="APP.OPMERKINGHOND">
+  <property name="naam" column="NAAM" length="20"/>
+  <property name="ras" column="RAS" length="20"/>
+  <property name="reu" column="REU" type="boolean"/>
+  <property name="kleur" column="KLEUR" length="20"/>
+  <property name="gecastreerd" column="GECASTREERD" type="boolean"/>
+  <property name="geboortedatum" column="GEBOORTEDATUM" type="date"/>
+  <set name="opmerkingen" cascade="delete-orphan" lazy="false" table="APP.OPMERKINGHOND">
    <key column="HID"/>
    <many-to-many class="Opmerking" column="OID" unique="true"/>
   </set>

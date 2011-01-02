@@ -13,8 +13,7 @@
 	<property name="ophalen" column="OPHALEN" type="boolean" />
 	<property name="afgehandeld" column="AFGEHANDELD" type="boolean" />
 	<many-to-one name="hond" column="HID" unique="true" not-null="true"/>
-	<many-to-one name="klant" column="KLANTID" not-null="true" class="Klant"/>
-	 <set name="behandelingen" table="APP.AFSPRAAKBEHANDELINGEN">
+	 <set name="behandelingen" table="APP.AFSPRAAKBEHANDELINGEN" lazy="false">
         <key column="AID"/>
         <many-to-many column="BID" unique="true" class="Behandeling"/>
     </set>

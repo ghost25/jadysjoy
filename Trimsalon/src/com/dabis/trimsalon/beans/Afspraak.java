@@ -3,13 +3,14 @@ package com.dabis.trimsalon.beans;
 import java.util.Calendar;
 import java.util.List;
 
+import org.hibernate.collection.PersistentSet;
+
 public class Afspraak
 {
 	private long id;
 	private Calendar begintijd;
 	private Calendar eindtijd;
-	private List<Behandeling> behandelingen;
-	private Klant klant;
+	private PersistentSet behandelingen;
 	private Hond hond;
 	private String opmerkingen;
 	private boolean ophalen;
@@ -54,27 +55,33 @@ public class Afspraak
 	/**
 	 * @return the behandeling
 	 */
-	public List<Behandeling> getBehandelingen() {
+	public PersistentSet getBehandelingen() {
 		return behandelingen;
 	}
 	/**
 	 * @param behandeling the behandeling to set
 	 */
-	public void setBehandelingen(List<Behandeling> behandelingen) {
+	public void setBehandelingen(PersistentSet behandelingen) {
 		this.behandelingen = behandelingen;
 	}
+	
 	/**
-	 * @return the klant
+	 * Add one Behandeling
 	 */
-	public Klant getKlant() {
-		return klant;
+	public void addBehandeling(Behandeling behandeling) {
+		if( behandelingen == null ) behandelingen = getBehandelingen();
+		behandelingen.add(behandeling);
 	}
+	
 	/**
-	 * @param klant the klant to set
+	 * Remove one Behandeling
 	 */
-	public void setKlant(Klant klant) {
-		this.klant = klant;
+	public void removeBehandeling(Behandeling behandeling) {
+		if( behandelingen != null ) {
+			behandelingen.remove(behandeling);
+		}
 	}
+	
 	/**
 	 * @return the hond
 	 */

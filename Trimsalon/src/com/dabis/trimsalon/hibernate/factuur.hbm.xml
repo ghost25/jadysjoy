@@ -1,17 +1,16 @@
 <?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC
-	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dabis.trimsalon.beans">
-  <class name="Factuur" table="APP.FACTUUR">
-     <id name="id" column="FID">
-            <generator class="native"/>
-     </id>
-	 <set name="factuurregels" table="APP.FACTUURBOEK">
-        <key column="BHID"/>
-        <many-to-many column="FID" unique="true" class="Factuur"/>
-    </set>
-	<property name="factuurdatum" column="FACTUURDATUM" type="calendar_date" />
-	<property name="factuurnummer" column="FACTUURNUMMER" length="10" />
-  </class>
+ <class name="Factuur" table="APP.FACTUUR">
+  <id column="FID" name="id">
+   <generator class="native"/>
+  </id>
+  <set name="factuurregels" cascade="delete" lazy="false" table="APP.FACTUURBOEK">
+   <key column="BHID"/>
+   <many-to-many class="Factuur" column="FID" unique="true"/>
+  </set>
+  <property name="factuurdatum" column="FACTUURDATUM" type="date"/>
+  <property name="factuurnummer" column="FACTUURNUMMER" length="10"/>
+ </class>
 </hibernate-mapping>

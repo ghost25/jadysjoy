@@ -6,9 +6,9 @@
   <id column="FID" name="id">
    <generator class="native"/>
   </id>
-  <set name="factuurregels" cascade="delete" lazy="false" table="APP.FACTUURBOEK">
-   <key column="BHID"/>
-   <many-to-many class="Factuur" column="FID" unique="true"/>
+  <set name="factuurregels" lazy="false" table="APP.FACTUURBOEK">
+   <key column="FID"/>
+   <many-to-many class="Boekhouding" column="BHID" unique="true"/>
   </set>
   <property name="factuurdatum" column="FACTUURDATUM" type="date"/>
   <property name="factuurnummer" column="FACTUURNUMMER" length="10"/>

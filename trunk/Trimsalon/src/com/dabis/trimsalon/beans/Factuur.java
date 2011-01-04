@@ -38,7 +38,6 @@ public class Factuur
 	 * Add one Factuurregel
 	 */
 	public void addFactuurregel(Boekhouding item) {
-		if( factuurregels == null ) factuurregels = new PersistentSet();
 		factuurregels.add(item);
 	}
 	/**

@@ -69,7 +69,6 @@ public class Afspraak
 	 * Add one Behandeling
 	 */
 	public void addBehandeling(Behandeling behandeling) {
-		if( behandelingen == null ) behandelingen = getBehandelingen();
 		behandelingen.add(behandeling);
 	}
 	

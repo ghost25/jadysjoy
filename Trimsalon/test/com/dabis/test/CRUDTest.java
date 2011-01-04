@@ -34,6 +34,7 @@ import com.dabis.trimsalon.utils.HibernateUtil;
 
 /**
  * @author Tom
+ * @param <T>
  *
  */
 public class CRUDTest {
@@ -271,9 +272,7 @@ public class CRUDTest {
 		Behandeling beh2 = CreateBehandelingWassen();
 		Add(beh2);
 		// and add them to this Afspraak
-		Session session = HibernateUtil.getInstance().getCurrentSession();
-		Set<Behandeling> set = new HashSet<Behandeling>();
-		afspraak.setBehandelingen(new PersistentSet((SessionImplementor) session, set));
+		afspraak.setBehandelingen(emptyPersistentSet(Behandeling.class));
 		afspraak.addBehandeling(beh1);
 		afspraak.addBehandeling(beh2);
 		// and save the afspraak again;
@@ -341,9 +340,7 @@ public class CRUDTest {
 		Afspraak afspraak1 = CreateAfspraak1();
 		afspraak1.setHond(hond1);
 		// and add two behandelingen to this Afspraak
-		Session session = HibernateUtil.getInstance().getCurrentSession();
-		Set<Behandeling> set = new HashSet<Behandeling>();
-		afspraak1.setBehandelingen(new PersistentSet((SessionImplementor) session, set));
+		afspraak1.setBehandelingen(emptyPersistentSet(Behandeling.class));
 		afspraak1.addBehandeling(beh1);
 		afspraak1.addBehandeling(beh2);
 		Add(afspraak1);
@@ -361,6 +358,7 @@ public class CRUDTest {
 		// Now create the Factuur 
 		Factuur factuur = new Factuur();
 		factuur.setFactuurdatum(new Date());
+		factuur.setFactuurregels(emptyPersistentSet(Boekhouding.class));
 		long factuurnummer = 1;
 		factuur.setFactuurnummer(factuurnummer+"");
 		for( Boekhouding item : boekhouding ) {
@@ -655,5 +653,11 @@ public class CRUDTest {
 			items.add(item);
 		}
 		return items;
+	}
+	
+	private <T> PersistentSet emptyPersistentSet(T arg1) {
+		Session session = HibernateUtil.getInstance().getCurrentSession();
+		Set<T> set = new HashSet<T>();
+		return new PersistentSet((SessionImplementor) session, set);
 	}
 }

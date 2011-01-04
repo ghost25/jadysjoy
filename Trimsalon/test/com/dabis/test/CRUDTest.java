@@ -11,12 +11,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.collection.PersistentSet;
+import org.hibernate.engine.SessionImplementor;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -267,6 +271,9 @@ public class CRUDTest {
 		Behandeling beh2 = CreateBehandelingWassen();
 		Add(beh2);
 		// and add them to this Afspraak
+		Session session = HibernateUtil.getInstance().getCurrentSession();
+		Set<Behandeling> set = new HashSet<Behandeling>();
+		afspraak.setBehandelingen(new PersistentSet((SessionImplementor) session, set));
 		afspraak.addBehandeling(beh1);
 		afspraak.addBehandeling(beh2);
 		// and save the afspraak again;
@@ -334,6 +341,9 @@ public class CRUDTest {
 		Afspraak afspraak1 = CreateAfspraak1();
 		afspraak1.setHond(hond1);
 		// and add two behandelingen to this Afspraak
+		Session session = HibernateUtil.getInstance().getCurrentSession();
+		Set<Behandeling> set = new HashSet<Behandeling>();
+		afspraak1.setBehandelingen(new PersistentSet((SessionImplementor) session, set));
 		afspraak1.addBehandeling(beh1);
 		afspraak1.addBehandeling(beh2);
 		Add(afspraak1);

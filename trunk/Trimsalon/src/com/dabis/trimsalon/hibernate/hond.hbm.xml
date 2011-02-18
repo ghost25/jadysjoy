@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dabis.trimsalon.beans">
- <class name="Hond" table="APP.HOND">
+ <class name="Hond" table="HOND">
   <id column="HID" name="id">
    <generator class="native"/>
   </id>
@@ -12,7 +12,7 @@
   <property name="kleur" column="KLEUR" length="20"/>
   <property name="gecastreerd" column="GECASTREERD" type="boolean"/>
   <property name="geboortedatum" column="GEBOORTEDATUM" type="date"/>
-  <set name="opmerkingen" cascade="delete-orphan" lazy="false" table="APP.OPMERKINGHOND">
+  <set name="opmerkingen" cascade="delete-orphan" lazy="false" table="OPMERKINGHOND">
    <key column="HID"/>
    <many-to-many class="Opmerking" column="OID" unique="true"/>
   </set>

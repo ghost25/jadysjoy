@@ -90,6 +90,7 @@ public class QueryTableModel extends AbstractTableModel {
 	}
 	
 	public <T> void setCache(List<T> data) {
+		if( data.size() == 0 ) return;
 		// Fill the data cache.
 		// columns contains the getter methods for each column
 		Method[] columns = new Method[varNames.length];

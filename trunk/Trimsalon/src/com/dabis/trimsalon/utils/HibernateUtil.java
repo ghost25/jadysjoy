@@ -25,10 +25,8 @@ public class HibernateUtil {
     
     private HibernateUtil() { }
     
-	static {
-	}
-
-	public static SessionFactory getSessionFactory() {
+	public static SessionFactory getSessionFactory(String db) {
+		setDB(db);
 		return sessionFactory;
 	}
 
@@ -47,7 +45,7 @@ public class HibernateUtil {
 	 * Opens a session and will not bind it to a session context
 	 * @return the session
 	 */
-	public Session openSession() {
+	public static Session openSession() {
 		return sessionFactory.openSession();
 	}
 
@@ -62,7 +60,7 @@ public class HibernateUtil {
 	* 
 	* @return the session
 	*/
-	public Session getCurrentSession() {
+	public static Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
 

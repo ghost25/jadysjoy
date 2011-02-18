@@ -3,7 +3,7 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dabis.trimsalon.beans">
-  <class name="Boekhouding" table="APP.BOEKHOUDING">
+  <class name="Boekhouding" table="BOEKHOUDING">
      <id name="id" column="BHID">
             <generator class="native"/>
      </id>

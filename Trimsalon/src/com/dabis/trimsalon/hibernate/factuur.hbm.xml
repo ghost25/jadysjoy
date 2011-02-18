@@ -2,11 +2,11 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.dabis.trimsalon.beans">
- <class name="Factuur" table="APP.FACTUUR">
+ <class name="Factuur" table="FACTUUR">
   <id column="FID" name="id">
    <generator class="native"/>
   </id>
-  <set name="factuurregels" lazy="false" table="APP.FACTUURBOEK">
+  <set name="factuurregels" lazy="false" table="FACTUURBOEK">
    <key column="FID"/>
    <many-to-many class="Boekhouding" column="BHID" unique="true"/>
   </set>

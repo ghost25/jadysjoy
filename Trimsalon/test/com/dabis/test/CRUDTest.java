@@ -414,7 +414,7 @@ public class CRUDTest {
 	//
 	private void Add(Object object) throws HibernateException {
 	    Transaction tx = null;
-	    Session session = HibernateUtil.getInstance().getCurrentSession();
+	    Session session = HibernateUtil.getCurrentSession();
 	    try {
 	    	tx = session.beginTransaction();
 	    	session.save(object);
@@ -435,7 +435,7 @@ public class CRUDTest {
 	
 	private void Update(Object object) throws HibernateException {
 	    Transaction tx = null;
-	    Session session = HibernateUtil.getInstance().getCurrentSession();
+	    Session session = HibernateUtil.getCurrentSession();
 	    try {
 	    	tx = session.beginTransaction();
 	    	session.update(object);
@@ -456,7 +456,7 @@ public class CRUDTest {
 	
 	private void Delete(Object object) throws HibernateException {
 	    Transaction tx = null;
-	    Session session = HibernateUtil.getInstance().getCurrentSession();
+	    Session session = HibernateUtil.getCurrentSession();
 	    try {
 	    	tx = session.beginTransaction();
 	    	session.delete(object);
@@ -479,7 +479,7 @@ public class CRUDTest {
 	private <T> List<T> GetAll(String query) throws HibernateException {
 		List<T> list = null;
 	    Transaction tx = null;
-	    Session session = HibernateUtil.getInstance().getCurrentSession();
+	    Session session = HibernateUtil.getCurrentSession();
 	    try {
 	    	tx = session.beginTransaction();
 			list = (List<T>) session.createQuery(query).list();
@@ -656,7 +656,7 @@ public class CRUDTest {
 	}
 	
 	private <T> PersistentSet emptyPersistentSet(T arg1) {
-		Session session = HibernateUtil.getInstance().getCurrentSession();
+		Session session = HibernateUtil.getCurrentSession();
 		Set<T> set = new HashSet<T>();
 		return new PersistentSet((SessionImplementor) session, set);
 	}

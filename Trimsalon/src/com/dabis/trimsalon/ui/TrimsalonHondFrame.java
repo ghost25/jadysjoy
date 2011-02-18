@@ -144,14 +144,14 @@ public class TrimsalonHondFrame extends JFrame {
 						c.setOpmerking(getJTextField7().getText());
 						klant.setKlant(getJTextField8().getText());
 										        
-						Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
 				        session.save(c);
 				        session.getTransaction().commit();
 					} else {
 						// Hond is modified
 						long id = Long.parseLong(getJTextField().getText());
-						Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
 						c = (Hond) session.createQuery("from Hond where id="+id).list().get(0);
 				        session.getTransaction().commit();
@@ -620,4 +620,4 @@ public class TrimsalonHondFrame extends JFrame {
 		return ivjJList;
 	}
 
-}  //  @jve:decl-index=0:visual-constraint="-15,6"
+}  //  @jve:decl-index=0:visual-constraint="-28,-14"

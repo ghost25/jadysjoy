@@ -1,22 +1,30 @@
 package com.dabis.trimsalon.ui;
+import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Calendar;
 import java.util.List;
 
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.*;
-
-import java.awt.Rectangle;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.apache.log4j.Logger;
+import org.gui.JCalendarCombo;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
@@ -25,16 +33,12 @@ import com.dabis.trimsalon.beans.Klant;
 import com.dabis.trimsalon.utils.HibernateUtil;
 import com.dabis.trimsalon.utils.QueryTableModel;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-
 public class TrimsalonKlantFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public static Logger log = Logger.getLogger(TrimsalonKlantFrame.class);
 	private javax.swing.JButton addButton = null;
 	private JButton clearButton = null;
 	private JButton exitButton = null;
-	private JButton changeButton = null;
 	private JPanel ivjJFrameContentPane = null;
 	private JLabel ivjJLabel9 = null;
 	private JLabel ivjJLabel1 = null;
@@ -58,18 +62,18 @@ public class TrimsalonKlantFrame extends JFrame {
 	private JTextField ivjJTextField6 = null;
 	private JTextField ivjJTextField7 = null;
 	private JTextField ivjJTextField8 = null;
-	private JTextField ivjJTextField12 = null;
 	private JTextField ivjJTextField13 = null;
-	private JTextField ivjJTextField14 = null;
 	private JScrollPane ivjJScrollPane = null;
 	private JTable ivjJTable = null;
 	private TableColumn ivjTableColumn = null;
 	private TableColumn ivjTableColumn2 = null;
 	private JTabbedPane ivjJTabbedPane = null;
-	private JScrollPane ivjJScrollPane2 = null;
-	private JList ivjJList = null;
 	public Boolean sortAscending = new Boolean(true);
 	public String sortBy = "naam";  //  @jve:decl-index=0:
+	private JCheckBox jCheckBox = null;
+	private JCalendarCombo ivjJCalendarCombo = null;
+	private JButton removeButton = null;
+	
 	public TrimsalonKlantFrame() {
 		super();
 		initialize();
@@ -117,15 +121,15 @@ public class TrimsalonKlantFrame extends JFrame {
 			ivjJFrameContentPane.add(getJTextField6(), null);
 			ivjJFrameContentPane.add(getJTextField7(), null);
 			ivjJFrameContentPane.add(getJTextField8(), null);
-			ivjJFrameContentPane.add(getJTextField12(), null);
 			ivjJFrameContentPane.add(getJTextField13(), null);
-			ivjJFrameContentPane.add(getJTextField14(), null);
 			ivjJFrameContentPane.add(getAddButton(), null);
 			ivjJFrameContentPane.add(getClearButton(), null);
 			ivjJFrameContentPane.add(getExitButton(), null);
-			ivjJFrameContentPane.add(getChangeButton(), null);
 			ivjJFrameContentPane.add(getJLabel9(), null);
 			ivjJFrameContentPane.add(getJTextField(), null);
+			ivjJFrameContentPane.add(getJCheckBox(), null);
+			ivjJFrameContentPane.add(getJCalendarCombo(), null);
+			ivjJFrameContentPane.add(getRemoveButton(), null);
 		}
 		return ivjJFrameContentPane;
 	}
@@ -137,13 +141,14 @@ public class TrimsalonKlantFrame extends JFrame {
 	private JButton getAddButton() {
 		if (addButton == null) {
 			addButton = new JButton();
-			addButton.setText("Toevoegen");
+			addButton.setText("Opslaan");
 			addButton.setBounds(new Rectangle(450, 450, 100, 25));
 			addButton.addActionListener(new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent arg0) {
 					Klant c = new Klant();
 					// If id is empty then its a new klant
-					if(getJTextField().getText().equalsIgnoreCase("")) {
+					long id = Long.parseLong(getJTextField().getText());
+					if(id == -1) {
 						// New klant
 						c.setNaam(getJTextField1().getText());
 						c.setAdres(getJTextField2().getText());
@@ -153,18 +158,18 @@ public class TrimsalonKlantFrame extends JFrame {
 						c.setTelefoon(getJTextField6().getText());
 						c.setMobiel(getJTextField7().getText());
 						c.setEmail(getJTextField8().getText());
-						/* c.setOphalen(getJTextField12().getText());*/
+						c.setOphalen(getJCheckBox().isSelected());
 						c.setOpmerkingen(getJTextField13().getText());
-						/*c.setInschrijfdatum(getJTextField14().getText());*/
+						c.setInschrijfdatum(getJCalendarCombo().getDate().getTime());
 										        
-						Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
 				        session.save(c);
 				        session.getTransaction().commit();
+				        getJTextField().setText(c.getId()+"");
 					} else {
 						// Klant is modified
-						long id = Long.parseLong(getJTextField().getText());
-						Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
 						c = (Klant) session.createQuery("from Klant where id="+id).list().get(0);
 				        session.getTransaction().commit();
@@ -177,43 +182,20 @@ public class TrimsalonKlantFrame extends JFrame {
 						c.setTelefoon(getJTextField6().getText());
 						c.setMobiel(getJTextField7().getText());
 						c.setEmail(getJTextField8().getText());
-						/*c.setOphalen(getJTextField12().getText());*/
+						c.setOphalen(getJCheckBox().isSelected());
 						c.setOpmerkingen(getJTextField13().getText());
-						/*c.setInschrijfdatum(getJTextField14().getText());*/
-												
+						c.setInschrijfdatum(getJCalendarCombo().getDate().getTime());
+						
+						session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
 				        session.save(c);
 				        session.getTransaction().commit();
-
 					}
-					fillIvjJTable("Naam", true);
+					fillIvjJTable(sortBy, sortAscending);
 				}
 			});
 		}
 		return addButton;
-	}
-	
-	/**
-	 * This method initializes changeButton	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getChangeButton() {
-		if (changeButton == null) {
-			changeButton = new JButton();
-			changeButton.setBounds(new Rectangle(560, 450, 100, 25));
-			changeButton.setText("Wijzigen");
-			changeButton.setName("changeButton");
-			changeButton.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					clearInvoer();
-					//Return the focus to the typing area.
-					ivjJTextField1.requestFocusInWindow();
-					
-				}
-			});
-		}
-		return changeButton;
 	}
 	
 	/**
@@ -224,8 +206,8 @@ public class TrimsalonKlantFrame extends JFrame {
 	private JButton getClearButton() {
 		if (clearButton == null) {
 			clearButton = new JButton();
-			clearButton.setBounds(new Rectangle(670, 450, 100, 25));
-			clearButton.setText("Legen");
+			clearButton.setBounds(new Rectangle(665, 450, 110, 25));
+			clearButton.setText("Leeg maken");
 			clearButton.setName("clearButton");
 			clearButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -260,6 +242,7 @@ public class TrimsalonKlantFrame extends JFrame {
 	}
 	
 	private void clearInvoer() {
+		getJTextField().setText("-1");
 		getJTextField1().setText(null);
 		getJTextField2().setText(null);
 		getJTextField3().setText(null);
@@ -268,9 +251,9 @@ public class TrimsalonKlantFrame extends JFrame {
 		getJTextField6().setText(null);
 		getJTextField7().setText(null);
 		getJTextField8().setText(null);
-		getJTextField12().setText(null);
+		getJCheckBox().setSelected(false);
 		getJTextField13().setText(null);
-		getJTextField14().setText(null);
+		getJCalendarCombo().setDate(Calendar.getInstance());
 	}
 
 	/**
@@ -417,7 +400,9 @@ public class TrimsalonKlantFrame extends JFrame {
 		if (ivjJTextField == null) {
 			ivjJTextField = new JTextField();
 			ivjJTextField.setName("JTextField");
+			ivjJTextField.setEnabled(false);
 			ivjJTextField.setBounds(new Rectangle(600, 80, 300, 20));
+			ivjJTextField.setText("-1");
 		}
 		return ivjJTextField;
 	}
@@ -493,14 +478,6 @@ public class TrimsalonKlantFrame extends JFrame {
 		}
 		return ivjJTextField8;
 	}
-	private JTextField getJTextField12() {
-		if (ivjJTextField12 == null) {
-			ivjJTextField12 = new JTextField();
-			ivjJTextField12.setName("JTextField12");
-			ivjJTextField12.setBounds(new Rectangle(600, 350, 300, 20));
-		}
-		return ivjJTextField12;
-	}
 	private JTextField getJTextField13() {
 		if (ivjJTextField13 == null) {
 			ivjJTextField13 = new JTextField();
@@ -509,13 +486,14 @@ public class TrimsalonKlantFrame extends JFrame {
 		}
 		return ivjJTextField13;
 	}
-	private JTextField getJTextField14() {
-		if (ivjJTextField14 == null) {
-			ivjJTextField14 = new JTextField();
-			ivjJTextField14.setName("JTextField14");
-			ivjJTextField14.setBounds(new Rectangle(600, 410, 300, 20));
+	
+	private JCalendarCombo getJCalendarCombo() {
+		if (ivjJCalendarCombo == null) {
+			ivjJCalendarCombo = new JCalendarCombo();
+			ivjJCalendarCombo.setName("JCalendarCombo");
+			ivjJCalendarCombo.setBounds(new Rectangle(600, 407, 300, 20));
 		}
-		return ivjJTextField14;
+		return ivjJCalendarCombo;
 	}
 	
 	private class TableSelectionListener implements ListSelectionListener {
@@ -530,9 +508,9 @@ public class TrimsalonKlantFrame extends JFrame {
 	            int selectedRow = lsm.getMinSelectionIndex();
 	            //selectedRow is selected
 	            String id = (String) ((QueryTableModel)getIvjJTable().getModel()).getRow(selectedRow)[0];
-				Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+				Session session = HibernateUtil.getCurrentSession();
 		        session.beginTransaction();
-				Klant c = (Klant) session.createQuery("from klant where id="+id).list().get(0);
+				Klant c = (Klant) session.createQuery("from Klant where id="+id).list().get(0);
 		        session.getTransaction().commit();
 		        getJTextField().setText(c.getId()+"");
 		        getJTextField1().setText(c.getNaam());
@@ -543,9 +521,11 @@ public class TrimsalonKlantFrame extends JFrame {
 		        getJTextField6().setText(c.getTelefoon()+"");
 		        getJTextField7().setText(c.getMobiel()+"");
 		        getJTextField8().setText(c.getEmail()+"");
-		        getJTextField12().setText(c.isOphalen()+"");
+		        getJCheckBox().setSelected(c.isOphalen());
 		        getJTextField13().setText(c.getOpmerkingen()+"");
-		        getJTextField14().setText(c.getInschrijfdatum()+"");
+		        Calendar dt = Calendar.getInstance();
+		        dt.setTime(c.getInschrijfdatum());
+		        getJCalendarCombo().setDate(dt);
 	        }
 	    }
 	}
@@ -602,12 +582,13 @@ public class TrimsalonKlantFrame extends JFrame {
 	
 	@SuppressWarnings("unchecked")
 	private void fillIvjJTable(String sortBy, Boolean ascending) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getCurrentSession();
         session.beginTransaction();
         Criteria c = session.createCriteria(Klant.class);
         if(ascending) c.addOrder(Order.asc(sortBy));
         else c.addOrder(Order.desc(sortBy));
 		List<Klant> list = c.list();
+		log.debug("List Klant size="+list.size());
         session.getTransaction().commit();
         String[] cols = {"!Id","Naam","Adres","Postcode"};
         QueryTableModel m = new QueryTableModel(cols, list);
@@ -656,38 +637,55 @@ public class TrimsalonKlantFrame extends JFrame {
 	private JTabbedPane getIvjJTabbedPane() {
 		if (ivjJTabbedPane == null) {
 			ivjJTabbedPane = new JTabbedPane(); // Explicit Instance
-			ivjJTabbedPane
-					.addTab("Klanten", null, getIvjJScrollPane2(), null); // JVE Generated
-			ivjJTabbedPane.addTab("Details", null, getIvjJScrollPane(), null); // JVE Generated
+			ivjJTabbedPane.addTab("Klanten", null, getIvjJScrollPane(), null); // JVE Generated
 			ivjJTabbedPane.setBounds(7, 28, 428, 476); // JVE Generated
 		}
 		return ivjJTabbedPane;
 	}
 
 	/**
-	 * This method initializes ivjJScrollPane2
-	 * 
-	 * @return JScrollPane
+	 * This method initializes jCheckBox	
+	 * 	
+	 * @return javax.swing.JCheckBox	
 	 */
-	private JScrollPane getIvjJScrollPane2() {
-		if (ivjJScrollPane2 == null) {
-			ivjJScrollPane2 = new JScrollPane(); // Explicit Instance
-			ivjJScrollPane2.setViewportView(getIvjJList());
+	private JCheckBox getJCheckBox() {
+		if (jCheckBox == null) {
+			jCheckBox = new JCheckBox();
+			jCheckBox.setBounds(new Rectangle(598, 347, 21, 21));
 		}
-		return ivjJScrollPane2;
+		return jCheckBox;
 	}
 
 	/**
-	 * This method initializes ivjJList
-	 * 
-	 * @return JList
+	 * This method initializes jButton	
+	 * 	
+	 * @return javax.swing.JButton	
 	 */
-	private JList getIvjJList() {
-		if (ivjJList == null) {
-			ivjJList = new JList(); // Explicit Instance
-			ivjJList.setModel(new DefaultListModel());
+	private JButton getRemoveButton() {
+		if (removeButton == null) {
+			removeButton = new JButton();
+			removeButton.setText("Verwijderen");
+			removeButton.setBounds(new Rectangle(555, 450, 105, 26));
+			removeButton.addActionListener(new ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent arg0) {
+					// If id is -1 then its a new klant
+					long id = Long.parseLong(getJTextField().getText());
+					if(id != -1) {
+						Session session = HibernateUtil.getCurrentSession();
+				        session.beginTransaction();
+						Klant c = (Klant) session.createQuery("from Klant where id="+id).list().get(0);
+				        session.getTransaction().commit();
+						session = HibernateUtil.getCurrentSession();
+				        session.beginTransaction();
+				        session.delete(c);
+				        session.getTransaction().commit();
+					}
+					clearInvoer();
+					fillIvjJTable(sortBy, sortAscending);
+				}
+			});
 		}
-		return ivjJList;
+		return removeButton;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="-15,6"

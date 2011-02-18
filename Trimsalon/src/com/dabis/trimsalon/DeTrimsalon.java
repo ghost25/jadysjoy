@@ -1,5 +1,6 @@
 package com.dabis.trimsalon;
 
+import com.dabis.trimsalon.ui.TrimsalonKlantFrame;
 import com.dabis.trimsalon.ui.TrimsalonMainFrame;
 import com.dabis.trimsalon.utils.HibernateUtil;
 
@@ -12,7 +13,7 @@ public class DeTrimsalon {
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-		TrimsalonMainFrame lbw = new TrimsalonMainFrame();
+		TrimsalonKlantFrame lbw = new TrimsalonKlantFrame();
 		lbw.setLocationRelativeTo(null);
 		lbw.setVisible(true);
     }
@@ -22,7 +23,7 @@ public class DeTrimsalon {
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-				HibernateUtil.getSessionFactory("").getCurrentSession();
+        		HibernateUtil.setDB("PROD");
                 createAndShowGUI();
             }
         });

@@ -173,7 +173,6 @@ public class TrimsalonKlantFrame extends JFrame {
 				        session.beginTransaction();
 						c = (Klant) session.createQuery("from Klant where id="+id).list().get(0);
 				        session.getTransaction().commit();
-
 				    	c.setNaam(getJTextField1().getText());
 						c.setAdres(getJTextField2().getText());
 						c.setHuisnummer(getJTextField3().getText());
@@ -188,7 +187,7 @@ public class TrimsalonKlantFrame extends JFrame {
 						
 						session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
-				        session.save(c);
+				        session.update(c);
 				        session.getTransaction().commit();
 					}
 					fillIvjJTable(sortBy, sortAscending);

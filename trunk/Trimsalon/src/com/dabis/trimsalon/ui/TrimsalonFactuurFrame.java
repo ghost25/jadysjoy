@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,13 +28,13 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
-import com.dabis.trimsalon.beans.Klant;
+import com.dabis.trimsalon.beans.Factuur;
 import com.dabis.trimsalon.utils.HibernateUtil;
 import com.dabis.trimsalon.utils.QueryTableModel;
 
-public class TrimsalonKlantFrame extends JFrame {
+public class TrimsalonFactuurFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
-	public static Logger log = Logger.getLogger(TrimsalonKlantFrame.class);
+	public static Logger log = Logger.getLogger(TrimsalonFactuurFrame.class);
 	private javax.swing.JButton addButton = null;
 	private JButton clearButton = null;
 	private JButton exitButton = null;
@@ -44,25 +43,11 @@ public class TrimsalonKlantFrame extends JFrame {
 	private JLabel ivjJLabel1 = null;
 	private JLabel ivjJLabel2 = null;
 	private JLabel ivjJLabel3 = null;
-	private JLabel ivjJLabel4 = null;
-	private JLabel ivjJLabel5 = null;
-	private JLabel ivjJLabel6 = null;
-	private JLabel ivjJLabel7 = null;
-	private JLabel ivjJLabel8 = null;
 	private JLabel ivjJLabel11 = null;
-	private JLabel ivjJLabel12 = null;
-	private JLabel ivjJLabel13 = null;
-	private JLabel ivjJLabel14 = null;
 	private JTextField ivjJTextField = null;
 	private JTextField ivjJTextField1 = null;
 	private JTextField ivjJTextField2 = null;
-	private JTextField ivjJTextField3 = null;
-	private JTextField ivjJTextField4 = null;
-	private JTextField ivjJTextField5 = null;
-	private JTextField ivjJTextField6 = null;
-	private JTextField ivjJTextField7 = null;
-	private JTextField ivjJTextField8 = null;
-	private JTextField ivjJTextField13 = null;
+	private JCalendarCombo ivjJCalendarCombo = null;
 	private JScrollPane ivjJScrollPane = null;
 	private JTable ivjJTable = null;
 	private TableColumn ivjTableColumn = null;
@@ -70,11 +55,9 @@ public class TrimsalonKlantFrame extends JFrame {
 	private JTabbedPane ivjJTabbedPane = null;
 	public Boolean sortAscending = new Boolean(true);
 	public String sortBy = "naam";  //  @jve:decl-index=0:
-	private JCheckBox jCheckBox = null;
-	private JCalendarCombo ivjJCalendarCombo = null;
 	private JButton removeButton = null;
 	
-	public TrimsalonKlantFrame() {
+	public TrimsalonFactuurFrame() {
 		super();
 		initialize();
 	}
@@ -83,7 +66,7 @@ public class TrimsalonKlantFrame extends JFrame {
 		setName("mainFrame");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setSize(931, 539);
-		this.setTitle("Klanten");
+		this.setTitle("Factuurregels");
 		this.setContentPane(getJFrameContentPane());
 		fillIvjJTable(sortBy, sortAscending);
 	}
@@ -105,31 +88,15 @@ public class TrimsalonKlantFrame extends JFrame {
 					.getName()); // JVE Generated
 			ivjJFrameContentPane.add(getJLabel2(), null);
 			ivjJFrameContentPane.add(getJLabel3(), null);
-			ivjJFrameContentPane.add(getJLabel5(), null);
-			ivjJFrameContentPane.add(getJLabel4(), null);
-			ivjJFrameContentPane.add(getJLabel7(), null);
-			ivjJFrameContentPane.add(getJLabel6(), null);
-			ivjJFrameContentPane.add(getJLabel8(), null);
-			ivjJFrameContentPane.add(getJLabel12(), null);
-			ivjJFrameContentPane.add(getJLabel13(), null);
-			ivjJFrameContentPane.add(getJLabel14(), null);
 			ivjJFrameContentPane.add(getJTextField1(), null);
 			ivjJFrameContentPane.add(getJTextField2(), null);
-			ivjJFrameContentPane.add(getJTextField3(), null);
-			ivjJFrameContentPane.add(getJTextField4(), null);
-			ivjJFrameContentPane.add(getJTextField5(), null);
-			ivjJFrameContentPane.add(getJTextField6(), null);
-			ivjJFrameContentPane.add(getJTextField7(), null);
-			ivjJFrameContentPane.add(getJTextField8(), null);
-			ivjJFrameContentPane.add(getJTextField13(), null);
 			ivjJFrameContentPane.add(getAddButton(), null);
 			ivjJFrameContentPane.add(getClearButton(), null);
 			ivjJFrameContentPane.add(getExitButton(), null);
 			ivjJFrameContentPane.add(getJLabel9(), null);
 			ivjJFrameContentPane.add(getJTextField(), null);
-			ivjJFrameContentPane.add(getJCheckBox(), null);
+			ivjJFrameContentPane.add(getRemoveButton(), null);;
 			ivjJFrameContentPane.add(getJCalendarCombo(), null);
-			ivjJFrameContentPane.add(getRemoveButton(), null);
 		}
 		return ivjJFrameContentPane;
 	}
@@ -145,22 +112,15 @@ public class TrimsalonKlantFrame extends JFrame {
 			addButton.setBounds(new Rectangle(450, 450, 100, 25));
 			addButton.addActionListener(new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent arg0) {
-					Klant c = new Klant();
-					// If id is empty then its a new klant
+					Factuur c = new Factuur();
+					// If id is empty then its a new factuurregel
 					long id = Long.parseLong(getJTextField().getText());
 					if(id == -1) {
-						// New klant
-						c.setNaam(getJTextField1().getText());
-						c.setAdres(getJTextField2().getText());
-						c.setHuisnummer(getJTextField3().getText());
-						c.setPostcode(getJTextField4().getText());
-						c.setWoonplaats(getJTextField5().getText());
-						c.setTelefoon(getJTextField6().getText());
-						c.setMobiel(getJTextField7().getText());
-						c.setEmail(getJTextField8().getText());
-						c.setOphalen(getJCheckBox().isSelected());
-						c.setOpmerkingen(getJTextField13().getText());
-						c.setInschrijfdatum(getJCalendarCombo().getDate().getTime());
+						// New factuurregel
+						c.setFactuurregels(getJTextField1().getText());
+						c.setFactuurdatum(getJCalendarCombo().getDate().getTime());
+						c.setFactuurnummer(getJTextField2().getText());
+						
 										        
 						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -168,22 +128,14 @@ public class TrimsalonKlantFrame extends JFrame {
 				        session.getTransaction().commit();
 				        getJTextField().setText(c.getId()+"");
 					} else {
-						// Klant is modified
+						// Factuur is modified
 						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
-						c = (Klant) session.createQuery("from Klant where id="+id).list().get(0);
+						c = (Factuur) session.createQuery("from Factuur where id="+id).list().get(0);
 				        session.getTransaction().commit();
-				    	c.setNaam(getJTextField1().getText());
-						c.setAdres(getJTextField2().getText());
-						c.setHuisnummer(getJTextField3().getText());
-						c.setPostcode(getJTextField4().getText());
-						c.setWoonplaats(getJTextField5().getText());
-						c.setTelefoon(getJTextField6().getText());
-						c.setMobiel(getJTextField7().getText());
-						c.setEmail(getJTextField8().getText());
-						c.setOphalen(getJCheckBox().isSelected());
-						c.setOpmerkingen(getJTextField13().getText());
-						c.setInschrijfdatum(getJCalendarCombo().getDate().getTime());
+				    	c.setFactuurregels(getJTextField1().getText());
+				    	c.setFactuurdatum(getJCalendarCombo().getDate().getTime());
+						c.setFactuurnummer(getJTextField2().getText());
 						
 						session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -244,15 +196,6 @@ public class TrimsalonKlantFrame extends JFrame {
 		getJTextField().setText("-1");
 		getJTextField1().setText(null);
 		getJTextField2().setText(null);
-		getJTextField3().setText(null);
-		getJTextField4().setText(null);
-		getJTextField5().setText(null);
-		getJTextField6().setText(null);
-		getJTextField7().setText(null);
-		getJTextField8().setText(null);
-		getJCheckBox().setSelected(false);
-		getJTextField13().setText(null);
-		getJCalendarCombo().setDate(Calendar.getInstance());
 	}
 
 	/**
@@ -273,7 +216,7 @@ public class TrimsalonKlantFrame extends JFrame {
 		if (ivjJLabel1 == null) {
 			ivjJLabel1 = new JLabel();
 			ivjJLabel1.setName("JLabel1");
-			ivjJLabel1.setText("Naam");
+			ivjJLabel1.setText("Factuurregels");
 			ivjJLabel1.setBounds(457, 110, 134, 15);
 		}
 		return ivjJLabel1;
@@ -284,7 +227,7 @@ public class TrimsalonKlantFrame extends JFrame {
 			ivjJLabel2 = new JLabel();
 			ivjJLabel2.setName("JLabel2");
 			ivjJLabel2.setBounds(new Rectangle(457, 140, 134, 15));
-			ivjJLabel2.setText("Adres");
+			ivjJLabel2.setText("Factuurdatum");
 		}
 		return ivjJLabel2;
 	}
@@ -294,87 +237,9 @@ public class TrimsalonKlantFrame extends JFrame {
 			ivjJLabel3 = new JLabel();
 			ivjJLabel3.setName("JLabel3");
 			ivjJLabel3.setBounds(new Rectangle(457, 170, 134, 15));
-			ivjJLabel3.setText("Huisnummer");
+			ivjJLabel3.setText("Factuurnummer");
 		}
 		return ivjJLabel3;
-	}
-	
-	private JLabel getJLabel4() {
-		if (ivjJLabel4 == null) {
-			ivjJLabel4 = new JLabel();
-			ivjJLabel4.setName("JLabel4");
-			ivjJLabel4.setBounds(new Rectangle(457, 200, 134, 15));
-			ivjJLabel4.setText("Postcode");
-		}
-		return ivjJLabel4;
-	}
-	
-	private JLabel getJLabel5() {
-		if (ivjJLabel5 == null) {
-			ivjJLabel5 = new JLabel();
-			ivjJLabel5.setName("JLabel5");
-			ivjJLabel5.setBounds(new Rectangle(457, 230, 134, 15));
-			ivjJLabel5.setText("Woonplaats");
-		}
-		return ivjJLabel5;
-	}
-	
-	private JLabel getJLabel6() {
-		if (ivjJLabel6 == null) {
-			ivjJLabel6 = new JLabel();
-			ivjJLabel6.setName("JLabel6");
-			ivjJLabel6.setBounds(new Rectangle(457, 260, 134, 15));
-			ivjJLabel6.setText("Telefoon");
-		}
-		return ivjJLabel6;
-	}
-	
-	private JLabel getJLabel7() {
-		if (ivjJLabel7 == null) {
-			ivjJLabel7 = new JLabel();
-			ivjJLabel7.setName("JLabel7");
-			ivjJLabel7.setBounds(new Rectangle(457, 290, 134, 15));
-			ivjJLabel7.setText("Mobiel");
-		}
-		return ivjJLabel7;
-	}
-	
-	private JLabel getJLabel8() {
-		if (ivjJLabel8 == null) {
-			ivjJLabel8 = new JLabel();
-			ivjJLabel8.setName("JLabel8");
-			ivjJLabel8.setBounds(new Rectangle(457, 320, 134, 15));
-			ivjJLabel8.setText("Email");
-		}
-		return ivjJLabel8;
-	}
-	
-	private JLabel getJLabel12() {
-		if (ivjJLabel12 == null) {
-			ivjJLabel12 = new JLabel();
-			ivjJLabel12.setName("JLabel12");
-			ivjJLabel12.setBounds(new Rectangle(457, 350, 134, 15));
-			ivjJLabel12.setText("Ophalen");
-		}
-		return ivjJLabel12;
-	}
-	private JLabel getJLabel13() {
-		if (ivjJLabel13 == null) {
-			ivjJLabel13 = new JLabel();
-			ivjJLabel13.setName("JLabel13");
-			ivjJLabel13.setBounds(new Rectangle(457, 380, 134, 15));
-			ivjJLabel13.setText("Opmerkingen");
-		}
-		return ivjJLabel13;
-	}
-	private JLabel getJLabel14() {
-		if (ivjJLabel14 == null) {
-			ivjJLabel14 = new JLabel();
-			ivjJLabel14.setName("JLabel14");
-			ivjJLabel14.setBounds(new Rectangle(457, 410, 134, 15));
-			ivjJLabel14.setText("Inschrijfdatum");
-		}
-		return ivjJLabel14;
 	}
 
 	/**
@@ -385,7 +250,7 @@ public class TrimsalonKlantFrame extends JFrame {
 		if (ivjJLabel11 == null) {
 			ivjJLabel11 = new JLabel();
 			ivjJLabel11.setName("JLabel11");
-			ivjJLabel11.setText("Klant informatie");
+			ivjJLabel11.setText("Factuur informatie");
 			ivjJLabel11.setBounds(457, 39, 442, 34);
 		}
 		return ivjJLabel11;
@@ -415,84 +280,22 @@ public class TrimsalonKlantFrame extends JFrame {
 		return ivjJTextField1;
 	}
 	
-	private JTextField getJTextField2() {
-		if (ivjJTextField2 == null) {
-			ivjJTextField2 = new JTextField();
-			ivjJTextField2.setName("JTextField2");
-			ivjJTextField2.setBounds(new Rectangle(600, 140, 300, 20));
-		}
-		return ivjJTextField2;
-	}
-	
-	private JTextField getJTextField3() {
-		if (ivjJTextField3 == null) {
-			ivjJTextField3 = new JTextField();
-			ivjJTextField3.setName("JTextField3");
-			ivjJTextField3.setBounds(new Rectangle(600, 170, 300, 20));
-		}
-		return ivjJTextField3;
-	}
-	
-	private JTextField getJTextField4() {
-		if (ivjJTextField4 == null) {
-			ivjJTextField4 = new JTextField();
-			ivjJTextField4.setName("JTextField4");
-			ivjJTextField4.setBounds(new Rectangle(600, 200, 300, 20));
-		}
-		return ivjJTextField4;
-	}
-		
-	private JTextField getJTextField5() {
-		if (ivjJTextField5 == null) {
-			ivjJTextField5 = new JTextField();
-			ivjJTextField5.setName("JTextField5");
-			ivjJTextField5.setBounds(new Rectangle(600, 230, 300, 20));
-		}
-		return ivjJTextField5;
-	}
-	
-	private JTextField getJTextField6() {
-		if (ivjJTextField6 == null) {
-			ivjJTextField6 = new JTextField();
-			ivjJTextField6.setName("JTextField6");
-			ivjJTextField6.setBounds(new Rectangle(600, 260, 300, 20));
-		}
-		return ivjJTextField6;
-	}
-	
-	private JTextField getJTextField7() {
-		if (ivjJTextField7 == null) {
-			ivjJTextField7 = new JTextField();
-			ivjJTextField7.setName("JTextField7");
-			ivjJTextField7.setBounds(new Rectangle(600, 290, 300, 20));
-		}
-		return ivjJTextField7;
-	}	
-	
-	private JTextField getJTextField8() {
-		if (ivjJTextField8 == null) {
-			ivjJTextField8 = new JTextField();
-			ivjJTextField8.setName("JTextField8");
-			ivjJTextField8.setBounds(new Rectangle(600, 320, 300, 20));
-		}
-		return ivjJTextField8;
-	}
-	private JTextField getJTextField13() {
-		if (ivjJTextField13 == null) {
-			ivjJTextField13 = new JTextField();
-			ivjJTextField13.setName("JTextField13");
-			ivjJTextField13.setBounds(new Rectangle(600, 380, 300, 20));
-		}
-		return ivjJTextField13;
-	}
-	
 	private JCalendarCombo getJCalendarCombo() {
 		if (ivjJCalendarCombo == null) {
 			ivjJCalendarCombo = new JCalendarCombo();
 			ivjJCalendarCombo.setName("JCalendarCombo");
-			ivjJCalendarCombo.setBounds(new Rectangle(600, 407, 300, 20));
+			ivjJCalendarCombo.setBounds(new Rectangle(600, 140, 300, 20));
 		}
 		return ivjJCalendarCombo;
+	}
+	
+	private JTextField getJTextField2() {
+		if (ivjJTextField2 == null) {
+			ivjJTextField2 = new JTextField();
+			ivjJTextField2.setName("JTextField2");
+			ivjJTextField2.setBounds(new Rectangle(600, 170, 300, 20));
+		}
+		return ivjJTextField2;
 	}
 	
 	private class TableSelectionListener implements ListSelectionListener {
@@ -509,21 +312,13 @@ public class TrimsalonKlantFrame extends JFrame {
 	            String id = (String) ((QueryTableModel)getIvjJTable().getModel()).getRow(selectedRow)[0];
 				Session session = HibernateUtil.getCurrentSession();
 		        session.beginTransaction();
-				Klant c = (Klant) session.createQuery("from Klant where id="+id).list().get(0);
+				Factuur c = (Factuur) session.createQuery("from Factuur where id="+id).list().get(0);
 		        session.getTransaction().commit();
 		        getJTextField().setText(c.getId()+"");
-		        getJTextField1().setText(c.getNaam());
-		        getJTextField2().setText(c.getAdres());
-		        getJTextField3().setText(c.getHuisnummer());
-		        getJTextField4().setText(c.getPostcode()+"");
-		        getJTextField5().setText(c.getWoonplaats()+"");
-		        getJTextField6().setText(c.getTelefoon()+"");
-		        getJTextField7().setText(c.getMobiel()+"");
-		        getJTextField8().setText(c.getEmail()+"");
-		        getJCheckBox().setSelected(c.isOphalen());
-		        getJTextField13().setText(c.getOpmerkingen()+"");
+		        getJTextField1().setText(c.getFactuurregels());
+		        getJTextField2().setText(c.getFactuurnummer()+"");
 		        Calendar dt = Calendar.getInstance();
-		        dt.setTime(c.getInschrijfdatum());
+		        dt.setTime(c.getFactuurdatum());
 		        getJCalendarCombo().setDate(dt);
 	        }
 	    }
@@ -583,13 +378,13 @@ public class TrimsalonKlantFrame extends JFrame {
 	private void fillIvjJTable(String sortBy, Boolean ascending) {
 		Session session = HibernateUtil.getCurrentSession();
         session.beginTransaction();
-        Criteria c = session.createCriteria(Klant.class);
+        Criteria c = session.createCriteria(Factuur.class);
         if(ascending) c.addOrder(Order.asc(sortBy));
         else c.addOrder(Order.desc(sortBy));
-		List<Klant> list = c.list();
-		log.debug("List Klant size="+list.size());
+		List<Factuur> list = c.list();
+		log.debug("List Factuur size="+list.size());
         session.getTransaction().commit();
-        String[] cols = {"!Id","Naam","Woonplaats","Telefoon","Opmerkingen","Inschrijfdatum"};
+        String[] cols = {"!Id","Factuurregels","Factuurdatum","Factuurdatum"};
         QueryTableModel m = new QueryTableModel(cols, list);
         getIvjJTable().setModel(m);
         
@@ -636,23 +431,10 @@ public class TrimsalonKlantFrame extends JFrame {
 	private JTabbedPane getIvjJTabbedPane() {
 		if (ivjJTabbedPane == null) {
 			ivjJTabbedPane = new JTabbedPane(); // Explicit Instance
-			ivjJTabbedPane.addTab("Klanten", null, getIvjJScrollPane(), null); // JVE Generated
+			ivjJTabbedPane.addTab("Factuur", null, getIvjJScrollPane(), null); // JVE Generated
 			ivjJTabbedPane.setBounds(7, 28, 428, 476); // JVE Generated
 		}
 		return ivjJTabbedPane;
-	}
-
-	/**
-	 * This method initializes jCheckBox	
-	 * 	
-	 * @return javax.swing.JCheckBox	
-	 */
-	private JCheckBox getJCheckBox() {
-		if (jCheckBox == null) {
-			jCheckBox = new JCheckBox();
-			jCheckBox.setBounds(new Rectangle(598, 347, 21, 21));
-		}
-		return jCheckBox;
 	}
 
 	/**
@@ -672,7 +454,7 @@ public class TrimsalonKlantFrame extends JFrame {
 					if(id != -1) {
 						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
-						Klant c = (Klant) session.createQuery("from Klant where id="+id).list().get(0);
+						Factuur c = (Factuur) session.createQuery("from Factuur where id="+id).list().get(0);
 				        session.getTransaction().commit();
 						session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -687,4 +469,5 @@ public class TrimsalonKlantFrame extends JFrame {
 		return removeButton;
 	}
 
-}  //  @jve:decl-index=0:visual-constraint="-15,6"
+}  //  @jve:decl-index=0:visual-constraint="135,50"
+

@@ -56,7 +56,7 @@ public class TrimsalonOpmerkingenFrame extends JFrame {
 	private TableColumn ivjTableColumn2 = null;
 	private JTabbedPane ivjJTabbedPane = null;
 	public Boolean sortAscending = new Boolean(true);
-	public String sortBy = "naam";  //  @jve:decl-index=0:
+	public String sortBy = "!Id";  //  @jve:decl-index=0:
 	private JButton removeButton = null;
 	
 	public TrimsalonOpmerkingenFrame() {
@@ -475,7 +475,7 @@ public class TrimsalonOpmerkingenFrame extends JFrame {
 			removeButton.setBounds(new Rectangle(555, 450, 105, 26));
 			removeButton.addActionListener(new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent arg0) {
-					// If id is -1 then its a new klant
+					// If id is -1 then its a new opmerking
 					long id = Long.parseLong(getJTextField().getText());
 					if(id != -1) {
 						Session session = HibernateUtil.getCurrentSession();

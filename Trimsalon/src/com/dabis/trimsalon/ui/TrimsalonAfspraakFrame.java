@@ -3,9 +3,11 @@ import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,17 +24,18 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.apache.log4j.Logger;
+import org.gui.JCalendarCombo;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
-import com.dabis.trimsalon.beans.Behandeling;
+import com.dabis.trimsalon.beans.Afspraak;
 import com.dabis.trimsalon.utils.HibernateUtil;
 import com.dabis.trimsalon.utils.QueryTableModel;
 
-public class TrimsalonBehandelingFrame extends JFrame {
+public class TrimsalonAfspraakFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
-	public static Logger log = Logger.getLogger(TrimsalonBehandelingFrame.class);
+	public static Logger log = Logger.getLogger(TrimsalonAfspraakFrame.class);
 	private javax.swing.JButton addButton = null;
 	private JButton clearButton = null;
 	private JButton exitButton = null;
@@ -41,21 +44,33 @@ public class TrimsalonBehandelingFrame extends JFrame {
 	private JLabel ivjJLabel1 = null;
 	private JLabel ivjJLabel2 = null;
 	private JLabel ivjJLabel3 = null;
+	private JLabel ivjJLabel4 = null;
+	private JLabel ivjJLabel5 = null;
+	private JLabel ivjJLabel6 = null;
 	private JLabel ivjJLabel11 = null;
+	private JLabel ivjJLabel12 = null;
+	private JLabel ivjJLabel13 = null;
+	private JLabel ivjJLabel14 = null;
 	private JTextField ivjJTextField = null;
 	private JTextField ivjJTextField1 = null;
 	private JTextField ivjJTextField2 = null;
 	private JTextField ivjJTextField3 = null;
+	private JTextField ivjJTextField4 = null;
+	private JTextField ivjJTextField5 = null;
+	private JTextField ivjJTextField6 = null;
 	private JScrollPane ivjJScrollPane = null;
 	private JTable ivjJTable = null;
 	private TableColumn ivjTableColumn = null;
 	private TableColumn ivjTableColumn2 = null;
 	private JTabbedPane ivjJTabbedPane = null;
 	public Boolean sortAscending = new Boolean(true);
-	public String sortBy = "omschrijving";  //  @jve:decl-index=0:
+	public String sortBy = "!id";  //  @jve:decl-index=0:
+	private JCheckBox jCheckBox = null;
+	private JCheckBox jCheckBox2 = null;
+	private JCalendarCombo ivjJCalendarCombo = null;
 	private JButton removeButton = null;
 	
-	public TrimsalonBehandelingFrame() {
+	public TrimsalonAfspraakFrame() {
 		super();
 		initialize();
 	}
@@ -64,7 +79,7 @@ public class TrimsalonBehandelingFrame extends JFrame {
 		setName("mainFrame");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setSize(931, 539);
-		this.setTitle("Behandelingen");
+		this.setTitle("Afspraak");
 		this.setContentPane(getJFrameContentPane());
 		fillIvjJTable(sortBy, sortAscending);
 	}
@@ -86,15 +101,27 @@ public class TrimsalonBehandelingFrame extends JFrame {
 					.getName()); // JVE Generated
 			ivjJFrameContentPane.add(getJLabel2(), null);
 			ivjJFrameContentPane.add(getJLabel3(), null);
+			ivjJFrameContentPane.add(getJLabel5(), null);
+			ivjJFrameContentPane.add(getJLabel4(), null);
+			ivjJFrameContentPane.add(getJLabel6(), null);
+			ivjJFrameContentPane.add(getJLabel12(), null);
+			ivjJFrameContentPane.add(getJLabel13(), null);
+			ivjJFrameContentPane.add(getJLabel14(), null);
 			ivjJFrameContentPane.add(getJTextField1(), null);
 			ivjJFrameContentPane.add(getJTextField2(), null);
 			ivjJFrameContentPane.add(getJTextField3(), null);
+			ivjJFrameContentPane.add(getJTextField4(), null);
+			ivjJFrameContentPane.add(getJTextField5(), null);
+			ivjJFrameContentPane.add(getJTextField6(), null);
 			ivjJFrameContentPane.add(getAddButton(), null);
 			ivjJFrameContentPane.add(getClearButton(), null);
 			ivjJFrameContentPane.add(getExitButton(), null);
 			ivjJFrameContentPane.add(getJLabel9(), null);
 			ivjJFrameContentPane.add(getJTextField(), null);
+			ivjJFrameContentPane.add(getJCheckBox(), null);
+			ivjJFrameContentPane.add(getJCalendarCombo(), null);
 			ivjJFrameContentPane.add(getRemoveButton(), null);
+			ivjJFrameContentPane.add(getJCheckBox2(), null);
 		}
 		return ivjJFrameContentPane;
 	}
@@ -110,14 +137,20 @@ public class TrimsalonBehandelingFrame extends JFrame {
 			addButton.setBounds(new Rectangle(450, 450, 100, 25));
 			addButton.addActionListener(new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent arg0) {
-					Behandeling c = new Behandeling();
-					// If id is empty then its a new behandeling
+					Afspraak c = new Afspraak();
+					// If id is empty then its a new afspraak
 					long id = Long.parseLong(getJTextField().getText());
 					if(id == -1) {
-						// New behandeling
-						c.setOmschrijving(getJTextField1().getText());
-						c.setPrijsExbtw(Double.valueOf(getJTextField2().getText()));
-						c.setBtw(Double.valueOf(getJTextField3().getText()));
+						// New afspraak
+						c.setBegintijd(getJTextField1().getText());
+						c.setEindtijd(getJTextField2().getText());
+						c.setBehandeling(getJTextField3().getText());
+						c.setKlant(getJTextField4().getText());
+						c.setHond(getJTextField5().getText());
+						c.setOpmerking(getJTextField6().getText());
+						c.setOphalen(getJTextField7().getText());
+						c.setAfgehandeld(getJTextField8().getText());
+						c.setInschrijfdatum(getJCalendarCombo().getDate().getTime());
 										        
 						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -125,14 +158,20 @@ public class TrimsalonBehandelingFrame extends JFrame {
 				        session.getTransaction().commit();
 				        getJTextField().setText(c.getId()+"");
 					} else {
-						// Behandeling is modified
+						// Afspraak is modified
 						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
-						c = (Behandeling) session.createQuery("from Behandeling where id="+id).list().get(0);
+						c = (Afspraak) session.createQuery("from Afspraak where id="+id).list().get(0);
 				        session.getTransaction().commit();
-				    	c.setOmschrijving(getJTextField1().getText());
-						c.setPrijsExbtw(Double.valueOf(getJTextField2().getText()));
-						c.setBtw(Double.valueOf(getJTextField3().getText()));
+				        c.setBegintijd(getJTextField1().getText());
+						c.setEindtijd(getJTextField2().getText());
+						c.setBehandeling(getJTextField3().getText());
+						c.setKlant(getJTextField4().getText());
+						c.setHond(getJTextField5().getText());
+						c.setOpmerking(getJTextField6().getText());
+						c.setOphalen(getJTextField7().getText());
+						c.setAfgehandeld(getJTextField8().getText());
+						c.setInschrijfdatum(getJCalendarCombo().getDate().getTime());
 						
 						session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -194,6 +233,12 @@ public class TrimsalonBehandelingFrame extends JFrame {
 		getJTextField1().setText(null);
 		getJTextField2().setText(null);
 		getJTextField3().setText(null);
+		getJTextField4().setText(null);
+		getJTextField5().setText(null);
+		getJTextField6().setText(null);
+		getJCheckBox().setSelected(false);
+		getJCheckBox2().setSelected(false);
+		getJCalendarCombo().setDate(Calendar.getInstance());
 	}
 
 	/**
@@ -214,7 +259,7 @@ public class TrimsalonBehandelingFrame extends JFrame {
 		if (ivjJLabel1 == null) {
 			ivjJLabel1 = new JLabel();
 			ivjJLabel1.setName("JLabel1");
-			ivjJLabel1.setText("Omschrijving");
+			ivjJLabel1.setText("Begintijd");
 			ivjJLabel1.setBounds(457, 110, 134, 15);
 		}
 		return ivjJLabel1;
@@ -225,7 +270,7 @@ public class TrimsalonBehandelingFrame extends JFrame {
 			ivjJLabel2 = new JLabel();
 			ivjJLabel2.setName("JLabel2");
 			ivjJLabel2.setBounds(new Rectangle(457, 140, 134, 15));
-			ivjJLabel2.setText("Prijs ex BTW");
+			ivjJLabel2.setText("Eindtijd");
 		}
 		return ivjJLabel2;
 	}
@@ -235,11 +280,69 @@ public class TrimsalonBehandelingFrame extends JFrame {
 			ivjJLabel3 = new JLabel();
 			ivjJLabel3.setName("JLabel3");
 			ivjJLabel3.setBounds(new Rectangle(457, 170, 134, 15));
-			ivjJLabel3.setText("Btw");
+			ivjJLabel3.setText("Behandeling");
 		}
 		return ivjJLabel3;
 	}
 	
+	private JLabel getJLabel4() {
+		if (ivjJLabel4 == null) {
+			ivjJLabel4 = new JLabel();
+			ivjJLabel4.setName("JLabel4");
+			ivjJLabel4.setBounds(new Rectangle(457, 200, 134, 15));
+			ivjJLabel4.setText("Klant");
+		}
+		return ivjJLabel4;
+	}
+	
+	private JLabel getJLabel5() {
+		if (ivjJLabel5 == null) {
+			ivjJLabel5 = new JLabel();
+			ivjJLabel5.setName("JLabel5");
+			ivjJLabel5.setBounds(new Rectangle(457, 230, 134, 15));
+			ivjJLabel5.setText("Hond");
+		}
+		return ivjJLabel5;
+	}
+	
+	private JLabel getJLabel6() {
+		if (ivjJLabel6 == null) {
+			ivjJLabel6 = new JLabel();
+			ivjJLabel6.setName("JLabel6");
+			ivjJLabel6.setBounds(new Rectangle(457, 260, 134, 15));
+			ivjJLabel6.setText("Opmerking");
+		}
+		return ivjJLabel6;
+	}
+	
+	private JLabel getJLabel12() {
+		if (ivjJLabel12 == null) {
+			ivjJLabel12 = new JLabel();
+			ivjJLabel12.setName("JLabel12");
+			ivjJLabel12.setBounds(new Rectangle(457, 290, 134, 15));
+			ivjJLabel12.setText("Ophalen");
+		}
+		return ivjJLabel12;
+	}
+	private JLabel getJLabel13() {
+		if (ivjJLabel13 == null) {
+			ivjJLabel13 = new JLabel();
+			ivjJLabel13.setName("JLabel13");
+			ivjJLabel13.setBounds(new Rectangle(457, 320, 134, 15));
+			ivjJLabel13.setText("Afgehandeld");
+		}
+		return ivjJLabel13;
+	}
+	private JLabel getJLabel14() {
+		if (ivjJLabel14 == null) {
+			ivjJLabel14 = new JLabel();
+			ivjJLabel14.setName("JLabel14");
+			ivjJLabel14.setBounds(new Rectangle(457, 410, 134, 15));
+			ivjJLabel14.setText("Inschrijfdatum");
+		}
+		return ivjJLabel14;
+	}
+
 	/**
 	 * Return the JLabel11 property value.
 	 * @return JLabel
@@ -248,7 +351,7 @@ public class TrimsalonBehandelingFrame extends JFrame {
 		if (ivjJLabel11 == null) {
 			ivjJLabel11 = new JLabel();
 			ivjJLabel11.setName("JLabel11");
-			ivjJLabel11.setText("Behandeling informatie");
+			ivjJLabel11.setText("Klant informatie");
 			ivjJLabel11.setBounds(457, 39, 442, 34);
 		}
 		return ivjJLabel11;
@@ -296,6 +399,42 @@ public class TrimsalonBehandelingFrame extends JFrame {
 		return ivjJTextField3;
 	}
 	
+	private JTextField getJTextField4() {
+		if (ivjJTextField4 == null) {
+			ivjJTextField4 = new JTextField();
+			ivjJTextField4.setName("JTextField4");
+			ivjJTextField4.setBounds(new Rectangle(600, 200, 300, 20));
+		}
+		return ivjJTextField4;
+	}
+		
+	private JTextField getJTextField5() {
+		if (ivjJTextField5 == null) {
+			ivjJTextField5 = new JTextField();
+			ivjJTextField5.setName("JTextField5");
+			ivjJTextField5.setBounds(new Rectangle(600, 230, 300, 20));
+		}
+		return ivjJTextField5;
+	}
+	
+	private JTextField getJTextField6() {
+		if (ivjJTextField6 == null) {
+			ivjJTextField6 = new JTextField();
+			ivjJTextField6.setName("JTextField6");
+			ivjJTextField6.setBounds(new Rectangle(600, 260, 300, 20));
+		}
+		return ivjJTextField6;
+	}	
+	
+	private JCalendarCombo getJCalendarCombo() {
+		if (ivjJCalendarCombo == null) {
+			ivjJCalendarCombo = new JCalendarCombo();
+			ivjJCalendarCombo.setName("JCalendarCombo");
+			ivjJCalendarCombo.setBounds(new Rectangle(600, 407, 300, 20));
+		}
+		return ivjJCalendarCombo;
+	}
+	
 	private class TableSelectionListener implements ListSelectionListener {
 	    public void valueChanged(ListSelectionEvent e) {
 	        //Ignore extra messages.
@@ -310,12 +449,20 @@ public class TrimsalonBehandelingFrame extends JFrame {
 	            String id = (String) ((QueryTableModel)getIvjJTable().getModel()).getRow(selectedRow)[0];
 				Session session = HibernateUtil.getCurrentSession();
 		        session.beginTransaction();
-				Behandeling c = (Behandeling) session.createQuery("from Behandeling where id="+id).list().get(0);
+		        Afspraak c = (Afspraak) session.createQuery("from Afspraak where id="+id).list().get(0);
 		        session.getTransaction().commit();
 		        getJTextField().setText(c.getId()+"");
-		        getJTextField1().setText(c.getOmschrijving());
-		        getJTextField2().setText(c.getPrijsExbtw()+"");
-		        getJTextField3().setText(c.getBtw()+"");
+		        getJTextField1().setText(c.getBegintijd());
+		        getJTextField2().setText(c.getEindtijd());
+		        getJTextField3().setText(c.getBehandeling());
+		        getJTextField4().setText(c.getKlant()+"");
+		        getJTextField5().setText(c.getHond()+"");
+		        getJTextField6().setText(c.getOpmerking()+"");
+		        getJTextField7().setText(c.getOphalen()+"");
+		        getJTextField8().setText(c.getAfgehandeld()+"");
+		        Calendar dt = Calendar.getInstance();
+		        dt.setTime(c.getInschrijfdatum());
+		        getJCalendarCombo().setDate(dt);
 	        }
 	    }
 	}
@@ -374,13 +521,13 @@ public class TrimsalonBehandelingFrame extends JFrame {
 	private void fillIvjJTable(String sortBy, Boolean ascending) {
 		Session session = HibernateUtil.getCurrentSession();
         session.beginTransaction();
-        Criteria c = session.createCriteria(Behandeling.class);
+        Criteria c = session.createCriteria(Afspraak.class);
         if(ascending) c.addOrder(Order.asc(sortBy));
         else c.addOrder(Order.desc(sortBy));
-		List<Behandeling> list = c.list();
-		log.debug("List Behandeling size="+list.size());
+		List<Afspraak> list = c.list();
+		log.debug("List Klant size="+list.size());
         session.getTransaction().commit();
-        String[] cols = {"!Id","Omschrijving","PrijsExbtw","Btw"};
+        String[] cols = {"!Id","Naam","Woonplaats","Telefoon","Opmerkingen","Inschrijfdatum"};
         QueryTableModel m = new QueryTableModel(cols, list);
         getIvjJTable().setModel(m);
         
@@ -427,10 +574,31 @@ public class TrimsalonBehandelingFrame extends JFrame {
 	private JTabbedPane getIvjJTabbedPane() {
 		if (ivjJTabbedPane == null) {
 			ivjJTabbedPane = new JTabbedPane(); // Explicit Instance
-			ivjJTabbedPane.addTab("Behandelingen", null, getIvjJScrollPane(), null); // JVE Generated
+			ivjJTabbedPane.addTab("Afspraken", null, getIvjJScrollPane(), null); // JVE Generated
 			ivjJTabbedPane.setBounds(7, 28, 428, 476); // JVE Generated
 		}
 		return ivjJTabbedPane;
+	}
+
+	/**
+	 * This method initializes jCheckBox	
+	 * 	
+	 * @return javax.swing.JCheckBox	
+	 */
+	private JCheckBox getJCheckBox() {
+		if (jCheckBox == null) {
+			jCheckBox = new JCheckBox();
+			jCheckBox.setBounds(new Rectangle(598, 287, 21, 21));
+		}
+		return jCheckBox;
+	}
+	
+	private JCheckBox getJCheckBox2() {
+		if (jCheckBox2 == null) {
+			jCheckBox2 = new JCheckBox();
+			jCheckBox2.setBounds(new Rectangle(598, 317, 21, 21));
+		}
+		return jCheckBox2;
 	}
 
 	/**
@@ -445,12 +613,12 @@ public class TrimsalonBehandelingFrame extends JFrame {
 			removeButton.setBounds(new Rectangle(555, 450, 105, 26));
 			removeButton.addActionListener(new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent arg0) {
-					// If id is -1 then its a new behandeling
+					// If id is -1 then its a new afspraak
 					long id = Long.parseLong(getJTextField().getText());
 					if(id != -1) {
 						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
-						Behandeling c = (Behandeling) session.createQuery("from Behandeling where id="+id).list().get(0);
+				        Afspraak c = (Afspraak) session.createQuery("from Afspraak where id="+id).list().get(0);
 				        session.getTransaction().commit();
 						session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();

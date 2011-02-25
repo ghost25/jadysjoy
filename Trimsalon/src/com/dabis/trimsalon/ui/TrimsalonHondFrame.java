@@ -2,6 +2,8 @@ package com.dabis.trimsalon.ui;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.*;
@@ -10,6 +12,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 
 import java.awt.Rectangle;
+
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -17,11 +21,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 
 import org.apache.log4j.Logger;
+import org.gui.JCalendarCombo;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
 import com.dabis.trimsalon.beans.Hond;
+import com.dabis.trimsalon.beans.Klant;
+import com.dabis.trimsalon.beans.Opmerking;
 import com.dabis.trimsalon.utils.HibernateUtil;
 import com.dabis.trimsalon.utils.QueryTableModel;
 
@@ -48,14 +55,15 @@ public class TrimsalonHondFrame extends JFrame {
 	private JLabel ivjJLabel7 = null;
 	private JLabel ivjJLabel8 = null;
 	private JLabel ivjJLabel11 = null;
+	private JLabel ivjJLabel10 = null;
+	private JLabel ivjJLabel12 = null;
 	private JTextField ivjJTextField = null;
 	private JTextField ivjJTextField1 = null;
 	private JTextField ivjJTextField2 = null;
-	private JTextField ivjJTextField3 = null;
 	private JTextField ivjJTextField4 = null;
-	private JTextField ivjJTextField5 = null;
-	private JTextField ivjJTextField6 = null;
 	private JTextField ivjJTextField7 = null;
+	private JTextField ivjJTextField8 = null;
+	private JTextField ivjJTextField9 = null;
 	private JScrollPane ivjJScrollPane = null;
 	private JTable ivjJTable = null;
 	private TableColumn ivjTableColumn = null;
@@ -64,6 +72,9 @@ public class TrimsalonHondFrame extends JFrame {
 	private JScrollPane ivjJScrollPane2 = null;
 	private JList ivjJList = null;
 	private JComboBox jComboBox = null;
+	private JCheckBox jCheckBox = null;
+	private JCheckBox jCheckBox2 = null;
+	private JCalendarCombo ivjJCalendarCombo = null;
 	public Boolean sortAscending = new Boolean(true);
 	public String sortBy = "naam";  //  @jve:decl-index=0:
 	public TrimsalonHondFrame() {
@@ -104,10 +115,7 @@ public class TrimsalonHondFrame extends JFrame {
 			ivjJFrameContentPane.add(getJLabel8(), null);
 			ivjJFrameContentPane.add(getJTextField1(), null);
 			ivjJFrameContentPane.add(getJTextField2(), null);
-			ivjJFrameContentPane.add(getJTextField3(), null);
 			ivjJFrameContentPane.add(getJTextField4(), null);
-			ivjJFrameContentPane.add(getJTextField5(), null);
-			ivjJFrameContentPane.add(getJTextField6(), null);
 			ivjJFrameContentPane.add(getJTextField7(), null);
 			ivjJFrameContentPane.add(getAddButton(), null);
 			ivjJFrameContentPane.add(getClearButton(), null);
@@ -116,6 +124,14 @@ public class TrimsalonHondFrame extends JFrame {
 			ivjJFrameContentPane.add(getJLabel9(), null);
 			ivjJFrameContentPane.add(getJTextField(), null);
 			ivjJFrameContentPane.add(getJComboBox1(), null);
+			ivjJFrameContentPane.add(getJCheckBox2(), null);
+			ivjJFrameContentPane.add(getJCheckBox(), null);
+			ivjJFrameContentPane.add(getJCalendarCombo(), null);
+			ivjJFrameContentPane.add(getJLabel12(), null);
+			ivjJFrameContentPane.add(getJLabel10(), null);
+			ivjJFrameContentPane.add(getJTextField8(), null);
+			ivjJFrameContentPane.add(getJTextField9(), null);
+			ivjJFrameContentPane.add(getJCheckBox(), null);
 		}
 		return ivjJFrameContentPane;
 	}
@@ -137,12 +153,21 @@ public class TrimsalonHondFrame extends JFrame {
 						// New hond
 						c.setNaam(getJTextField1().getText());
 						c.setRas(getJTextField2().getText());
-						c.setReu(getJTextField3().getText());
+						c.setReu(getJCheckBox().isSelected());
 						c.setKleur(getJTextField4().getText());
-						c.setGecastreerd(getJTextField5().getText());
-						c.setGeboortedatum(getJTextField6().getText());
-						c.setOpmerking(getJTextField7().getText());
-						klant.setKlant(getJTextField8().getText());
+						c.setGecastreerd(getJCheckBox2().isSelected());
+						c.setGeboortedatum(getJCalendarCombo().getDate().getTime());
+
+							Opmerking opm1 = new Opmerking();
+							opm1.setDatum(new Date());
+							opm1.setAdvies(getJTextField7().getText());
+							opm1.setGedrag(getJTextField8().getText());
+							opm1.setMedischeKenmerken(getJTextField9().getText());
+							c.addOpmerking(opm1);
+							
+							Klant kl1 = new Klant();	
+							kl1.setKlant(getJComboBox1().getSelectedItem());
+							c.setKlant(kl1);
 										        
 						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -156,15 +181,19 @@ public class TrimsalonHondFrame extends JFrame {
 						c = (Hond) session.createQuery("from Hond where id="+id).list().get(0);
 				        session.getTransaction().commit();
 
-				        c.setNaam(getJTextField1().getText());
-						c.setRas(getJTextField2().getText());
-						c.setReu(getJTextField3().getText());
-						c.setKleur(getJTextField4().getText());
-						c.setGecastreerd(getJTextField5().getText());
-						c.setGeboortedatum(getJTextField6().getText());
-						c.setOpmerkingen(getJTextField7().getText());
-						c.setKlant(getJTextField8().getText());
-												
+				        getJTextField1().setText(c.getNaam());
+				        getJTextField2().setText(c.getRas());
+				        getJCheckBox().setSelected(c.isReu());
+				        getJTextField4().setText(c.getKleur());
+				        getJCheckBox2().setSelected(c.isGecastreerd());
+				        getJCalendarCombo().setDate(Calendar.getInstance());
+				        Opmerking opm1 = new Opmerking();
+				        getJTextField7().setText(opm1.getAdvies());
+				        getJTextField8().setText(opm1.getGedrag());
+				        getJTextField9().setText(opm1.getMedischeKenmerken());
+				        Klant kl1 = new Klant();
+				        getJComboBox1().setSelectedItem(kl1.getNaam());
+				        							
 				        session.beginTransaction();
 				        session.save(c);
 				        session.getTransaction().commit();
@@ -246,10 +275,7 @@ public class TrimsalonHondFrame extends JFrame {
 	private void clearInvoer() {
 		getJTextField1().setText(null);
 		getJTextField2().setText(null);
-		getJTextField3().setText(null);
 		getJTextField4().setText(null);
-		getJTextField5().setText(null);
-		getJTextField6().setText(null);
 		getJTextField7().setText(null);
 	}
 
@@ -332,16 +358,36 @@ public class TrimsalonHondFrame extends JFrame {
 			ivjJLabel7 = new JLabel();
 			ivjJLabel7.setName("JLabel7");
 			ivjJLabel7.setBounds(new Rectangle(457, 290, 134, 15));
-			ivjJLabel7.setText("Opmerking");
+			ivjJLabel7.setText("Advies");
 		}
 		return ivjJLabel7;
+	}
+	
+	private JLabel getJLabel12() {
+		if (ivjJLabel12 == null) {
+			ivjJLabel12 = new JLabel();
+			ivjJLabel12.setName("JLabel12");
+			ivjJLabel12.setBounds(new Rectangle(457, 320, 134, 15));
+			ivjJLabel12.setText("Gedrag");
+		}
+		return ivjJLabel12;
+	}
+	
+	private JLabel getJLabel10() {
+		if (ivjJLabel10 == null) {
+			ivjJLabel10 = new JLabel();
+			ivjJLabel10.setName("JLabel10");
+			ivjJLabel10.setBounds(new Rectangle(457, 350, 134, 15));
+			ivjJLabel10.setText("Medische kenmerken");
+		}
+		return ivjJLabel10;
 	}
 	
 	private JLabel getJLabel8() {
 		if (ivjJLabel8 == null) {
 			ivjJLabel8 = new JLabel();
 			ivjJLabel8.setName("JLabel8");
-			ivjJLabel8.setBounds(new Rectangle(457, 320, 134, 15));
+			ivjJLabel8.setBounds(new Rectangle(457, 380, 134, 15));
 			ivjJLabel8.setText("Klant");
 		}
 		return ivjJLabel8;
@@ -369,7 +415,9 @@ public class TrimsalonHondFrame extends JFrame {
 		if (ivjJTextField == null) {
 			ivjJTextField = new JTextField();
 			ivjJTextField.setName("JTextField");
+			ivjJTextField.setEnabled(false);
 			ivjJTextField.setBounds(new Rectangle(600, 80, 300, 20));
+			ivjJTextField.setText("-1");
 		}
 		return ivjJTextField;
 	}
@@ -392,13 +440,12 @@ public class TrimsalonHondFrame extends JFrame {
 		return ivjJTextField2;
 	}
 	
-	private JTextField getJTextField3() {
-		if (ivjJTextField3 == null) {
-			ivjJTextField3 = new JTextField();
-			ivjJTextField3.setName("JTextField3");
-			ivjJTextField3.setBounds(new Rectangle(600, 170, 300, 20));
+	private JCheckBox getJCheckBox() {
+		if (jCheckBox == null) {
+			jCheckBox = new JCheckBox();
+			jCheckBox.setBounds(new Rectangle(598, 168, 21, 21));
 		}
-		return ivjJTextField3;
+		return jCheckBox;
 	}
 	
 	private JTextField getJTextField4() {
@@ -410,22 +457,21 @@ public class TrimsalonHondFrame extends JFrame {
 		return ivjJTextField4;
 	}
 		
-	private JTextField getJTextField5() {
-		if (ivjJTextField5 == null) {
-			ivjJTextField5 = new JTextField();
-			ivjJTextField5.setName("JTextField5");
-			ivjJTextField5.setBounds(new Rectangle(600, 230, 300, 20));
+	private JCheckBox getJCheckBox2() {
+		if (jCheckBox2 == null) {
+			jCheckBox2 = new JCheckBox();
+			jCheckBox2.setBounds(new Rectangle(598, 228, 21, 21));
 		}
-		return ivjJTextField5;
+		return jCheckBox2;
 	}
 	
-	private JTextField getJTextField6() {
-		if (ivjJTextField6 == null) {
-			ivjJTextField6 = new JTextField();
-			ivjJTextField6.setName("JTextField6");
-			ivjJTextField6.setBounds(new Rectangle(600, 260, 300, 20));
+	private JCalendarCombo getJCalendarCombo() {
+		if (ivjJCalendarCombo == null) {
+			ivjJCalendarCombo = new JCalendarCombo();
+			ivjJCalendarCombo.setName("JCalendarCombo");
+			ivjJCalendarCombo.setBounds(new Rectangle(600, 260, 300, 20));
 		}
-		return ivjJTextField6;
+		return ivjJCalendarCombo;
 	}
 	
 	private JTextField getJTextField7() {
@@ -436,6 +482,24 @@ public class TrimsalonHondFrame extends JFrame {
 		}
 		return ivjJTextField7;
 	}
+	
+	private JTextField getJTextField8() {
+		if (ivjJTextField8 == null) {
+			ivjJTextField8 = new JTextField();
+			ivjJTextField8.setName("JTextField8");
+			ivjJTextField8.setBounds(new Rectangle(600, 320, 300, 20));
+		}
+		return ivjJTextField8;
+	}
+	
+	private JTextField getJTextField9() {
+		if (ivjJTextField9 == null) {
+			ivjJTextField9 = new JTextField();
+			ivjJTextField9.setName("JTextField9");
+			ivjJTextField9.setBounds(new Rectangle(600, 350, 300, 20));
+		}
+		return ivjJTextField9;
+	}
 		
 	/**
 	 * This method initializes jComboBox	
@@ -445,7 +509,7 @@ public class TrimsalonHondFrame extends JFrame {
 	private JComboBox getJComboBox1() {
 		if (jComboBox == null) {
 			jComboBox = new JComboBox();
-			jComboBox.setBounds(new Rectangle(600, 320, 300, 20));
+			jComboBox.setBounds(new Rectangle(600, 380, 300, 20));
 		}
 		return jComboBox;
 	}
@@ -463,19 +527,23 @@ public class TrimsalonHondFrame extends JFrame {
 	            int selectedRow = lsm.getMinSelectionIndex();
 	            //selectedRow is selected
 	            String id = (String) ((QueryTableModel)getIvjJTable().getModel()).getRow(selectedRow)[0];
-				Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+				Session session = HibernateUtil.getCurrentSession();
 		        session.beginTransaction();
 				Hond c = (Hond) session.createQuery("from hond where id="+id).list().get(0);
 		        session.getTransaction().commit();
 		        getJTextField().setText(c.getId()+"");
 		        getJTextField1().setText(c.getNaam());
 		        getJTextField2().setText(c.getRas());
-		        getJTextField3().setCaret(c.isReu());
+		        getJCheckBox().setSelected(c.isReu());
 		        getJTextField4().setText(c.getKleur()+"");
-		        getJTextField5().setText(c.isGecastreerd()+"");
-		        getJTextField6().setText(c.getGeboortedatum()+"");
+		        getJCheckBox2().setSelected(c.isGecastreerd());
+		        Calendar dt = Calendar.getInstance();
+		        dt.setTime(c.getGeboortedatum());
+		        getJCalendarCombo().setDate(dt);
 		        getJTextField7().setText(c.getOpmerkingen()+"");
-		        getJComboBox1().setText(c.getKlant()+"");
+		        getJTextField8().setText(c.getOpmerkingen()+"");
+		        getJTextField9().setText(c.getOpmerkingen()+"");
+		        getJComboBox1().setSelectedItem(c.getKlant());
 	        }
 	    }
 	}
@@ -532,7 +600,7 @@ public class TrimsalonHondFrame extends JFrame {
 	
 	@SuppressWarnings("unchecked")
 	private void fillIvjJTable(String sortBy, Boolean ascending) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getCurrentSession();
         session.beginTransaction();
         Criteria c = session.createCriteria(Hond.class);
         if(ascending) c.addOrder(Order.asc(sortBy));

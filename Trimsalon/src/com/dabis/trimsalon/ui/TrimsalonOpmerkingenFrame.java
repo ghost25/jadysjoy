@@ -56,7 +56,7 @@ public class TrimsalonOpmerkingenFrame extends JFrame {
 	private TableColumn ivjTableColumn2 = null;
 	private JTabbedPane ivjJTabbedPane = null;
 	public Boolean sortAscending = new Boolean(true);
-	public String sortBy = "!Id";  //  @jve:decl-index=0:
+	public String sortBy = "advies";  //  @jve:decl-index=0:
 	private JButton removeButton = null;
 	
 	public TrimsalonOpmerkingenFrame() {

@@ -1,4 +1,6 @@
 package com.dabis.trimsalon.ui;
+import static org.junit.Assert.fail;
+
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,7 +25,9 @@ import javax.swing.WindowConstants;
 import org.apache.log4j.Logger;
 import org.gui.JCalendarCombo;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
 import com.dabis.trimsalon.beans.Hond;
@@ -35,7 +39,6 @@ import com.dabis.trimsalon.utils.QueryTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
-import java.awt.Dimension;
 
 public class TrimsalonHondFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -43,7 +46,6 @@ public class TrimsalonHondFrame extends JFrame {
 	private javax.swing.JButton addButton = null;
 	private JButton clearButton = null;
 	private JButton exitButton = null;
-	private JButton changeButton = null;
 	private JPanel ivjJFrameContentPane = null;
 	private JLabel ivjJLabel9 = null;
 	private JLabel ivjJLabel1 = null;
@@ -65,7 +67,7 @@ public class TrimsalonHondFrame extends JFrame {
 	private JTextField ivjJTextField8 = null;
 	private JTextField ivjJTextField9 = null;
 	private JScrollPane ivjJScrollPane = null;
-	private JTable ivjJTable = null;
+	private JTable ivjJTable = null;  //  @jve:decl-index=0:visual-constraint="-15,80"
 	private TableColumn ivjTableColumn = null;
 	private TableColumn ivjTableColumn2 = null;
 	private JTabbedPane ivjJTabbedPane = null;
@@ -120,7 +122,6 @@ public class TrimsalonHondFrame extends JFrame {
 			ivjJFrameContentPane.add(getAddButton(), null);
 			ivjJFrameContentPane.add(getClearButton(), null);
 			ivjJFrameContentPane.add(getExitButton(), null);
-			ivjJFrameContentPane.add(getChangeButton(), null);
 			ivjJFrameContentPane.add(getJLabel9(), null);
 			ivjJFrameContentPane.add(getJTextField(), null);
 			ivjJFrameContentPane.add(getJComboBox1(), null);
@@ -143,10 +144,11 @@ public class TrimsalonHondFrame extends JFrame {
 	private JButton getAddButton() {
 		if (addButton == null) {
 			addButton = new JButton();
-			addButton.setText("Toevoegen");
+			addButton.setText("Opslaan");
 			addButton.setBounds(new Rectangle(450, 450, 100, 25));
 			addButton.addActionListener(new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent arg0) {
+		
 					Hond c = new Hond();
 					// If id is empty then its a new hond
 					if(getJTextField().getText().equalsIgnoreCase("")) {
@@ -165,9 +167,19 @@ public class TrimsalonHondFrame extends JFrame {
 							opm1.setMedischeKenmerken(getJTextField9().getText());
 							c.addOpmerking(opm1);
 							
-							Klant kl1 = new Klant();	
-							kl1.setKlant(getJComboBox1().getSelectedItem());
-							c.setKlant(kl1);
+							Klant kl1 = new Klant();
+							
+							try {
+								Add(kl1);
+							} catch (HibernateException e) {
+								// Klant is mandatory, so an error should appear.
+								if(! e.getMessage().equalsIgnoreCase("not-null property references a null or transient value: com.dabis.trimsalon.beans.Hond.klant") ) {
+									fail("Could not add Hond:"+e.getMessage());
+								}
+							}
+							// Retrieve it again
+							kl1 = (Klant) GetAll("from Klant").get(0);
+							kl1.setNaam(getJComboBox1().getSelectedItem()+"");
 										        
 						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -207,29 +219,6 @@ public class TrimsalonHondFrame extends JFrame {
 	}
 	
 	/**
-	 * This method initializes changeButton	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getChangeButton() {
-		if (changeButton == null) {
-			changeButton = new JButton();
-			changeButton.setBounds(new Rectangle(560, 450, 100, 25));
-			changeButton.setText("Wijzigen");
-			changeButton.setName("changeButton");
-			changeButton.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					clearInvoer();
-					//Return the focus to the typing area.
-					ivjJTextField1.requestFocusInWindow();
-					
-				}
-			});
-		}
-		return changeButton;
-	}
-	
-	/**
 	 * This method initializes clearButton	
 	 * 	
 	 * @return javax.swing.JButton	
@@ -237,7 +226,7 @@ public class TrimsalonHondFrame extends JFrame {
 	private JButton getClearButton() {
 		if (clearButton == null) {
 			clearButton = new JButton();
-			clearButton.setBounds(new Rectangle(670, 450, 100, 25));
+			clearButton.setBounds(new Rectangle(560, 450, 100, 25));
 			clearButton.setText("Legen");
 			clearButton.setName("clearButton");
 			clearButton.addActionListener(new java.awt.event.ActionListener() {
@@ -260,7 +249,7 @@ public class TrimsalonHondFrame extends JFrame {
 	private JButton getExitButton() {
 		if (exitButton == null) {
 			exitButton = new JButton();
-			exitButton.setBounds(new Rectangle(780, 450, 100, 25));
+			exitButton.setBounds(new Rectangle(670, 450, 100, 25));
 			exitButton.setText("Stoppen");
 			exitButton.setName("exitButton");
 			exitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -277,6 +266,12 @@ public class TrimsalonHondFrame extends JFrame {
 		getJTextField2().setText(null);
 		getJTextField4().setText(null);
 		getJTextField7().setText(null);
+		getJTextField8().setText(null);
+		getJTextField9().setText(null);
+		getJCheckBox2().setSelected(false);
+		getJCheckBox().setSelected(false);
+		getJComboBox1().setSelectedItem("Selecteer klant...");
+		getJCalendarCombo().setDate(Calendar.getInstance());
 	}
 
 	/**
@@ -508,12 +503,16 @@ public class TrimsalonHondFrame extends JFrame {
 	 */
 	private JComboBox getJComboBox1() {
 		if (jComboBox == null) {
+			Klant kl1 = new Klant();
+			kl1 = (Klant) GetAll("from Klant order by naam").get(0);
 			jComboBox = new JComboBox();
 			jComboBox.setBounds(new Rectangle(600, 380, 300, 20));
-		}
+			jComboBox.addItem("Selecteer klant...");
+			jComboBox.addItem(kl1.getNaam());
+		}		
+				
 		return jComboBox;
-	}
-	
+	}	
 	
 	private class TableSelectionListener implements ListSelectionListener {
 	    public void valueChanged(ListSelectionEvent e) {
@@ -568,10 +567,10 @@ public class TrimsalonHondFrame extends JFrame {
 	 * 	
 	 * @return javax.swing.JScrollPane	
 	 */
+	@SuppressWarnings("unused")
 	private JScrollPane getIvjJScrollPane() {
 		if (ivjJScrollPane == null) {
 			ivjJScrollPane = new JScrollPane();
-			ivjJScrollPane.setViewportView(getIvjJTable());
 		}
 		return ivjJScrollPane;
 	}
@@ -585,7 +584,7 @@ public class TrimsalonHondFrame extends JFrame {
 		if (ivjJTable == null) {
 			ivjJTable = new JTable();
 			ivjJTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-			ivjJTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			ivjJTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 			ivjJTable.setShowGrid(true);
 // Ask to be notified of selection changes.
 			ivjJTable.getSelectionModel().addListSelectionListener(new TableSelectionListener());
@@ -656,7 +655,6 @@ public class TrimsalonHondFrame extends JFrame {
 			ivjJTabbedPane = new JTabbedPane(); // Explicit Instance
 			ivjJTabbedPane
 					.addTab("Honden", null, getIvjJScrollPane2(), null); // JVE Generated
-			ivjJTabbedPane.addTab("Details", null, getIvjJScrollPane(), null); // JVE Generated
 			ivjJTabbedPane.setBounds(7, 28, 428, 476); // JVE Generated
 		}
 		return ivjJTabbedPane;
@@ -687,5 +685,53 @@ public class TrimsalonHondFrame extends JFrame {
 		}
 		return ivjJList;
 	}
+	
+	@SuppressWarnings("unchecked")
+	private <T> List<T> GetAll(String query) throws HibernateException {
+		List<T> list = null;
+	    Transaction tx = null;
+	    Session session = HibernateUtil.getCurrentSession();
+	    try {
+	    	tx = session.beginTransaction();
+			list = (List<T>) session.createQuery(query).list();
+	    	tx.commit();
+	    } catch (RuntimeException e) {
+	    	if (tx != null && tx.isActive()) {
+		        try {
+		        	// Second try catch as the rollback could fail as well
+		        	tx.rollback();
+		        } catch (HibernateException e1) {
+		        	log.debug("Error rolling back transaction");
+		        }
+		        // throw again the first exception
+		        throw e;
+	    	}
+	    }
+		return list;
+	}
 
+	//====================================================================================
+	//Supporting methods
+	//
+	private void Add(Object object) throws HibernateException {
+	    Transaction tx = null;
+	    Session session = HibernateUtil.getCurrentSession();
+	    try {
+	    	tx = session.beginTransaction();
+	    	session.save(object);
+	    	tx.commit();
+	    } catch (RuntimeException e) {
+	    	if (tx != null && tx.isActive()) {
+		        try {
+		        	// Second try catch as the rollback could fail as well
+		        	tx.rollback();
+		        } catch (HibernateException e1) {
+		        	log.debug("Error rolling back transaction");
+		        }
+		        // throw again the first exception
+		        throw e;
+	    	}
+	    }
+	}
+	
 }  //  @jve:decl-index=0:visual-constraint="-28,-14"

@@ -2,8 +2,6 @@ package com.dabis.trimsalon.beans;
 
 import java.util.Date;
 
-import javax.swing.text.Caret;
-
 import org.hibernate.collection.PersistentSet;
 
 public class Hond

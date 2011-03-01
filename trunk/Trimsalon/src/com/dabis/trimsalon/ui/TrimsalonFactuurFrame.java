@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -29,6 +30,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
 import com.dabis.trimsalon.beans.Factuur;
+import com.dabis.trimsalon.beans.Opmerking;
 import com.dabis.trimsalon.utils.HibernateUtil;
 import com.dabis.trimsalon.utils.QueryTableModel;
 
@@ -315,7 +317,7 @@ public class TrimsalonFactuurFrame extends JFrame {
 				Factuur c = (Factuur) session.createQuery("from Factuur where id="+id).list().get(0);
 		        session.getTransaction().commit();
 		        getJTextField().setText(c.getId()+"");
-		        getJTextField1().setText(c.getFactuurregels());
+		        getJTextField1().setText(c.getFactuurregels()+"");
 		        getJTextField2().setText(c.getFactuurnummer()+"");
 		        Calendar dt = Calendar.getInstance();
 		        dt.setTime(c.getFactuurdatum());

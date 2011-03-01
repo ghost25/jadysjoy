@@ -1,6 +1,6 @@
 package com.dabis.trimsalon;
 
-import com.dabis.trimsalon.ui.TrimsalonOpmerkingenFrame;
+import com.dabis.trimsalon.ui.TrimsalonHondFrame;
 import com.dabis.trimsalon.utils.HibernateUtil;
 
 public class DeTrimsalon {
@@ -12,7 +12,7 @@ public class DeTrimsalon {
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-		TrimsalonOpmerkingenFrame lbw = new TrimsalonOpmerkingenFrame();
+		TrimsalonHondFrame lbw = new TrimsalonHondFrame();
 		lbw.setLocationRelativeTo(null);
 		lbw.setVisible(true);
     }

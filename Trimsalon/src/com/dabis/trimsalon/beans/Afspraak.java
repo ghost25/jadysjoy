@@ -1,16 +1,16 @@
 package com.dabis.trimsalon.beans;
 
 import java.util.Calendar;
-import java.util.List;
 
 import org.hibernate.collection.PersistentSet;
 
 public class Afspraak
 {
 	private long id;
-	private Calendar begintijd;
+	private Calendar datum;
 	private Calendar eindtijd;
 	private PersistentSet behandelingen;
+	private Klant klant;
 	private Hond hond;
 	private String opmerkingen;
 	private boolean ophalen;
@@ -31,14 +31,14 @@ public class Afspraak
 	/**
 	 * @return the begintijd
 	 */
-	public Calendar getBegintijd() {
-		return begintijd;
+	public Calendar getDatum() {
+		return datum;
 	}
 	/**
 	 * @param begintijd the begintijd to set
 	 */
-	public void setBegintijd(Calendar begintijd) {
-		this.begintijd = begintijd;
+	public void setDatum(Calendar datum) {
+		this.datum = datum;
 	}
 	/**
 	 * @return the eindtijd
@@ -79,6 +79,19 @@ public class Afspraak
 		if( behandelingen != null ) {
 			behandelingen.remove(behandeling);
 		}
+	}
+	
+	/**
+	 * @return the klant
+	 */
+	public Klant getKlant() {
+		return klant;
+	}
+	/**
+	 * @param hond the klant to set
+	 */
+	public void setKlant(Klant klant) {
+		this.klant = klant;
 	}
 	
 	/**

@@ -146,7 +146,7 @@ public class TrimsalonBoekhoudingFrame extends JFrame {
 						c.setPrijsExbtw(Double.valueOf(getJTextField3().getText()));
 						c.setBtw(Double.valueOf(getJTextField1().getText()));
 						c.setBetaalt(getJCheckBox().isSelected());
-						c.setBoekingsdatum(getJCalendarCombo().getDate().getTime());
+						c.setBoekingsdatum((getJCalendarCombo().getDate().getTime());
 						
 						session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -364,7 +364,7 @@ public class TrimsalonBoekhoudingFrame extends JFrame {
 				Boekhouding c = (Boekhouding) session.createQuery("from Boekhouding where id="+id).list().get(0);
 		        session.getTransaction().commit();
 		        getJTextField().setText(c.getId()+"");
-		        getJTextField1().setText(c.getAfspraak());
+		        getJTextField1().setText(c.getAfspraak()+"");
 		        getJTextField2().setText(c.getPrijsExbtw()+"");
 		        getJTextField3().setText(c.getBtw()+"");
 		        getJCheckBox().setSelected(c.isBetaalt());		        

@@ -7,8 +7,7 @@
 	<id name="id" column="AID">
 	    <generator class="native"/>
 	</id>
-	<property name="begintijd" column="BEGINTIJD" type="calendar" />
-	<property name="eindtijd" column="EINDTIJD" type="calendar" />
+	<property name="datum" column="DATUM" type="calendar" />
 	<property name="opmerkingen" column="OPMERKINGEN" length="50" />
 	<property name="ophalen" column="OPHALEN" type="boolean" />
 	<property name="afgehandeld" column="AFGEHANDELD" type="boolean" />

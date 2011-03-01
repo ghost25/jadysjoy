@@ -8,7 +8,6 @@ public class Afspraak
 {
 	private long id;
 	private Calendar datum;
-	private Calendar eindtijd;
 	private PersistentSet behandelingen;
 	private Klant klant;
 	private Hond hond;
@@ -29,29 +28,18 @@ public class Afspraak
 		this.id = id;
 	}
 	/**
-	 * @return the begintijd
+	 * @return the datum
 	 */
 	public Calendar getDatum() {
 		return datum;
 	}
 	/**
-	 * @param begintijd the begintijd to set
+	 * @param datum the datum to set
 	 */
 	public void setDatum(Calendar datum) {
 		this.datum = datum;
 	}
-	/**
-	 * @return the eindtijd
-	 */
-	public Calendar getEindtijd() {
-		return eindtijd;
-	}
-	/**
-	 * @param eindtijd the eindtijd to set
-	 */
-	public void setEindtijd(Calendar eindtijd) {
-		this.eindtijd = eindtijd;
-	}
+	
 	/**
 	 * @return the behandeling
 	 */

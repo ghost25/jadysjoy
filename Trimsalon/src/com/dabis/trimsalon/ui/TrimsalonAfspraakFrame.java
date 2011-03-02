@@ -35,6 +35,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
 import com.dabis.trimsalon.beans.Afspraak;
+import com.dabis.trimsalon.beans.Behandeling;
 import com.dabis.trimsalon.beans.Hond;
 import com.dabis.trimsalon.beans.Klant;
 import com.dabis.trimsalon.utils.HibernateUtil;
@@ -49,7 +50,6 @@ public class TrimsalonAfspraakFrame extends JFrame {
 	private JPanel ivjJFrameContentPane = null;
 	private JLabel ivjJLabel9 = null;
 	private JLabel ivjJLabel1 = null;
-	private JLabel ivjJLabel2 = null;
 	private JLabel ivjJLabel3 = null;
 	private JLabel ivjJLabel4 = null;
 	private JLabel ivjJLabel5 = null;
@@ -59,10 +59,9 @@ public class TrimsalonAfspraakFrame extends JFrame {
 	private JLabel ivjJLabel13 = null;
 	private JTextField ivjJTextField = null;
 	private JTextField ivjJTextField1 = null;
-	private JTextField ivjJTextField2 = null;
-	private JTextField ivjJTextField3 = null;
 	private JComboBox jComboBox = null;
 	private JComboBox jComboBox2 = null;
+	private JComboBox jComboBox3 = null;
 	private JTextField ivjJTextField6 = null;
 	private JScrollPane ivjJScrollPane = null;
 	private JTable ivjJTable = null;
@@ -103,15 +102,12 @@ public class TrimsalonAfspraakFrame extends JFrame {
 			getJFrameContentPane().add(getJLabel11(), getJLabel11().getName());
 			ivjJFrameContentPane.add(getIvjJTabbedPane(), getIvjJTabbedPane()
 					.getName()); // JVE Generated
-			ivjJFrameContentPane.add(getJLabel2(), null);
 			ivjJFrameContentPane.add(getJLabel3(), null);
 			ivjJFrameContentPane.add(getJLabel5(), null);
 			ivjJFrameContentPane.add(getJLabel4(), null);
 			ivjJFrameContentPane.add(getJLabel6(), null);
 			ivjJFrameContentPane.add(getJLabel12(), null);
 			ivjJFrameContentPane.add(getJLabel13(), null);
-			ivjJFrameContentPane.add(getJTextField2(), null);
-			ivjJFrameContentPane.add(getJTextField3(), null);
 			ivjJFrameContentPane.add(getJTextField6(), null);
 			ivjJFrameContentPane.add(getAddButton(), null);
 			ivjJFrameContentPane.add(getClearButton(), null);
@@ -124,6 +120,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 			ivjJFrameContentPane.add(getJCheckBox2(), null);
 			ivjJFrameContentPane.add(getJComboBox1(), null);
 			ivjJFrameContentPane.add(getJComboBox2(), null);
+			ivjJFrameContentPane.add(getJComboBox3(), null);
 		}
 		return ivjJFrameContentPane;
 	}
@@ -145,9 +142,20 @@ public class TrimsalonAfspraakFrame extends JFrame {
 					if(id == -1) {
 						// New afspraak
 						c.setDatum(getJCalendarCombo().getDate().getTime());
-						c.setEindtijd(getJTextField2().getText());
-						c.setBehandeling(getJTextField3().getText());
-
+						Behandeling be1 = new Behandeling();
+						
+						try {
+							Add(be1);
+						} catch (HibernateException e) {
+							// Behandeling is mandatory, so an error should appear.
+							if(! e.getMessage().equalsIgnoreCase("not-null property references a null or transient value: com.dabis.trimsalon.beans.Hond.klant") ) {
+								fail("Could not add Afspraak:"+e.getMessage());
+							}
+						}
+						// Retrieve it again
+						be1 = (Behandeling) GetAll("from Behandeling").get(0);
+						be1.setOmschrijving(getJComboBox3().getSelectedItem()+"");
+						
 						Klant kl1 = new Klant();
 						
 						try {
@@ -191,9 +199,21 @@ public class TrimsalonAfspraakFrame extends JFrame {
 				        session.beginTransaction();
 						c = (Afspraak) session.createQuery("from Afspraak where id="+id).list().get(0);
 				        session.getTransaction().commit();
-				        c.setBegintijd(getJCalendarCombo().getDate().getTime());
-						c.setEindtijd(getJTextField2().getText());
-						c.setBehandelingen(getJTextField3().getText());
+				        c.setDatum(getJCalendarCombo().getDate().getTime());
+
+				        Behandeling be1 = new Behandeling();
+						
+						try {
+							Add(be1);
+						} catch (HibernateException e) {
+							// Behandeling is mandatory, so an error should appear.
+							if(! e.getMessage().equalsIgnoreCase("not-null property references a null or transient value: com.dabis.trimsalon.beans.Hond.klant") ) {
+								fail("Could not add Afspraak:"+e.getMessage());
+							}
+						}
+						// Retrieve it again
+						be1 = (Behandeling) GetAll("from Behandeling").get(0);
+						be1.setOmschrijving(getJComboBox3().getSelectedItem()+"");
 
 						Klant kl1 = new Klant();
 						
@@ -284,8 +304,6 @@ public class TrimsalonAfspraakFrame extends JFrame {
 	
 	private void clearInvoer() {
 		getJTextField().setText("-1");
-		getJTextField2().setText(null);
-		getJTextField3().setText(null);
 		getJTextField6().setText(null);
 		getJCheckBox().setSelected(false);
 		getJCheckBox2().setSelected(false);
@@ -316,21 +334,11 @@ public class TrimsalonAfspraakFrame extends JFrame {
 		return ivjJLabel1;
 	}
 	
-	private JLabel getJLabel2() {
-		if (ivjJLabel2 == null) {
-			ivjJLabel2 = new JLabel();
-			ivjJLabel2.setName("JLabel2");
-			ivjJLabel2.setBounds(new Rectangle(457, 140, 134, 15));
-			ivjJLabel2.setText("Tijd");
-		}
-		return ivjJLabel2;
-	}
-	
 	private JLabel getJLabel3() {
 		if (ivjJLabel3 == null) {
 			ivjJLabel3 = new JLabel();
 			ivjJLabel3.setName("JLabel3");
-			ivjJLabel3.setBounds(new Rectangle(457, 170, 134, 15));
+			ivjJLabel3.setBounds(new Rectangle(457, 140, 134, 15));
 			ivjJLabel3.setText("Behandeling");
 		}
 		return ivjJLabel3;
@@ -340,7 +348,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 		if (ivjJLabel4 == null) {
 			ivjJLabel4 = new JLabel();
 			ivjJLabel4.setName("JLabel4");
-			ivjJLabel4.setBounds(new Rectangle(457, 200, 134, 15));
+			ivjJLabel4.setBounds(new Rectangle(457, 170, 134, 15));
 			ivjJLabel4.setText("Klant");
 		}
 		return ivjJLabel4;
@@ -350,7 +358,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 		if (ivjJLabel5 == null) {
 			ivjJLabel5 = new JLabel();
 			ivjJLabel5.setName("JLabel5");
-			ivjJLabel5.setBounds(new Rectangle(457, 230, 134, 15));
+			ivjJLabel5.setBounds(new Rectangle(457, 200, 134, 15));
 			ivjJLabel5.setText("Hond");
 		}
 		return ivjJLabel5;
@@ -360,7 +368,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 		if (ivjJLabel6 == null) {
 			ivjJLabel6 = new JLabel();
 			ivjJLabel6.setName("JLabel6");
-			ivjJLabel6.setBounds(new Rectangle(457, 260, 134, 15));
+			ivjJLabel6.setBounds(new Rectangle(457, 230, 134, 15));
 			ivjJLabel6.setText("Opmerking");
 		}
 		return ivjJLabel6;
@@ -370,7 +378,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 		if (ivjJLabel12 == null) {
 			ivjJLabel12 = new JLabel();
 			ivjJLabel12.setName("JLabel12");
-			ivjJLabel12.setBounds(new Rectangle(457, 290, 134, 15));
+			ivjJLabel12.setBounds(new Rectangle(457, 260, 134, 15));
 			ivjJLabel12.setText("Ophalen");
 		}
 		return ivjJLabel12;
@@ -379,7 +387,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 		if (ivjJLabel13 == null) {
 			ivjJLabel13 = new JLabel();
 			ivjJLabel13.setName("JLabel13");
-			ivjJLabel13.setBounds(new Rectangle(457, 320, 134, 15));
+			ivjJLabel13.setBounds(new Rectangle(457, 290, 134, 15));
 			ivjJLabel13.setText("Afgehandeld");
 		}
 		return ivjJLabel13;
@@ -414,24 +422,6 @@ public class TrimsalonAfspraakFrame extends JFrame {
 		return ivjJTextField;
 	}
 	
-	private JTextField getJTextField2() {
-		if (ivjJTextField2 == null) {
-			ivjJTextField2 = new JTextField();
-			ivjJTextField2.setName("JTextField2");
-			ivjJTextField2.setBounds(new Rectangle(600, 140, 300, 20));
-		}
-		return ivjJTextField2;
-	}
-	
-	private JTextField getJTextField3() {
-		if (ivjJTextField3 == null) {
-			ivjJTextField3 = new JTextField();
-			ivjJTextField3.setName("JTextField3");
-			ivjJTextField3.setBounds(new Rectangle(600, 170, 300, 20));
-		}
-		return ivjJTextField3;
-	}
-	
 	/**
 	 * This method initializes jComboBox	
 	 * 	
@@ -442,7 +432,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 			Klant kl1 = new Klant();
 			kl1 = (Klant) GetAll("from Klant order by naam").get(0);
 			jComboBox = new JComboBox();
-			jComboBox.setBounds(new Rectangle(600, 200, 300, 20));
+			jComboBox.setBounds(new Rectangle(600, 170, 300, 20));
 			jComboBox.addItem("Selecteer klant...");
 			jComboBox.addItem(kl1.getNaam());
 		}		
@@ -455,7 +445,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 			Hond ho1 = new Hond();
 			ho1 = (Hond) GetAll("from Hond order by naam").get(0);
 			jComboBox2 = new JComboBox();
-			jComboBox2.setBounds(new Rectangle(600, 230, 300, 20));
+			jComboBox2.setBounds(new Rectangle(600, 200, 300, 20));
 			jComboBox2.addItem("Selecteer Hond...");
 			jComboBox2.addItem(ho1.getNaam());
 		}		
@@ -463,11 +453,24 @@ public class TrimsalonAfspraakFrame extends JFrame {
 		return jComboBox2;
 	}
 	
+	private JComboBox getJComboBox3() {
+		if (jComboBox3 == null) {
+			Behandeling be1 = new Behandeling();
+			be1 = (Behandeling) GetAll("from Behandeling order by omschrijving").get(0);
+			jComboBox3 = new JComboBox();
+			jComboBox3.setBounds(new Rectangle(600, 140, 300, 20));
+			jComboBox3.addItem("Selecteer klant...");
+			jComboBox3.addItem(be1.getOmschrijving());
+		}		
+				
+		return jComboBox3;
+	}
+	
 	private JTextField getJTextField6() {
 		if (ivjJTextField6 == null) {
 			ivjJTextField6 = new JTextField();
 			ivjJTextField6.setName("JTextField6");
-			ivjJTextField6.setBounds(new Rectangle(600, 260, 300, 20));
+			ivjJTextField6.setBounds(new Rectangle(600, 230, 300, 20));
 		}
 		return ivjJTextField6;
 	}	
@@ -501,8 +504,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 		        Calendar dt = Calendar.getInstance();
 		        dt.setTime(c.getDatum());
 		        getJCalendarCombo().setDate(dt);
-		        getJTextField2().setText(c.getEindtijd());
-		        getJTextField3().setText(c.getBehandeling());
+		        getJComboBox3().setSelectedItem(c.getBehandelingen());
 		        getJComboBox1().setSelectedItem(c.getKlant());
 		        getJComboBox2().setSelectedItem(c.getHond());
 		        getJTextField6().setText(c.getOpmerkingen()+"");
@@ -633,7 +635,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 	private JCheckBox getJCheckBox() {
 		if (jCheckBox == null) {
 			jCheckBox = new JCheckBox();
-			jCheckBox.setBounds(new Rectangle(598, 287, 21, 21));
+			jCheckBox.setBounds(new Rectangle(598, 258, 21, 21));
 		}
 		return jCheckBox;
 	}
@@ -641,7 +643,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 	private JCheckBox getJCheckBox2() {
 		if (jCheckBox2 == null) {
 			jCheckBox2 = new JCheckBox();
-			jCheckBox2.setBounds(new Rectangle(598, 317, 21, 21));
+			jCheckBox2.setBounds(new Rectangle(598, 288, 21, 21));
 		}
 		return jCheckBox2;
 	}

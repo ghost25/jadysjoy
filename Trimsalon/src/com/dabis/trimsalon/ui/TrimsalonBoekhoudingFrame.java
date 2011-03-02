@@ -1,4 +1,6 @@
 package com.dabis.trimsalon.ui;
+import static org.junit.Assert.fail;
+
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -8,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,10 +29,14 @@ import javax.swing.table.TableColumnModel;
 import org.apache.log4j.Logger;
 import org.gui.JCalendarCombo;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
+import com.dabis.trimsalon.beans.Afspraak;
 import com.dabis.trimsalon.beans.Boekhouding;
+import com.dabis.trimsalon.beans.Klant;
 import com.dabis.trimsalon.utils.HibernateUtil;
 import com.dabis.trimsalon.utils.QueryTableModel;
 
@@ -58,6 +65,7 @@ public class TrimsalonBoekhoudingFrame extends JFrame {
 	private TableColumn ivjTableColumn = null;
 	private TableColumn ivjTableColumn2 = null;
 	private JTabbedPane ivjJTabbedPane = null;
+	private JComboBox jComboBox = null;
 	public Boolean sortAscending = new Boolean(true);
 	public String sortBy = "!id";  //  @jve:decl-index=0:
 	private JButton removeButton = null;
@@ -125,7 +133,20 @@ public class TrimsalonBoekhoudingFrame extends JFrame {
 					long id = Long.parseLong(getJTextField().getText());
 					if(id == -1) {
 						// New boekhouding
-						c.setAfspraak(getJTextField1().getText());
+						Afspraak af1 = new Afspraak();	
+						
+						try {
+							Add(af1);
+						} catch (HibernateException e) {
+							// Afspraak is mandatory, so an error should appear.
+							if(! e.getMessage().equalsIgnoreCase("not-null property references a null or transient value: com.dabis.trimsalon.beans.Hond.klant") ) {
+								fail("Could not add Hond:"+e.getMessage());
+							}
+						}
+						// Retrieve it again
+						af1 = (Afspraak) GetAll("from Afspraak").get(0);
+						af1.setHond(getJComboBox1().getSelectedItem()+"");
+						
 						c.setPrijsExbtw(Double.valueOf(getJTextField3().getText()));
 						c.setBtw(Double.valueOf(getJTextField1().getText()));
 						c.setBetaalt(getJCheckBox().isSelected());
@@ -142,11 +163,24 @@ public class TrimsalonBoekhoudingFrame extends JFrame {
 				        session.beginTransaction();
 						c = (Boekhouding) session.createQuery("from Boekhouding where id="+id).list().get(0);
 				        session.getTransaction().commit();
-				    	c.setAfspraak(getJTextField1().getText());
+				    	Afspraak af1 = new Afspraak();
+						
+						try {
+							Add(af1);
+						} catch (HibernateException e) {
+							// Afspraak is mandatory, so an error should appear.
+							if(! e.getMessage().equalsIgnoreCase("not-null property references a null or transient value: com.dabis.trimsalon.beans.Hond.klant") ) {
+								fail("Could not add Hond:"+e.getMessage());
+							}
+						}
+						// Retrieve it again
+						af1 = (Afspraak) GetAll("from Afspraak").get(0);
+						af1.setAfspraak(getJComboBox1().getSelectedItem()+"");
+				    	
 						c.setPrijsExbtw(Double.valueOf(getJTextField3().getText()));
 						c.setBtw(Double.valueOf(getJTextField1().getText()));
 						c.setBetaalt(getJCheckBox().isSelected());
-						c.setBoekingsdatum((getJCalendarCombo().getDate().getTime());
+						c.setBoekingsdatum(getJCalendarCombo().getDate().getTime());
 						
 						session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -319,6 +353,19 @@ public class TrimsalonBoekhoudingFrame extends JFrame {
 			ivjJTextField2.setBounds(new Rectangle(600, 140, 300, 20));
 		}
 		return ivjJTextField2;
+	}
+	
+	private JComboBox getJComboBox1() {
+		if (jComboBox == null) {
+			Afspraak af1 = new Afspraak();
+			af1 = (Afspraak) GetAll("from Afspraak").get(0);
+			jComboBox = new JComboBox();
+			jComboBox.setBounds(new Rectangle(600, 140, 300, 20));
+			jComboBox.addItem("Selecteer Afspraak...");
+			jComboBox.addItem(af1.getDatum());
+		}		
+				
+		return jComboBox;
 	}
 	
 	private JTextField getJTextField3() {
@@ -518,6 +565,54 @@ public class TrimsalonBoekhoudingFrame extends JFrame {
 			});
 		}
 		return removeButton;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private <T> List<T> GetAll(String query) throws HibernateException {
+		List<T> list = null;
+	    Transaction tx = null;
+	    Session session = HibernateUtil.getCurrentSession();
+	    try {
+	    	tx = session.beginTransaction();
+			list = (List<T>) session.createQuery(query).list();
+	    	tx.commit();
+	    } catch (RuntimeException e) {
+	    	if (tx != null && tx.isActive()) {
+		        try {
+		        	// Second try catch as the rollback could fail as well
+		        	tx.rollback();
+		        } catch (HibernateException e1) {
+		        	log.debug("Error rolling back transaction");
+		        }
+		        // throw again the first exception
+		        throw e;
+	    	}
+	    }
+		return list;
+	}
+
+	//====================================================================================
+	//Supporting methods
+	//
+	private void Add(Object object) throws HibernateException {
+	    Transaction tx = null;
+	    Session session = HibernateUtil.getCurrentSession();
+	    try {
+	    	tx = session.beginTransaction();
+	    	session.save(object);
+	    	tx.commit();
+	    } catch (RuntimeException e) {
+	    	if (tx != null && tx.isActive()) {
+		        try {
+		        	// Second try catch as the rollback could fail as well
+		        	tx.rollback();
+		        } catch (HibernateException e1) {
+		        	log.debug("Error rolling back transaction");
+		        }
+		        // throw again the first exception
+		        throw e;
+	    	}
+	    }
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="-15,6"

@@ -504,7 +504,7 @@ public class TrimsalonHondFrame extends JFrame {
 	private JComboBox getJComboBox1() {
 		if (jComboBox == null) {
 			Klant kl1 = new Klant();
-			kl1 = (Klant) GetAll("from Klant order by naam").get(0);
+			kl1 = (Klant) GetAll("from Klant").get(0);
 			jComboBox = new JComboBox();
 			jComboBox.setBounds(new Rectangle(600, 380, 300, 20));
 			jComboBox.addItem("Selecteer klant...");

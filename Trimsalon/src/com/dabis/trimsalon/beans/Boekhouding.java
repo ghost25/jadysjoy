@@ -3,7 +3,7 @@
  */
 package com.dabis.trimsalon.beans;
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author rdaalman
@@ -12,7 +12,7 @@ import java.util.Calendar;
 public class Boekhouding {
 	
 	private long id;
-	private Calendar boekingsdatum;
+	private Date boekingsdatum;
 	private Afspraak afspraak;
 	private double prijsExbtw;
 	private double btw;
@@ -33,13 +33,13 @@ public class Boekhouding {
 	/**
 	 * @return the boekingsdatum
 	 */
-	public Calendar getBoekingsdatum() {
+	public Date getBoekingsdatum() {
 		return boekingsdatum;
 	}
 	/**
 	 * @param boekingsdatum the boekingsdatum to set
 	 */
-	public void setBoekingsdatum(Calendar boekingsdatum) {
+	public void setBoekingsdatum(Date boekingsdatum) {
 		this.boekingsdatum = boekingsdatum;
 	}
 	/**

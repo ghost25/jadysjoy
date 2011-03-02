@@ -7,7 +7,7 @@
      <id name="id" column="BHID">
             <generator class="native"/>
      </id>
-     <property name="boekingsdatum" column="BOEKINGSDATUM" type="calendar_date" />
+     <property name="boekingsdatum" column="BOEKINGSDATUM" type="calendar" />
      <many-to-one name="afspraak" column="AID" not-null="true"/>
      <property name="prijsExbtw" column="PRIJSEXBTW" type="double" />
      <property name="btw" column="BTW" type="double" />

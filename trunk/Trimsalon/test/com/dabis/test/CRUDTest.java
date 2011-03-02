@@ -596,16 +596,13 @@ public class CRUDTest {
 		}
 		Calendar begintijd = Calendar.getInstance();
 		begintijd.setTime(d);
-		afspraak.setBegintijd(begintijd);
+		afspraak.setDatum(begintijd);
 		try {
 			d = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse("10-01-2011 12:30");
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Calendar eindtijd = Calendar.getInstance();
-		eindtijd.setTime(d);
-		afspraak.setEindtijd(eindtijd);
 		afspraak.setOphalen(true);
 		afspraak.setOpmerkingen("Mogelijk 5 minuten later.");
 		return afspraak;
@@ -622,16 +619,13 @@ public class CRUDTest {
 		}
 		Calendar begintijd = Calendar.getInstance();
 		begintijd.setTime(d);
-		afspraak.setBegintijd(begintijd);
+		afspraak.setDatum(begintijd);
 		try {
 			d = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse("11-01-2011 16:30");
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Calendar eindtijd = Calendar.getInstance();
-		eindtijd.setTime(d);
-		afspraak.setEindtijd(eindtijd);
 		afspraak.setOphalen(false);
 		afspraak.setOpmerkingen("Bellen wanneer klaar.");
 		return afspraak;

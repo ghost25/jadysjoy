@@ -1,13 +1,13 @@
 package com.dabis.trimsalon.beans;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import org.hibernate.collection.PersistentSet;
 
 public class Afspraak
 {
 	private long id;
-	private Date datum;
+	private Calendar datum;
 	private PersistentSet behandelingen;
 	private Klant klant;
 	private Hond hond;
@@ -30,13 +30,13 @@ public class Afspraak
 	/**
 	 * @return the datum
 	 */
-	public Date getDatum() {
+	public Calendar getDatum() {
 		return datum;
 	}
 	/**
 	 * @param datum the datum to set
 	 */
-	public void setDatum(Date datum) {
+	public void setDatum(Calendar datum) {
 		this.datum = datum;
 	}
 	

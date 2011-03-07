@@ -150,7 +150,11 @@ public class TrimsalonBoekhoudingFrame extends JFrame {
 						c.setPrijsExbtw(Double.valueOf(getJTextField3().getText()));
 						c.setBtw(Double.valueOf(getJTextField1().getText()));
 						c.setBetaalt(getJCheckBox().isSelected());
-						c.setBoekingsdatum(getJCalendarCombo().getDate().getTime());
+						
+						//Calendar statement
+						Calendar datum = Calendar.getInstance();
+						datum.setTime(getJCalendarCombo().getDate().getTime());
+						c.setBoekingsdatum(datum); //calendar gegevens
 										        
 						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -175,7 +179,7 @@ public class TrimsalonBoekhoudingFrame extends JFrame {
 						}
 						// Retrieve it again
 						af1 = (Afspraak) GetAll("from Afspraak").get(0);
-						af1.setAfspraak(getJComboBox1().getSelectedItem()+"");
+						af1.setAfspraak(getJComboBox1().getSelectedItem()+""); //Objecten in combobox
 				    	
 						c.setPrijsExbtw(Double.valueOf(getJTextField3().getText()));
 						c.setBtw(Double.valueOf(getJTextField1().getText()));

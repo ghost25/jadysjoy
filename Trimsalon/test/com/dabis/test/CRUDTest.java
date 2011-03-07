@@ -594,9 +594,9 @@ public class CRUDTest {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Calendar begintijd = Calendar.getInstance();
-		begintijd.setTime(d);
-		afspraak.setDatum(begintijd);
+		Calendar datum = Calendar.getInstance();
+		datum.setTime(d);
+		afspraak.setDatum(datum);
 		try {
 			d = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse("10-01-2011 12:30");
 		} catch (ParseException e1) {
@@ -617,9 +617,9 @@ public class CRUDTest {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Calendar begintijd = Calendar.getInstance();
-		begintijd.setTime(d);
-		afspraak.setDatum(begintijd);
+		Calendar datum = Calendar.getInstance();
+		datum.setTime(d);
+		afspraak.setDatum(datum);
 		try {
 			d = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse("11-01-2011 16:30");
 		} catch (ParseException e1) {

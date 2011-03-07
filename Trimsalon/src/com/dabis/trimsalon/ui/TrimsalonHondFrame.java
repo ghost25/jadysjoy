@@ -151,7 +151,8 @@ public class TrimsalonHondFrame extends JFrame {
 		
 					Hond c = new Hond();
 					// If id is empty then its a new hond
-					if(getJTextField().getText().equalsIgnoreCase("")) {
+					long id = Long.parseLong(getJTextField().getText());
+					if(id==-1) {
 						// New hond
 						c.setNaam(getJTextField1().getText());
 						c.setRas(getJTextField2().getText());
@@ -187,7 +188,6 @@ public class TrimsalonHondFrame extends JFrame {
 				        session.getTransaction().commit();
 					} else {
 						// Hond is modified
-						long id = Long.parseLong(getJTextField().getText());
 						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
 						c = (Hond) session.createQuery("from Hond where id="+id).list().get(0);

@@ -1,6 +1,8 @@
 package com.dabis.trimsalon.beans;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.collection.PersistentSet;
 
@@ -13,7 +15,7 @@ public class Hond
 	private String kleur;
 	private boolean gecastreerd;
 	private Date geboortedatum;
-	private PersistentSet opmerkingen;
+	private Set<Opmerking> opmerkingen;
 	private Klant klant;
 	
 	public void setId(long id) {
@@ -111,14 +113,14 @@ public class Hond
 	/**
 	 * @return the opmerkingen
 	 */
-	public PersistentSet getOpmerkingen() { 
+	public Set<Opmerking> getOpmerkingen() { 
 		return opmerkingen;
 	}
 
 	/**
 	 * @param opmerkingen the opmerkingen to set
 	 */
-	public void setOpmerkingen(PersistentSet opmerkingen) {
+	public void setOpmerkingen(Set<Opmerking> opmerkingen) {
 		this.opmerkingen = opmerkingen;
 	}
 
@@ -126,7 +128,7 @@ public class Hond
 	 * Add one opmerking
 	 */
 	public void addOpmerking(Opmerking opmerking) {
-		if( opmerkingen == null ) opmerkingen = new PersistentSet();
+		if( opmerkingen == null ) opmerkingen = new HashSet<Opmerking>();
 		opmerkingen.add(opmerking);
 	}
 	

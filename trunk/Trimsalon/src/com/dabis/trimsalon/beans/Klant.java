@@ -1,5 +1,6 @@
 package com.dabis.trimsalon.beans;
 
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -17,7 +18,7 @@ public class Klant
 	private String email;
 	private boolean ophalen;
 	private String opmerkingen;
-	private Date inschrijfdatum;
+	private Calendar inschrijfdatum;
 	
 	/**
 	 * @return the id
@@ -154,13 +155,13 @@ public class Klant
 	/**
 	 * @return the inschrijfdatum
 	 */
-	public Date getInschrijfdatum() {
+	public Calendar getInschrijfdatum() {
 		return inschrijfdatum;
 	}
 	/**
 	 * @param inschrijfdatum the inschrijfdatum to set
 	 */
-	public void setInschrijfdatum(Date inschrijfdatum) {
+	public void setInschrijfdatum(Calendar inschrijfdatum) {
 		this.inschrijfdatum = inschrijfdatum;
 	}	
 }

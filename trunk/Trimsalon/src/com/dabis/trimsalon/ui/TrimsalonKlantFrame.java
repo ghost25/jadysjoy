@@ -1,8 +1,6 @@
 package com.dabis.trimsalon.ui;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Calendar;
 import java.util.List;
 
@@ -19,23 +17,21 @@ import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 
 import org.apache.log4j.Logger;
 import org.gui.JCalendarCombo;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Order;
+import org.springframework.context.ApplicationContext;
 
 import com.dabis.trimsalon.beans.Klant;
-import com.dabis.trimsalon.utils.HibernateUtil;
+import com.dabis.trimsalon.services.KlantManager;
 import com.dabis.trimsalon.utils.QueryTableModel;
 
 public class TrimsalonKlantFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public static Logger log = Logger.getLogger(TrimsalonKlantFrame.class);
+	private ApplicationContext context;
 	private javax.swing.JButton addButton = null;
 	private JButton clearButton = null;
 	private JButton exitButton = null;
@@ -74,8 +70,9 @@ public class TrimsalonKlantFrame extends JFrame {
 	private JCalendarCombo ivjJCalendarCombo = null;
 	private JButton removeButton = null;
 	
-	public TrimsalonKlantFrame() {
+	public TrimsalonKlantFrame(ApplicationContext context) {
 		super();
+		this.context = context;
 		initialize();
 	}
 
@@ -160,19 +157,12 @@ public class TrimsalonKlantFrame extends JFrame {
 						c.setEmail(getJTextField8().getText());
 						c.setOphalen(getJCheckBox().isSelected());
 						c.setOpmerkingen(getJTextField13().getText());
-						c.setInschrijfdatum(getJCalendarCombo().getDate().getTime());
-										        
-						Session session = HibernateUtil.getCurrentSession();
-				        session.beginTransaction();
-				        session.save(c);
-				        session.getTransaction().commit();
-				        getJTextField().setText(c.getId()+"");
+						c.setInschrijfdatum(getJCalendarCombo().getDate());
+						long newId = ((KlantManager) context.getBean("klantManager")).createKlant(c);
+				        getJTextField().setText(newId+"");
 					} else {
 						// Klant is modified
-						Session session = HibernateUtil.getCurrentSession();
-				        session.beginTransaction();
-						c = (Klant) session.createQuery("from Klant where id="+id).list().get(0);
-				        session.getTransaction().commit();
+						c = ((KlantManager) context.getBean("klantManager")).getKlantById(id);
 				    	c.setNaam(getJTextField1().getText());
 						c.setAdres(getJTextField2().getText());
 						c.setHuisnummer(getJTextField3().getText());
@@ -183,12 +173,8 @@ public class TrimsalonKlantFrame extends JFrame {
 						c.setEmail(getJTextField8().getText());
 						c.setOphalen(getJCheckBox().isSelected());
 						c.setOpmerkingen(getJTextField13().getText());
-						c.setInschrijfdatum(getJCalendarCombo().getDate().getTime());
-						
-						session = HibernateUtil.getCurrentSession();
-				        session.beginTransaction();
-				        session.update(c);
-				        session.getTransaction().commit();
+						c.setInschrijfdatum(getJCalendarCombo().getDate());
+						((KlantManager) context.getBean("klantManager")).updateKlant(c);
 					}
 					fillIvjJTable(sortBy, sortAscending);
 				}
@@ -504,13 +490,10 @@ public class TrimsalonKlantFrame extends JFrame {
 	        if (lsm.isSelectionEmpty()) {
 	            //no rows are selected
 	        } else {
-	            int selectedRow = lsm.getMinSelectionIndex();
+	            int selectedRow = getIvjJTable().convertRowIndexToModel(lsm.getMinSelectionIndex());
 	            //selectedRow is selected
 	            String id = (String) ((QueryTableModel)getIvjJTable().getModel()).getRow(selectedRow)[0];
-				Session session = HibernateUtil.getCurrentSession();
-		        session.beginTransaction();
-				Klant c = (Klant) session.createQuery("from Klant where id="+id).list().get(0);
-		        session.getTransaction().commit();
+				Klant c = ((KlantManager) context.getBean("klantManager")).getKlantById(Long.parseLong(id));
 		        getJTextField().setText(c.getId()+"");
 		        getJTextField1().setText(c.getNaam());
 		        getJTextField2().setText(c.getAdres());
@@ -522,26 +505,9 @@ public class TrimsalonKlantFrame extends JFrame {
 		        getJTextField8().setText(c.getEmail()+"");
 		        getJCheckBox().setSelected(c.isOphalen());
 		        getJTextField13().setText(c.getOpmerkingen()+"");
-		        Calendar dt = Calendar.getInstance();
-		        dt.setTime(c.getInschrijfdatum());
-		        getJCalendarCombo().setDate(dt);
+		        getJCalendarCombo().setDate(c.getInschrijfdatum());
 	        }
 	    }
-	}
-	
-	private class TableSorter extends MouseAdapter {
-        public void mouseClicked(MouseEvent e) {
-            TableColumnModel columnModel = getIvjJTable().getColumnModel();
-            int viewColumn = columnModel.getColumnIndexAtX(e.getX()); 
-            int column = getIvjJTable().convertColumnIndexToModel(viewColumn); 
-            if(e.getClickCount() == 1 && column != -1) {
-                sortAscending = new Boolean(!sortAscending.booleanValue());
-				String v = ((QueryTableModel)getIvjJTable().getModel()).getVarNames()[column];
-                sortBy = v.substring(0, 1).toLowerCase()+v.substring(1);
-                fillIvjJTable(sortBy, sortAscending);
-                clearInvoer();
-            }
-         }
 	}
 
 	/**
@@ -570,29 +536,18 @@ public class TrimsalonKlantFrame extends JFrame {
 			ivjJTable.setShowGrid(true);
 // Ask to be notified of selection changes.
 			ivjJTable.getSelectionModel().addListSelectionListener(new TableSelectionListener());
-// Make column header click result in sorting ascending (shift-click is descending)
 			ivjJTable.setColumnSelectionAllowed(false);
-	        TableSorter listSorter = new TableSorter();
-			JTableHeader th = ivjJTable.getTableHeader();
-	        th.addMouseListener(listSorter); 
 		}
 		return ivjJTable;
 	}
 	
-	@SuppressWarnings("unchecked")
 	private void fillIvjJTable(String sortBy, Boolean ascending) {
-		Session session = HibernateUtil.getCurrentSession();
-        session.beginTransaction();
-        Criteria c = session.createCriteria(Klant.class);
-        if(ascending) c.addOrder(Order.asc(sortBy));
-        else c.addOrder(Order.desc(sortBy));
-		List<Klant> list = c.list();
+		List<Klant> list = ((KlantManager)context.getBean("klantManager")).getAllKlanten();
 		log.debug("List Klant size="+list.size());
-        session.getTransaction().commit();
         String[] cols = {"!Id","Naam","Woonplaats","Telefoon","Opmerkingen","Inschrijfdatum"};
         QueryTableModel m = new QueryTableModel(cols, list);
         getIvjJTable().setModel(m);
-        
+        getIvjJTable().setRowSorter(new TableRowSorter<QueryTableModel>(m));
 	}
 	
 	/**
@@ -670,14 +625,9 @@ public class TrimsalonKlantFrame extends JFrame {
 					// If id is -1 then its a new klant
 					long id = Long.parseLong(getJTextField().getText());
 					if(id != -1) {
-						Session session = HibernateUtil.getCurrentSession();
-				        session.beginTransaction();
-						Klant c = (Klant) session.createQuery("from Klant where id="+id).list().get(0);
-				        session.getTransaction().commit();
-						session = HibernateUtil.getCurrentSession();
-				        session.beginTransaction();
-				        session.delete(c);
-				        session.getTransaction().commit();
+						Klant c = new Klant();
+						c.setId(id);
+						((KlantManager) context.getBean("klantManager")).deleteKlant(c);
 					}
 					clearInvoer();
 					fillIvjJTable(sortBy, sortAscending);

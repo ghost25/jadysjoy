@@ -120,7 +120,7 @@ public class TrimsalonFactuurFrame extends JFrame {
 					if(id == -1) {
 						// New factuurregel
 						c.setFactuurregels(getJTextField1().getText());
-						c.setFactuurdatum(getJCalendarCombo().getDate().getTime());
+						c.setFactuurdatum(getJCalendarCombo().getDate());
 						c.setFactuurnummer(getJTextField2().getText());
 						
 										        
@@ -136,7 +136,7 @@ public class TrimsalonFactuurFrame extends JFrame {
 						c = (Factuur) session.createQuery("from Factuur where id="+id).list().get(0);
 				        session.getTransaction().commit();
 				    	c.setFactuurregels(getJTextField1().getText());
-				    	c.setFactuurdatum(getJCalendarCombo().getDate().getTime());
+				    	c.setFactuurdatum(getJCalendarCombo().getDate());
 						c.setFactuurnummer(getJTextField2().getText());
 						
 						session = HibernateUtil.getCurrentSession();
@@ -319,9 +319,7 @@ public class TrimsalonFactuurFrame extends JFrame {
 		        getJTextField().setText(c.getId()+"");
 		        getJTextField1().setText(c.getFactuurregels()+"");
 		        getJTextField2().setText(c.getFactuurnummer()+"");
-		        Calendar dt = Calendar.getInstance();
-		        dt.setTime(c.getFactuurdatum());
-		        getJCalendarCombo().setDate(dt);
+		        getJCalendarCombo().setDate(c.getFactuurdatum());
 	        }
 	    }
 	}

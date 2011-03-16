@@ -18,4 +18,5 @@
     </set>
 	 
  </class>
+  <query name="Afspraak.findAll">select p from Afspraak p</query>
 </hibernate-mapping>

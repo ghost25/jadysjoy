@@ -1,14 +1,15 @@
 package com.dabis.trimsalon.beans;
 
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.hibernate.collection.PersistentSet;
 
 public class Afspraak
 {
 	private long id;
 	private Calendar datum;
-	private PersistentSet behandelingen;
+	private Set<Behandeling> behandelingen;
 	private Klant klant;
 	private Hond hond;
 	private String opmerkingen;
@@ -43,13 +44,14 @@ public class Afspraak
 	/**
 	 * @return the behandeling
 	 */
-	public PersistentSet getBehandelingen() {
+	public Set<Behandeling> getBehandelingen() {
+		if( behandelingen == null ) behandelingen = new HashSet<Behandeling>();
 		return behandelingen;
 	}
 	/**
 	 * @param behandeling the behandeling to set
 	 */
-	public void setBehandelingen(PersistentSet behandelingen) {
+	public void setBehandelingen(Set<Behandeling> behandelingen) {
 		this.behandelingen = behandelingen;
 	}
 	
@@ -57,7 +59,7 @@ public class Afspraak
 	 * Add one Behandeling
 	 */
 	public void addBehandeling(Behandeling behandeling) {
-		behandelingen.add(behandeling);
+		getBehandelingen().add(behandeling);
 	}
 	
 	/**

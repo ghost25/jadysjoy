@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				http://www.springframework.org/schema/tx
+				http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+				http://www.springframework.org/schema/aop
+				http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 
+    <!--    Data Source Setup -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName">
+            <value>org.apache.derby.jdbc.EmbeddedDriver</value>
+        </property>
+        <property name="url">
+            <value>jdbc:derby:trimsalon</value>
+        </property>
+        <property name="username">
+            <value>admin</value>
+        </property>
+        <property name="password">
+            <value>admin</value>
+        </property>
+    </bean>
+
+    <bean id="namingStrategy"
+          class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+        <property name="staticField">
+            <value>org.hibernate.cfg.ImprovedNamingStrategy.INSTANCE</value>
+        </property>
+    </bean>
+
+    <bean id="extendedFinderNamingStrategy"
+        class="com.dabis.trimsalon.dao.base.ExtendedFinderNamingStrategy" />
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="namingStrategy">
+            <ref bean="namingStrategy"/>
+        </property>
+        <property name="mappingResources">
+            <list>
+				<value>com/dabis/trimsalon/hibernate/afspraak.hbm.xml</value>
+				<value>com/dabis/trimsalon/hibernate/behandeling.hbm.xml</value>
+				<value>com/dabis/trimsalon/hibernate/boekhouding.hbm.xml</value>
+				<value>com/dabis/trimsalon/hibernate/factuur.hbm.xml</value>
+				<value>com/dabis/trimsalon/hibernate/hond.hbm.xml</value>
+				<value>com/dabis/trimsalon/hibernate/klant.hbm.xml</value>
+				<value>com/dabis/trimsalon/hibernate/opmerking.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.DerbyDialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+
+    <!--  Dao Layer generic config-->
+    <bean id="finderIntroductionAdvisor" class="com.dabis.trimsalon.dao.base.FinderIntroductionAdvisor"/>
+    <bean id="abstractDaoTarget"
+          class="com.dabis.trimsalon.dao.base.GenericDao" abstract="true">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+        <property name="namingStrategy">
+            <ref bean="extendedFinderNamingStrategy" />
+        </property>
+    </bean>
+    <bean id="abstractDao"
+          class="org.springframework.aop.framework.ProxyFactoryBean" abstract="true">
+        <property name="interceptorNames">
+            <list>
+                <value>finderIntroductionAdvisor</value>
+            </list>
+        </property>
+    </bean>
+    
+    <tx:annotation-driven />
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <import resource="persistenceContext.xml"/>
+		
+</beans>

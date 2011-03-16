@@ -1,10 +1,8 @@
 package com.dabis.trimsalon.beans;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.hibernate.collection.PersistentSet;
 
 public class Hond
 {
@@ -14,7 +12,7 @@ public class Hond
 	private boolean reu;
 	private String kleur;
 	private boolean gecastreerd;
-	private Date geboortedatum;
+	private Calendar geboortedatum;
 	private Set<Opmerking> opmerkingen;
 	private Klant klant;
 	
@@ -99,21 +97,22 @@ public class Hond
 	/**
 	 * @return the geboortedatum
 	 */
-	public Date getGeboortedatum() {
+	public Calendar getGeboortedatum() {
 		return geboortedatum;
 	}
 
 	/**
 	 * @param geboortedatum the geboortedatum to set
 	 */
-	public void setGeboortedatum(Date geboortedatum) {
+	public void setGeboortedatum(Calendar geboortedatum) {
 		this.geboortedatum = geboortedatum;
 	}
 
 	/**
 	 * @return the opmerkingen
 	 */
-	public Set<Opmerking> getOpmerkingen() { 
+	public Set<Opmerking> getOpmerkingen() {
+		if( opmerkingen == null ) opmerkingen = new HashSet<Opmerking>();
 		return opmerkingen;
 	}
 
@@ -128,8 +127,7 @@ public class Hond
 	 * Add one opmerking
 	 */
 	public void addOpmerking(Opmerking opmerking) {
-		if( opmerkingen == null ) opmerkingen = new HashSet<Opmerking>();
-		opmerkingen.add(opmerking);
+		getOpmerkingen().add(opmerking);
 	}
 	
 	/**

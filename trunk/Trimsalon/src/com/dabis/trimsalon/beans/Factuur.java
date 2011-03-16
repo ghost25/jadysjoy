@@ -1,13 +1,14 @@
 package com.dabis.trimsalon.beans;
 
-import java.util.Date;
-import org.hibernate.collection.PersistentSet;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Factuur
 {
 	private long id;
-	private PersistentSet factuurregels;
-	private Date factuurdatum;
+	private Set<Boekhouding> factuurregels;
+	private Calendar factuurdatum;
 	private String factuurnummer;
 	
 	/**
@@ -25,20 +26,21 @@ public class Factuur
 	/**
 	 * @return the factuurregels
 	 */
-	public PersistentSet getFactuurregels() {
+	public Set<Boekhouding> getFactuurregels() {
+		if( factuurregels == null ) factuurregels = new HashSet<Boekhouding>();
 		return factuurregels;
 	}
 	/**
 	 * @param factuurregels the factuurregels to set
 	 */
-	public void setFactuurregels(PersistentSet factuurregels) {
+	public void setFactuurregels(Set<Boekhouding> factuurregels) {
 		this.factuurregels = factuurregels;
 	}
 	/**
 	 * Add one Factuurregel
 	 */
 	public void addFactuurregel(Boekhouding item) {
-		factuurregels.add(item);
+		getFactuurregels().add(item);
 	}
 	/**
 	 * Remove one Factuurregel
@@ -51,13 +53,13 @@ public class Factuur
 	/**
 	 * @return the factuurdatum
 	 */
-	public Date getFactuurdatum() {
+	public Calendar getFactuurdatum() {
 		return factuurdatum;
 	}
 	/**
 	 * @param factuurdatum the factuurdatum to set
 	 */
-	public void setFactuurdatum(Date factuurdatum) {
+	public void setFactuurdatum(Calendar factuurdatum) {
 		this.factuurdatum = factuurdatum;
 	}
 	/**

@@ -13,10 +13,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 
+import java.awt.Component;
 import java.awt.Rectangle;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
@@ -29,11 +31,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.springframework.context.ApplicationContext;
 
 import com.dabis.trimsalon.beans.Hond;
 import com.dabis.trimsalon.beans.Klant;
 import com.dabis.trimsalon.beans.Opmerking;
-import com.dabis.trimsalon.utils.HibernateUtil;
 import com.dabis.trimsalon.utils.QueryTableModel;
 
 import javax.swing.JScrollPane;
@@ -43,6 +45,7 @@ import javax.swing.JComboBox;
 public class TrimsalonHondFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public static Logger log = Logger.getLogger(TrimsalonHondFrame.class);
+	private ApplicationContext context;
 	private javax.swing.JButton addButton = null;
 	private JButton clearButton = null;
 	private JButton exitButton = null;
@@ -79,8 +82,9 @@ public class TrimsalonHondFrame extends JFrame {
 	private JCalendarCombo ivjJCalendarCombo = null;
 	public Boolean sortAscending = new Boolean(true);
 	public String sortBy = "naam";  //  @jve:decl-index=0:
-	public TrimsalonHondFrame() {
+	public TrimsalonHondFrame(ApplicationContext context) {
 		super();
+		this.context = context;
 		initialize();
 	}
 
@@ -159,28 +163,9 @@ public class TrimsalonHondFrame extends JFrame {
 						c.setReu(getJCheckBox().isSelected());
 						c.setKleur(getJTextField4().getText());
 						c.setGecastreerd(getJCheckBox2().isSelected());
-						c.setGeboortedatum(getJCalendarCombo().getDate().getTime());
-
-							Opmerking opm1 = new Opmerking();
-							opm1.setDatum(new Date());
-							opm1.setAdvies(getJTextField7().getText());
-							opm1.setGedrag(getJTextField8().getText());
-							opm1.setMedischeKenmerken(getJTextField9().getText());
-							c.addOpmerking(opm1);
-							
-							Klant kl1 = new Klant();
-							
-							try {
-								Add(kl1);
-							} catch (HibernateException e) {
-								// Klant is mandatory, so an error should appear.
-								if(! e.getMessage().equalsIgnoreCase("not-null property references a null or transient value: com.dabis.trimsalon.beans.Hond.klant") ) {
-									fail("Could not add Hond:"+e.getMessage());
-								}
-							}
-							// Retrieve it again
-							kl1 = (Klant) GetAll("from Klant").get(0);
-							kl1.setNaam(getJComboBox1().getSelectedItem()+"");
+						c.setGeboortedatum(getJCalendarCombo().getDate());
+						// Get klant object from combobox
+						kl1.setNaam(getJComboBox1().getSelectedItem()+"");
 										        
 						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -503,11 +488,18 @@ public class TrimsalonHondFrame extends JFrame {
 	 */
 	private JComboBox getJComboBox1() {
 		if (jComboBox == null) {
-			Klant kl1 = new Klant();
-			kl1 = (Klant) GetAll("from Klant").get(0);
-			jComboBox = new JComboBox();
+			jComboBox = new JComboBox(new DefaultComboBoxModel());
 			jComboBox.setBounds(new Rectangle(600, 380, 300, 20));
-			jComboBox.addItem("Selecteer klant...");
+			jComboBox.setRenderer(new ListCellRenderer<Klant>() {
+
+				@Override
+				public Component getListCellRendererComponent(JList arg0,
+						Object arg1, int arg2, boolean arg3, boolean arg4) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				
+			});
 			jComboBox.addItem(kl1.getNaam());
 		}		
 				
@@ -537,8 +529,7 @@ public class TrimsalonHondFrame extends JFrame {
 		        getJTextField4().setText(c.getKleur()+"");
 		        getJCheckBox2().setSelected(c.isGecastreerd());
 		        Calendar dt = Calendar.getInstance();
-		        dt.setTime(c.getGeboortedatum());
-		        getJCalendarCombo().setDate(dt);
+		        getJCalendarCombo().setDate(c.getGeboortedatum());
 		        getJTextField7().setText(c.getOpmerkingen()+"");
 		        getJTextField8().setText(c.getOpmerkingen()+"");
 		        getJTextField9().setText(c.getOpmerkingen()+"");

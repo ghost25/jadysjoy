@@ -184,7 +184,7 @@ public class TrimsalonBoekhoudingFrame extends JFrame {
 						c.setPrijsExbtw(Double.valueOf(getJTextField3().getText()));
 						c.setBtw(Double.valueOf(getJTextField1().getText()));
 						c.setBetaalt(getJCheckBox().isSelected());
-						c.setBoekingsdatum(getJCalendarCombo().getDate().getTime());
+						c.setBoekingsdatum(getJCalendarCombo().getDate());
 						
 						session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -419,9 +419,7 @@ public class TrimsalonBoekhoudingFrame extends JFrame {
 		        getJTextField2().setText(c.getPrijsExbtw()+"");
 		        getJTextField3().setText(c.getBtw()+"");
 		        getJCheckBox().setSelected(c.isBetaalt());		        
-		        Calendar dt = Calendar.getInstance();
-		        dt.setTime(c.getBoekingsdatum());
-		        getJCalendarCombo().setDate(dt);
+		        getJCalendarCombo().setDate(c.getBoekingsdatum());
 	        }
 	    }
 	}

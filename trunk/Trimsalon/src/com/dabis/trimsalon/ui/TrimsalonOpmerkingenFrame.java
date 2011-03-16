@@ -124,7 +124,7 @@ public class TrimsalonOpmerkingenFrame extends JFrame {
 						c.setAdvies(getJTextField1().getText());
 						c.setGedrag(getJTextField2().getText());
 						c.setMedischeKenmerken(getJTextField3().getText());
-						c.setDatum(getJCalendarCombo().getDate().getTime());
+						c.setDatum(getJCalendarCombo().getDate());
 										        
 						Session session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -140,7 +140,7 @@ public class TrimsalonOpmerkingenFrame extends JFrame {
 				    	c.setAdvies(getJTextField1().getText());
 						c.setGedrag(getJTextField2().getText());
 						c.setMedischeKenmerken(getJTextField3().getText());
-						c.setDatum(getJCalendarCombo().getDate().getTime());
+						c.setDatum(getJCalendarCombo().getDate());
 						
 						session = HibernateUtil.getCurrentSession();
 				        session.beginTransaction();
@@ -344,8 +344,7 @@ public class TrimsalonOpmerkingenFrame extends JFrame {
 		        getJTextField2().setText(c.getGedrag()+"");
 		        getJTextField3().setText(c.getMedischeKenmerken()+"");
 		        Calendar dt = Calendar.getInstance();
-		        dt.setTime(c.getDatum());
-		        getJCalendarCombo().setDate(dt);
+		        getJCalendarCombo().setDate(c.getDatum());
 	        }
 	    }
 	}

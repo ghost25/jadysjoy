@@ -1,7 +1,9 @@
 package com.dabis.trimsalon;
 
-import com.dabis.trimsalon.ui.TrimsalonHondFrame;
-import com.dabis.trimsalon.utils.HibernateUtil;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.dabis.trimsalon.ui.TrimsalonKlantFrame;
 
 public class DeTrimsalon {
 
@@ -10,9 +12,9 @@ public class DeTrimsalon {
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    private static void createAndShowGUI() {
+    private static void createAndShowGUI(ApplicationContext context) {
         //Create and set up the window.
-		TrimsalonHondFrame lbw = new TrimsalonHondFrame();
+		TrimsalonKlantFrame lbw = new TrimsalonKlantFrame(context);
 		lbw.setLocationRelativeTo(null);
 		lbw.setVisible(true);
     }
@@ -22,8 +24,9 @@ public class DeTrimsalon {
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-        		HibernateUtil.setDB("PROD");
-                createAndShowGUI();
+                ApplicationContext factory = 
+                	new ClassPathXmlApplicationContext("applicationContext.xml");
+                createAndShowGUI(factory);
             }
         });
     }

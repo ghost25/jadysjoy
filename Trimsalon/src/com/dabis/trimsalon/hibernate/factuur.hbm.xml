@@ -10,7 +10,8 @@
    <key column="FID"/>
    <many-to-many class="Boekhouding" column="BHID" unique="true"/>
   </set>
-  <property name="factuurdatum" column="FACTUURDATUM" type="date"/>
+  <property name="factuurdatum" column="FACTUURDATUM" type="calendar"/>
   <property name="factuurnummer" column="FACTUURNUMMER" length="10"/>
  </class>
+  <query name="Factuur.findAll">select p from Factuur p</query>
 </hibernate-mapping>

@@ -13,4 +13,5 @@
      <property name="btw" column="BTW" type="double" />
      <property name="betaalt" column="BETAALT" type="boolean" />
   </class>
+  <query name="Boekhouding.findAll">select p from Boekhouding p</query>
 </hibernate-mapping>

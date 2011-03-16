@@ -11,11 +11,12 @@
   <property name="reu" column="REU" type="boolean"/>
   <property name="kleur" column="KLEUR" length="20"/>
   <property name="gecastreerd" column="GECASTREERD" type="boolean"/>
-  <property name="geboortedatum" column="GEBOORTEDATUM" type="date"/>
+  <property name="geboortedatum" column="GEBOORTEDATUM" type="calendar"/>
   <set name="opmerkingen" cascade="delete-orphan" lazy="false" table="OPMERKINGHOND">
    <key column="HID"/>
    <many-to-many class="Opmerking" column="OID" unique="true"/>
   </set>
   <many-to-one class="Klant" column="KID" lazy="false" name="klant" not-null="true"/>
  </class>
+  <query name="Hond.findAll">select p from Hond p</query>
 </hibernate-mapping>

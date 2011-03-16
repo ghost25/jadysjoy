@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+		
+    <!--  Dao Layer instances -->
+    <bean id="afspraakDao" parent="abstractDao">
+        <property name="proxyInterfaces">
+            <value>com.dabis.trimsalon.dao.IAfspraakDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoTarget">
+                <constructor-arg>
+                    <value>com.dabis.trimsalon.beans.Afspraak</value>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+    <bean id="behandelingDao" parent="abstractDao">
+        <property name="proxyInterfaces">
+            <value>com.dabis.trimsalon.dao.IBehandelingDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoTarget">
+                <constructor-arg>
+                    <value>com.dabis.trimsalon.beans.Behandeling</value>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+    <bean id="boekhoudingDao" parent="abstractDao">
+        <property name="proxyInterfaces">
+            <value>com.dabis.trimsalon.dao.IBoekhoudingDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoTarget">
+                <constructor-arg>
+                    <value>com.dabis.trimsalon.beans.Boekhouding</value>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+    <bean id="factuurDao" parent="abstractDao">
+        <property name="proxyInterfaces">
+            <value>com.dabis.trimsalon.dao.IFactuurDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoTarget">
+                <constructor-arg>
+                    <value>com.dabis.trimsalon.beans.Factuur</value>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+    <bean id="hondDao" parent="abstractDao">
+        <property name="proxyInterfaces">
+            <value>com.dabis.trimsalon.dao.IHondDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoTarget">
+                <constructor-arg>
+                    <value>com.dabis.trimsalon.beans.Hond</value>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+    <bean id="klantDao" parent="abstractDao">
+        <property name="proxyInterfaces">
+            <value>com.dabis.trimsalon.dao.IKlantDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoTarget">
+                <constructor-arg>
+                    <value>com.dabis.trimsalon.beans.Klant</value>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+    <bean id="opmerkingDao" parent="abstractDao">
+        <property name="proxyInterfaces">
+            <value>com.dabis.trimsalon.dao.IOpmerkingDao</value>
+        </property>
+        <property name="target">
+            <bean parent="abstractDaoTarget">
+                <constructor-arg>
+                    <value>com.dabis.trimsalon.beans.Opmerking</value>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+	<bean id="afspraakManager" class="com.dabis.trimsalon.services.AfspraakManager" >
+		<constructor-arg>
+			<map>
+				<entry key="AfspraakDao" value-ref="afspraakDao"/>
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="behandelingManager" class="com.dabis.trimsalon.services.BehandelingManager" >
+		<constructor-arg>
+			<map>
+				<entry key="BehandelingDao" value-ref="behandelingDao"/>
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="boekhoudingManager" class="com.dabis.trimsalon.services.BoekhoudingManager" >
+		<constructor-arg>
+			<map>
+				<entry key="BoekhoudingDao" value-ref="boekhoudingDao"/>
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="factuurManager" class="com.dabis.trimsalon.services.FactuurManager" >
+		<constructor-arg>
+			<map>
+				<entry key="FactuurDao" value-ref="factuurDao"/>
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="hondManager" class="com.dabis.trimsalon.services.HondManager" >
+		<constructor-arg>
+			<map>
+				<entry key="HondDao" value-ref="hondDao"/>
+				<entry key="OpmerkingDao" value-ref="opmerkingDao"/>
+				<entry key="KlantDao" value-ref="klantDao"/>
+			</map>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="klantManager" class="com.dabis.trimsalon.services.KlantManager" >
+		<constructor-arg>
+			<map>
+				<entry key="KlantDao" value-ref="klantDao"/>
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="opmerkingManager" class="com.dabis.trimsalon.services.OpmerkingManager" >
+		<constructor-arg>
+			<map>
+				<entry key="OpmerkingDao" value-ref="opmerkingDao"/>
+			</map>
+		</constructor-arg>
+	</bean>
+
+</beans>
+

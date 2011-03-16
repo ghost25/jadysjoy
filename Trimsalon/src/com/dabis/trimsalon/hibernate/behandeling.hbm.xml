@@ -12,4 +12,5 @@
         <property name="prijsExbtw" column="PRIJSEXBTW" type="double" />
         <property name="btw" column="BTW" type="double" />
   </class>
+  <query name="Behandeling.findAll">select p from Behandeling p</query>
 </hibernate-mapping>

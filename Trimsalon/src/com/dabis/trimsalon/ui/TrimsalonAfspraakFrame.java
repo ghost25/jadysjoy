@@ -141,7 +141,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 					long id = Long.parseLong(getJTextField().getText());
 					if(id == -1) {
 						// New afspraak
-						c.setDatum(getJCalendarCombo().getDate().getTime());
+						c.setDatum(getJCalendarCombo().getDate());
 						Behandeling be1 = new Behandeling();
 						
 						try {
@@ -199,7 +199,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 				        session.beginTransaction();
 						c = (Afspraak) session.createQuery("from Afspraak where id="+id).list().get(0);
 				        session.getTransaction().commit();
-				        c.setDatum(getJCalendarCombo().getDate().getTime());
+				        c.setDatum(getJCalendarCombo().getDate());
 
 				        Behandeling be1 = new Behandeling();
 						
@@ -501,9 +501,7 @@ public class TrimsalonAfspraakFrame extends JFrame {
 		        Afspraak c = (Afspraak) session.createQuery("from Afspraak where id="+id).list().get(0);
 		        session.getTransaction().commit();
 		        getJTextField().setText(c.getId()+"");
-		        Calendar dt = Calendar.getInstance();
-		        dt.setTime(c.getDatum());
-		        getJCalendarCombo().setDate(dt);
+		        getJCalendarCombo().setDate(c.getDatum());
 		        getJComboBox3().setSelectedItem(c.getBehandelingen());
 		        getJComboBox1().setSelectedItem(c.getKlant());
 		        getJComboBox2().setSelectedItem(c.getHond());

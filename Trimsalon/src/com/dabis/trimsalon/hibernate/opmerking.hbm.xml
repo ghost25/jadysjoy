@@ -9,6 +9,7 @@
   <property column="ADVIES" generated="never" lazy="false" length="50" name="advies"/>
   <property column="GEDRAG" generated="never" lazy="false" length="50" name="gedrag"/>
   <property column="MEDISCH" generated="never" lazy="false" length="50" name="medischeKenmerken"/>
-  <property column="DATUM" generated="never" lazy="false" name="datum" type="date"/>
+  <property column="DATUM" generated="never" lazy="false" name="datum" type="calendar"/>
  </class>
+  <query name="Opmerking.findAll">select p from Opmerking p</query>
 </hibernate-mapping>

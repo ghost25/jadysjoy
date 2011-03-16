@@ -3,12 +3,12 @@
  */
 package com.dabis.trimsalon.utils;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import com.dabis.trimsalon.beans.Klant;
 
@@ -18,96 +18,64 @@ import com.dabis.trimsalon.beans.Klant;
  */
 public class KlantManager {
 
-public static Logger log = Logger.getLogger(KlantManager.class);
+	public static Logger log = Logger.getLogger(KlantManager.class);
+	
+	private static Map<Long, Klant> klanten = new HashMap<Long, Klant>();
+	private static long currentId = 0;
+	
+	public static void initialize() {
+		Klant k = new Klant();
+		k.setId(++currentId);
+		k.setNaam("Rob Daalman");
+		k.setAdres("Molenstraat");
+		k.setHuisnummer("207");
+		k.setPostcode("5342CB");
+		k.setWoonplaats("Oss");
+		k.setInschrijfdatum(new Date());
+		k.setTelefoon("0412630534");
+		k.setMobiel("0647886423");
+		k.setOphalen(false);
+		k.setEmail("rob.daalman@gmail.com");
+		k.setOpmerkingen("Lastige klant!");
+		klanten.put(currentId, k);
+		
+		k = new Klant();
+		k.setId(++currentId);
+		k.setNaam("Tom Pijl");
+		k.setAdres("Jagerspad");
+		k.setHuisnummer("10");
+		k.setPostcode("5343XE");
+		k.setWoonplaats("Oss");
+		k.setInschrijfdatum(new Date());
+		k.setTelefoon("0412630534");
+		k.setMobiel("0646615266");
+		k.setOphalen(true);
+		k.setEmail("tom.deanne.pijl@home.nl");
+		k.setOpmerkingen("Geeft altijd fooi.!");
+		klanten.put(currentId, k);
+	}
 
-	@SuppressWarnings("unused")
-	private void Add(Klant klant) throws HibernateException {
-	    Transaction tx = null;
-	    Session session = HibernateUtil.getCurrentSession();
-	    try {
-	    	tx = session.beginTransaction();
-	    	session.save(klant);
-	    	tx.commit();
-	    } catch (RuntimeException e) {
-	    	if (tx != null && tx.isActive()) {
-		        try {
-		        	// Second try catch as the rollback could fail as well
-		        	tx.rollback();
-		        } catch (HibernateException e1) {
-		        	log.debug("Error rolling back transaction");
-		        }
-		        // throw again the first exception
-		        throw e;
-	    	}
-	    }
+	public static long addKlant(Klant klant) {
+		klant.setId(++currentId);
+		klanten.put(currentId, klant);
+		return currentId;
 	}
 	
-	@SuppressWarnings("unused")
-	private void Update(Klant klant) throws HibernateException {
-	    Transaction tx = null;
-	    Session session = HibernateUtil.getCurrentSession();
-	    try {
-	    	tx = session.beginTransaction();
-	    	session.update(klant);
-	    	tx.commit();
-	    } catch (RuntimeException e) {
-	    	if (tx != null && tx.isActive()) {
-		        try {
-		        	// Second try catch as the rollback could fail as well
-		        	tx.rollback();
-		        } catch (HibernateException e1) {
-		        	log.debug("Error rolling back transaction");
-		        }
-		        // throw again the first exception
-		        throw e;
-	    	}
-	    }
+	public void updateKlant(Klant klant) {
+		klanten.remove(klant.getId());
+		klanten.put(klant.getId(), klant);
 	}
 	
-	@SuppressWarnings("unused")
-	private void Delete(Klant klant) throws HibernateException {
-	    Transaction tx = null;
-	    Session session = HibernateUtil.getCurrentSession();
-	    try {
-	    	tx = session.beginTransaction();
-	    	session.delete(klant);
-	    	tx.commit();
-	    } catch (RuntimeException e) {
-	    	if (tx != null && tx.isActive()) {
-		        try {
-		        	// Second try catch as the rollback could fail as well
-		        	tx.rollback();
-		        } catch (HibernateException e1) {
-		        	log.debug("Error rolling back transaction");
-		        }
-		        // throw again the first exception
-		        throw e;
-	    	}
-	    }
+	public void deleteKlant(Klant klant) {
+		klanten.remove(klant.getId());
 	}
 	
-	@SuppressWarnings({ "unchecked", "unused" })
-	private <T> List<T> GetAll(String query) throws HibernateException {
-		List<T> list = null;
-	    Transaction tx = null;
-	    Session session = HibernateUtil.getCurrentSession();
-	    try {
-	    	tx = session.beginTransaction();
-			list = (List<T>) session.createQuery(query).list();
-	    	tx.commit();
-	    } catch (RuntimeException e) {
-	    	if (tx != null && tx.isActive()) {
-		        try {
-		        	// Second try catch as the rollback could fail as well
-		        	tx.rollback();
-		        } catch (HibernateException e1) {
-		        	log.debug("Error rolling back transaction");
-		        }
-		        // throw again the first exception
-		        throw e;
-	    	}
-	    }
-		return list;
+	public List<Klant> getAllKlanten() {
+		return (List<Klant>) klanten.values();
+	}
+	
+	public Klant getKlantById(long id) {
+		return klanten.get(id);
 	}
 	
 }

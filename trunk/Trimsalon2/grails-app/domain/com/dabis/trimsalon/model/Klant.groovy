@@ -1,6 +1,7 @@
 package com.dabis.trimsalon.model
 
 class Klant {
+	// Fields
 	String naam
 	String adres
 	String huisnummer
@@ -9,10 +10,12 @@ class Klant {
 	String telefoon
 	String mobiel
 	String email
-	boolean ophalen = false
+	Boolean ophalen = false
 	String opmerkingen
 	Date inschrijfdatum
-
+	// Relationships
+	static hasMany = [honden:Hond, afspraken:Afspraak]
+	// Constraints and from sequence
     static constraints = {
 		naam(blank:false)
 		adres(blank:false)

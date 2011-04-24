@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Welcome to Grails</title>
+        <title>Welkom bij D-BIS</title>
         <meta name="layout" content="main" />
         <style type="text/css" media="screen">
 
@@ -93,6 +93,9 @@
                     <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
                         <li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
                     </g:each>
+                    <g:link controller="user" action="create">
+					New User
+					</g:link>
                 </ul>
             </div>
         </div>

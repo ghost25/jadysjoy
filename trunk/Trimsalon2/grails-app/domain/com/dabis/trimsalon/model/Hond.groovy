@@ -4,26 +4,29 @@ class Hond {
 	// Fields
 	String naam
 	String ras
-	Boolean reu = false
+	String geslacht
 	String kleur
-	Boolean gecastreerd = false
+	String gecastreerd
 	Date geboortedatum
 	Klant klant
-// Relationships
+	
+	// Relationships
 	static hasMany = [opmerkingen:Opmerking, afspraken:Afspraak]
 	static hasOne = [klant:Klant]
+	
 	// Validation and order of appearance of fields on Details form
     static constraints = {
 		naam(blank:false)
 		ras()
-		reu()
+		geslacht(inList: ["Reu", "Teef"])
 		kleur()
-		gecastreerd()
+		gecastreerd(inList: ["Gecastreerd", "Gesteriliseerd", "Geen"])
 		geboortedatum()
 		klant(blank:false, unique:true)
     }
+	
 	// as it will be shown in the Opmerking form
-	String toString(){
+		String toString(){
 		return "${naam}, ${klant.postcode} ${klant.woonplaats}"
 	}
 }

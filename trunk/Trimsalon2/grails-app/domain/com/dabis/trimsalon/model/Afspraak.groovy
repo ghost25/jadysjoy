@@ -8,9 +8,10 @@ class Afspraak {
 	String opmerkingen
 	Boolean ophalen
 	Boolean afgehandeld
+	
 	// Relationships
-	static hasMany = [behandelingen:Behandeling]
-	static hasOne = [klant:Klant, hond:Hond, factuurregel:Boekhouding]
+	static hasOne = [klant:Klant, hond:Hond, producten:Producten]
+	
 	// Constraints and form sequence
     static constraints = {
 		datum(blank:false)

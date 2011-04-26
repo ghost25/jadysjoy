@@ -8,13 +8,15 @@ class Klant {
 	String postcode
 	String woonplaats
 	String telefoon
-	String mobiel
+	String telefoon2
 	String email
 	Boolean ophalen = false
 	String opmerkingen
 	Date inschrijfdatum
+	
 	// Relationships
 	static hasMany = [honden:Hond, afspraken:Afspraak]
+	
 	// Constraints and from sequence
     static constraints = {
 		naam(blank:false)
@@ -23,12 +25,13 @@ class Klant {
 		postcode(blank:false)
 		woonplaats(blank:false)
 		telefoon(blank:false)
-		mobiel()
+		telefoon2()
 		email(email:true)
 		ophalen()
 		opmerkingen()
 		inschrijfdatum(blank:false)
     }
+	
 	// as it will be shown in the Hond form
 	String toString(){
 		return "${naam}, ${postcode} ${woonplaats}"

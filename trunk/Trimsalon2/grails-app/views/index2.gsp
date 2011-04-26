@@ -119,15 +119,15 @@
                         
                             <td><g:link action="show" id="${afspraakInstance.id}">${fieldValue(bean: afspraakInstance, field: "id")}</g:link></td>
                         
-                            <td>${fieldValue(bean: userInstance, field: "datum")}</td>
+                            <td>${fieldValue(bean: afspraakInstance, field: "datum")}</td>
                         
-                            <td>${fieldValue(bean: userInstance, field: "hond")}</td>
+                            <td>${fieldValue(bean: afspraakInstance, field: "hond")}</td>
                         
-                            <td>${fieldValue(bean: userInstance, field: "klant")}</td>
+                            <td>${fieldValue(bean: afspraakInstance, field: "klant")}</td>
                             
-                            <td>${fieldValue(bean: userInstance, field: "ophalen")}</td>
+                            <td>${fieldValue(bean: afspraakInstance, field: "ophalen")}</td>
                             
-                            <td>${fieldValue(bean: userInstance, field: "afgehandeld")}</td>
+                            <td>${fieldValue(bean: afspraakInstance, field: "afgehandeld")}</td>
                         
                         </tr>
                     </g:each>

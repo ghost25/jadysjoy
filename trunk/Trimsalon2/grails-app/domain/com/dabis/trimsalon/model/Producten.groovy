@@ -1,17 +1,26 @@
 package com.dabis.trimsalon.model
 
 class Producten {
+	String naam;
 	String omschrijving;
-	String ras;
 	BigDecimal prijsExbtw;
-	BigDecimal btw;
+	BigDecimal btw = 19;
+	Integer voorraad;
+	Integer drempel;
 
 	static hasMany = [afspraken:Afspraak]
 	
     static constraints = {
-		ras()
-		omschrijving()
-		prijsExbtw()
+		naam(blank:false)
+		omschrijving(blank:false)
+		prijsExbtw(blank:false)
 		btw()
+		voorraad()
+		drempel()
     }
-}
+	
+	// as it will be shown in the Afspraak form
+	String toString(){
+		return "${naam}"
+	}
+} 

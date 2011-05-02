@@ -70,9 +70,6 @@
 					<g:link controller="afspraak" action="create">
 					Nieuwe Afspraak
 					</g:link></p>
-                     <g:link controller="factuur" action="list">
-					Facturen
-					</g:link></p>
 					<g:link controller="producten" action="list">
 					Producten
 					</g:link></p>

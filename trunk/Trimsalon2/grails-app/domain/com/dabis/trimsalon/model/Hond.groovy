@@ -27,6 +27,6 @@ class Hond {
 	
 	// as it will be shown in the Opmerking form
 		String toString(){
-		return "${naam}, ${klant.postcode} ${klant.woonplaats}"
+		return "${naam}, ${klant.naam} ${klant.woonplaats}"
 	}
 }

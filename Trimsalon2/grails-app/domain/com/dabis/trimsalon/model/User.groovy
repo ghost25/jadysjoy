@@ -1,17 +1,20 @@
 package com.dabis.trimsalon.model
 
 class User {
+	
+	static searchable = true
+	
 	String login
 	String password
+	String naam
+	Date indienst
 	String role = "user"
-	//String naam
-	//Date indienst
-
+	
 	static constraints = {
 		login(blank:false, nullable:false, unique:true)
 		password(blank:false, password:true)
-		//naam()
-		//indienst(blank:false)
+		naam(blank:false)
+		indienst(blank:false, nullable:true)
 		role(inList:["admin", "user"])
 	}
 	

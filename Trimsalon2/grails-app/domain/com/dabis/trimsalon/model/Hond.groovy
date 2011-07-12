@@ -1,6 +1,8 @@
 package com.dabis.trimsalon.model
 
 class Hond {
+	static searchable = true
+	
 	// Fields
 	String naam
 	String ras
@@ -17,12 +19,12 @@ class Hond {
 	// Validation and order of appearance of fields on Details form
     static constraints = {
 		naam(blank:false)
-		ras()
+		ras(blank:false)
 		geslacht(inList: ["Reu", "Teef"])
-		kleur()
+		kleur(blank:false)
 		gecastreerd(inList: ["Gecastreerd", "Gesteriliseerd", "Geen"])
-		geboortedatum()
-		klant(blank:false, unique:true)
+		geboortedatum(blank:false)
+		klant(unique:true)
     }
 	
 	// as it will be shown in the Opmerking form

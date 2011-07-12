@@ -64,6 +64,12 @@
 					 <g:link controller="klant" action="create">
 					Nieuwe klant
 					</g:link></p>
+					<g:link controller="hond" action="list">
+					Honden
+					</g:link></p>
+					 <g:link controller="hond" action="create">
+					Nieuwe hond
+					</g:link></p>
 					 <g:link controller="afspraak" action="list">
 					Afspraken
 					</g:link></p>
@@ -83,16 +89,15 @@
             </div>
         </div>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Home</a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/index2.gsp')}">Home</a></span>
         </div>
         <div id="pageBody">
-            <h1>Welkom bij D-BIS</h1>
-            <p>Congratulations, you have successfully started your first Grails application! At the moment
-            this is the default page, feel free to modify it to either redirect to a controller or display whatever
-            content you may choose. Below is a list of controllers that are currently deployed in this application,
-            click on each to execute its default action:</p>
-            		
+            <h1>Welkom bij D-Trim</h1>
+            <p>Met dit programma snel en eenvoudig behandelingen invoeren
+             en uw inkomsten per behandeling vastleggen.<br> 
+            Zoeken naar een klant of hond is nog nooit zo makkelijk geweest en uw boekhouding
+            blijft altijd op orde.</p><br> 
+            <br>           		
 			<div class="list">
                 <table>
                     <thead>

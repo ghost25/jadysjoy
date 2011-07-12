@@ -1,6 +1,8 @@
 package com.dabis.trimsalon.model
 
 class Klant {
+	static searchable = true
+	
 	// Fields
 	String naam
 	String adres
@@ -12,7 +14,7 @@ class Klant {
 	String email
 	Boolean ophalen = false
 	String opmerkingen
-	Date inschrijfdatum
+	Date dateCreated
 	
 	// Relationships
 	static hasMany = [honden:Hond, afspraken:Afspraak]
@@ -29,7 +31,7 @@ class Klant {
 		email(email:true)
 		ophalen()
 		opmerkingen()
-		inschrijfdatum(blank:false)
+		dateCreated()
     }
 	
 	// as it will be shown in the Hond form

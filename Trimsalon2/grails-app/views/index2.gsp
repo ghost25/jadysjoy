@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Welkom bij D-BIS</title>
+        <title>Welkom bij D-Trim</title>
         <meta name="layout" content="main" />
         <style type="text/css" media="screen">
 

@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Welkom bij D-BIS</title>
+        <title>Welkom bij D-Trim</title>
         <meta name="layout" content="main" />
         <style type="text/css" media="screen">
 
@@ -55,48 +55,86 @@
             <div class="homePagePanel">
                 <div class="panelTop"></div>
                 <div class="panelBody">
-                    <h1>Application Status</h1>
-                    <ul>
-                        <li>App version: <g:meta name="app.version"></g:meta></li>
-                        <li>Grails version: <g:meta name="app.grails.version"></g:meta></li>
-                        <li>Groovy version: ${org.codehaus.groovy.runtime.InvokerHelper.getVersion()}</li>
-                        <li>JVM version: ${System.getProperty('java.version')}</li>
-                        <li>Controllers: ${grailsApplication.controllerClasses.size()}</li>
-                        <li>Domains: ${grailsApplication.domainClasses.size()}</li>
-                        <li>Services: ${grailsApplication.serviceClasses.size()}</li>
-                        <li>Tag Libraries: ${grailsApplication.tagLibClasses.size()}</li>
-                    </ul>
-                    <h1>Installed Plugins</h1>
-                    <ul>
-                        <g:set var="pluginManager"
-                               value="${applicationContext.getBean('pluginManager')}"></g:set>
-
-                        <g:each var="plugin" in="${pluginManager.allPlugins}">
-                            <li>${plugin.name} - ${plugin.version}</li>
-                        </g:each>
-
-                    </ul>
+                    <h1>Menu</h1>
+                    <div id="controllerList" class="dialog">
+                <ul>
+                     <g:link controller="klant" action="list">
+					Klanten
+					</g:link></p>
+					 <g:link controller="klant" action="create">
+					Nieuwe klant
+					</g:link></p>
+					<g:link controller="hond" action="list">
+					Honden
+					</g:link></p>
+					 <g:link controller="hond" action="create">
+					Nieuwe hond
+					</g:link></p>
+					 <g:link controller="afspraak" action="list">
+					Afspraken
+					</g:link></p>
+					<g:link controller="afspraak" action="create">
+					Nieuwe Afspraak
+					</g:link></p>
+					<g:link controller="producten" action="list">
+					Producten
+					</g:link></p>
+                    <g:link controller="user" action="create">
+					Nieuwe gebruiker
+					</g:link>
+                </ul>
+            </div>
                 </div>
                 <div class="panelBtm"></div>
             </div>
         </div>
+        <div class="nav">
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Home</a></span>
+        </div>
         <div id="pageBody">
-            <h1>Welcome to Grails</h1>
-            <p>Congratulations, you have successfully started your first Grails application! At the moment
-            this is the default page, feel free to modify it to either redirect to a controller or display whatever
-            content you may choose. Below is a list of controllers that are currently deployed in this application,
-            click on each to execute its default action:</p>
-
-            <div id="controllerList" class="dialog">
-                <h2>Available Controllers:</h2>
-                <ul>
-                    <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-                        <li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
+            <h1>Welkom bij D-Trim</h1>
+            <p>Met dit programma snel en eenvoudig behandelingen invoeren
+             en uw inkomsten per behandeling vastleggen.<br> 
+            Zoeken naar een klant of hond is nog nooit zo makkelijk geweest en uw boekhouding
+            blijft altijd op orde.</p><br> 
+            <br>
+			<div class="list">
+                <table>
+                    <thead>
+                        <tr>
+                        
+                            <g:sortableColumn property="datum" title="${message(code: 'afspraak.datum.label', default: 'Datum')}" />
+                        
+                            <g:sortableColumn property="hond" title="${message(code: 'afspraak.hond.label', default: 'Hond')}" />
+                        
+                            <g:sortableColumn property="klant" title="${message(code: 'afspraak.klant.label', default: 'Klant')}" />
+                        
+                            <g:sortableColumn property="ophalen" title="${message(code: 'afspraak.ophalen.label', default: 'Ophalen')}" />
+                            
+                            <g:sortableColumn property="afgehandeld" title="${message(code: 'afspraak.afgehandeld.label', default: 'Afgehandeld')}" />
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <g:each in="${afspraakInstanceList}" status="i" var="afspraakInstance">
+                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                        
+                            <td><g:link action="show" id="${afspraakInstance.id}">${fieldValue(bean: afspraakInstance, field: "id")}</g:link></td>
+                        
+                            <td>${fieldValue(bean: afspraakInstance, field: "datum")}</td>
+                        
+                            <td>${fieldValue(bean: afspraakInstance, field: "hond")}</td>
+                        
+                            <td>${fieldValue(bean: afspraakInstance, field: "klant")}</td>
+                            
+                            <td>${fieldValue(bean: afspraakInstance, field: "ophalen")}</td>
+                            
+                            <td>${fieldValue(bean: afspraakInstance, field: "afgehandeld")}</td>
+                        
+                        </tr>
                     </g:each>
-                    <g:link controller="user" action="create">
-					New User
-					</g:link>
-                </ul>
+                    </tbody>
+                </table>
             </div>
         </div>
     </body>

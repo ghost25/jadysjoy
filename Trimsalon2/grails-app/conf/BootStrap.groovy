@@ -26,38 +26,6 @@ class BootStrap {
 			if(jdoe.hasErrors()){
 				println jdoe.errors
 	}
-			
-			def klant1 = new Klant(
-				naam:"Jan janssen",
-				adres:"molenstraat",
-				huisnummer:"207",
-				postcode:"5342CB",
-				woonplaats:"Oss",
-				telefoon:"0412481966",
-				telefoon2:"000000",
-				email:"test@test.nl",
-				ophalen:"yes",
-				opmerkingen:"test",
-				dateCReated:"2010/01/10")
-			
-			klant1.save()
-			if(klant1.hasErrors()){
-				println klant1.errors
-	}
-			
-			def hond1 = new Hond(
-				naam:"Kees",
-				ras:"Labrador",
-				geslacht:"Reu",
-				kleur:"zwart",
-				gecastreerd:"Gecastreerd",
-				geboortedatum:"2001/01/01",
-				klant:"Janssen, 5342CB Oss")
-			
-			hond1.save()
-			if(hond1.hasErrors()){
-				println hond1.errors
-	}
 
 		}
 		}

@@ -89,7 +89,7 @@
             </div>
         </div>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/index2.gsp')}">Home</a></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/home.gsp')}">Home</a></span>
         </div>
         <div id="pageBody">
             <h1>Welkom bij D-Trim</h1>

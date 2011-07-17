@@ -9,14 +9,14 @@ class BootStrap {
 				switch(GrailsUtil.environment){
 					case "development":
 					def admin = new User(login:"admin",
-		password:"wordpass",
-		role:"admin",
-		naam:"Test admin"
-			)
+										password:"wordpass",
+										role:"admin",
+										naam:"Test admin"
+								)
 					admin.save()
 		if(admin.hasErrors()){
 			println admin.errors
-	}
+		}
 		def jdoe = new User(login:"jdoe",
 			password:"password",
 			role:"user",

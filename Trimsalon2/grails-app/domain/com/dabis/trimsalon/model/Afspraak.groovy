@@ -2,8 +2,6 @@ package com.dabis.trimsalon.model
 
 class Afspraak {
 	
-	static searchable = true
-	
 	// Fields
 	Date datum
 	String begintijd
@@ -80,9 +78,9 @@ class Afspraak {
 							"19:00",
 							"19:30",
 							"20:00"]) 
-		producten(unique:true)
-		hond(unique:true)
-		klant(unique:true)
+		producten()
+		hond()
+		klant()
 		opmerkingen()
 		ophalen()
 		afgehandeld()

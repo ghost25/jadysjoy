@@ -26,8 +26,8 @@ class Klant {
 		huisnummer(blank:false)
 		postcode(blank:false)
 		woonplaats(blank:false)
-		telefoon(blank:false)
-		telefoon2()
+		telefoon(blank:false, maxLength:11)
+		telefoon2(maxLength:11)
 		email(email:true)
 		ophalen()
 		opmerkingen()
@@ -36,7 +36,7 @@ class Klant {
 	
 	// as it will be shown in the Hond form
 	String toString(){
-		return "${naam}, ${postcode} ${woonplaats}"
+		return "${naam}, ${woonplaats}"
 	}
 
 }

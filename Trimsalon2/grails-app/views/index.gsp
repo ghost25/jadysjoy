@@ -2,6 +2,8 @@
     <head>
         <title>Welkom bij D-Trim</title>
         <meta name="layout" content="main" />
+         <g:set var="entityName" value="${message(code: 'afspraak.label', default: 'Afspraak')}"/>
+        <title><g:message code="default.show.label" args="[entityName]" /></title>
         <style type="text/css" media="screen">
         </style>
     </head>
@@ -16,7 +18,7 @@
             Zoeken naar een klant of hond is nog nooit zo makkelijk geweest en uw boekhouding
             blijft altijd op orde.</p><br> 
             <br>
-			<div class="list">
+			<div class="dialog">
                 <table>
                     <thead>
                         <tr>

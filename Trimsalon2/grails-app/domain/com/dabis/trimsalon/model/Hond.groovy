@@ -1,7 +1,6 @@
 package com.dabis.trimsalon.model
 
 class Hond {
-	static searchable = true
 	
 	// Fields
 	String naam
@@ -23,8 +22,8 @@ class Hond {
 		geslacht(inList: ["Reu", "Teef"])
 		kleur(blank:false)
 		gecastreerd(inList: ["Gecastreerd", "Gesteriliseerd", "Geen"])
-		geboortedatum(blank:false)
-		klant(unique:true)
+		geboortedatum(blank:false, nullable:false)
+		klant(blank:false)
     }
 	
 	// as it will be shown in the Opmerking form

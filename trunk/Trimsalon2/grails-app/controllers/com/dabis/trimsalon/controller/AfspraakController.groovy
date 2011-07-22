@@ -4,3 +4,5 @@ class AfspraakController {
 
     def scaffold = com.dabis.trimsalon.model.Afspraak
 }
+
+

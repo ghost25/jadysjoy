@@ -1,5 +1,3 @@
-import com.dabis.trimsalon.model.Hond
-import com.dabis.trimsalon.model.Klant
 import com.dabis.trimsalon.model.User
 import grails.util.GrailsUtil
 	

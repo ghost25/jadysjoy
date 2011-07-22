@@ -1,6 +1,9 @@
 package com.dabis.trimsalon.model
 
 class Opmerking {
+	
+	static searchable = true
+	
 	// Fields
 	Hond hond
 	String advies
@@ -14,7 +17,7 @@ class Opmerking {
 	// Validation and order of appearance of fields on Details form
     static constraints = {
 		dateCreated()
-		hond()
+		hond(nullable:false)
 		advies()
 		gedrag()
 		medischeKenmerken()

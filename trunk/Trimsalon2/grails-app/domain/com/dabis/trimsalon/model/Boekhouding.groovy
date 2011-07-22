@@ -13,6 +13,7 @@ class Boekhouding {
 	// Relationships
 	static belongsTo = [afspraak:Afspraak]
 	// Constraints and form sequence
+	
     static constraints = {
 		factuurnr(min:90000)
 		boekingsdatum(blank:false)

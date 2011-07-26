@@ -36,7 +36,7 @@ class UserController {
 		def login = {}
 	
 		def logout = {
-		  flash.message = "Goodbye ${session.user.login}"
+		  flash.message = "Prettige dag ${session.user.login}"
 		  session.user = null
 		  redirect(action:"login")
 		}
@@ -48,13 +48,13 @@ class UserController {
 			session.user = user
 			flash.message = "Hello ${user.login}!"
 			if(user.admin){
-			  redirect(controller:"admin", action:"index")
+			  redirect(controller:"admin", action:"index.gsp")
 			} else{
-			  redirect(controller:"user", action:"list")
+			  redirect(controller:"afspraak", action:"list")
 			}
 		  }else{
 			flash.message =
-			   "Sorry, ${params.login}. Please try again."
+			   "Sorry, ${params.login}. Gebruikesnaam of wachtwoord niet juist, probeer opnieuw!"
 			redirect(action:"login")
 		  }
 		}

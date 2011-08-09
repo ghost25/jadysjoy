@@ -15,7 +15,8 @@
             Zoeken naar een klant of hond is nog nooit zo makkelijk geweest en uw boekhouding
             blijft altijd op orde.</p><br> 
             <br>
-            <h1>Login</h1>  
+            <h1>Login</h1> 
+            <p>Log in om programma te gebruiken</p><br> 
             <g:if test="${flash.message}">
               <div class="message">${flash.message}</div>
             </g:if>

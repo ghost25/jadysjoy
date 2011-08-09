@@ -31,31 +31,44 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="login"><g:message code="user.login.label" default="Login" /></label>
+                                    <label for="hond"><g:message code="opmerking.hond.label" default="Hond" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'login', 'errors')}">
-                                    <g:textField name="login" value="${userInstance?.login}" />
+                                <td valign="top" class="value ${hasErrors(bean: opmerkingInstance, field: 'hond', 'errors')}">
+                                    <g:textField name="hond" value="${opmerkingInstance?.naam}" />
                                 </td>
-                            </tr>
-                        
+                            </tr>                        
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="password"><g:message code="user.password.label" default="Password" /></label>
+                                    <label for="advies"><g:message code="opmerking.advies.label" default="Advies" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'password', 'errors')}">
-                                    <g:passwordField name="password" value="${userInstance?.password}" />
+                                <td valign="top" class="value ${hasErrors(bean: opmerkingInstance, field: 'advies', 'errors')}">
+                                    <g:textField name="advies" value="${opmerkingInstance?.advies}" />
                                 </td>
                             </tr>
-                        
+  							<tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="gedrag"><g:message code="opmerking.gedrag.label" default="Gedrag" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: opmerkingInstance, field: 'gedrag', 'errors')}">
+                                    <g:textField name="gedrag" value="${opmerkingInstance?.gedrag}" />
+                                </td>                           
+                            </tr>
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="role"><g:message code="user.role.label" default="Role" /></label>
+                                    <label for="medischeKenmerken"><g:message code="opmerking.medischeKenmerken.label" default="Medische kenmerken" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'role', 'errors')}">
-                                    <g:select name="role" from="${userInstance.constraints.role.inList}" value="${userInstance?.role}" valueMessagePrefix="user.role"  />
+                                <td valign="top" class="value ${hasErrors(bean: opmerkingInstance, field: 'medischeKenmerken', 'errors')}">
+                                    <g:textField name="medischeKenmerken" value="${opmerkingInstance?.medischeKenmerken}" />
                                 </td>
-                            </tr>
-                        
+                             </tr> 
+                              <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="dateCreated"><g:message code="opmerking.dateCreated.label" default="Toegevoegd op" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: opmerkingInstance, field: 'dateCreated', 'errors')}">
+                                    <g:textField name="dateCreated" value="${opmerkingInstance?.dateCreated}" />
+                                </td>
+                             </tr>                              
                         </tbody>
                     </table>
                 </div>

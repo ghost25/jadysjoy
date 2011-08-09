@@ -6,14 +6,6 @@ class UserController {
 	
 		static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	
-	/*
-		def beforeInterceptor = [action:this.&debug]
-	
-		def debug(){
-		  println "DEBUG: ${actionUri} called."
-		  println "DEBUG: ${params}"
-		}
-	*/
 		def beforeInterceptor = [action:this.&auth,
 				   except:['login', 'logout', 'authenticate']]
 	
@@ -24,16 +16,30 @@ class UserController {
 		  }
 	
 		  if(!session.user.admin){
-			flash.message = "Tsk tsk—admins only"
+			flash.message = "Alleen voor beheerders beschikbaar"
 			redirect(controller:"user", action:"list")
 			return false
 		  }
 		}
 		
-	
-	
-	
-		def login = {}
+	def login = {
+			if (request.method == "GET") {
+			session.userId = null
+			def user = new User()
+			}
+			else {
+			def user =
+			User.findByUserIdAndPassword(params.userId,
+			params.password)
+			if (user) {
+			session.userId = user.userId
+			redirect(controller:'race')
+			}
+			else {
+			flash['message'] = 'Please enter a valid user ID and password'
+			}
+			}
+			}
 	
 		def logout = {
 		  flash.message = "Prettige dag ${session.user.login}"
@@ -46,7 +52,7 @@ class UserController {
 												 params.password)
 		  if(user){
 			session.user = user
-			flash.message = "Hello ${user.login}!"
+			flash.message = "Welkom ${user.login}!"
 			if(user.admin){
 			  redirect(controller:"admin", action:"index.gsp")
 			} else{
@@ -54,7 +60,7 @@ class UserController {
 			}
 		  }else{
 			flash.message =
-			   "Sorry, ${params.login}. Gebruikesnaam of wachtwoord niet juist, probeer opnieuw!"
+			   "Sorry. Gebruikesnaam of wachtwoord niet juist, probeer opnieuw!"
 			redirect(action:"login")
 		  }
 		}

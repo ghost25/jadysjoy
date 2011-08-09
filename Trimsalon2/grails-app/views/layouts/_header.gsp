@@ -26,9 +26,6 @@
 					<g:link controller="producten" action="list">
 					Producten
 					</g:link></p>
-                    <g:link controller="user" action="create">
-					Nieuwe gebruiker
-					</g:link>
                 </ul>
             </div>
                 </div>

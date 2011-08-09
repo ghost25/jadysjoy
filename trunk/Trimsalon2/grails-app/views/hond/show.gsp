@@ -2,7 +2,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     	<meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
+        <g:set var="entityName" value="${message(code: 'hond.label', default: 'hond')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -19,42 +19,61 @@
             </g:if>
             <div class="dialog">
                 	<table>
-                    <tbody>
+                    <tbody>                  
+             
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.id.label" default="Id" /></td>
+                            <td valign="top" class="name"><g:message code="hond.naam.label" default="Naam" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "id")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: hondInstance, field: "naam")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.login.label" default="Login" /></td>
+                            <td valign="top" class="name"><g:message code="hond.ras.label" default="Ras" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "login")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.password.label" default="Password" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "password")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: hondInstance, field: "ras")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.role.label" default="Role" /></td>
+                            <td valign="top" class="name"><g:message code="hond.geslacht.label" default="Geslacht" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "role")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: hondInstance, field: "geslacht")}</td>
                             
                         </tr>
+                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="hond.kleur.label" default="Kleur" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: hondInstance, field: "kleur")}</td>
+                            
+                        </tr>
+                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="hond.gecastreerd.label" default="Gecastreerd" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: hondInstance, field: "gecastreerd")}</td>
+                            
+                        </tr>
+                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="hond.geboortedatum.label" default="Geboortedatum" /></td>
+                            
+                            <td valign="top" class="value"><g:formatDate date="${hondInsctance?.geboortedatum}" format="yyyy-MMM-dd"/></td>
+                            
+                        </tr>
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="hond.klant.label" default="Klant" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: hondInstance, field: "klant")}</td>
+                            
+                        </tr>
+                        
                     
                     </tbody>
                 </table>
             </div>
             <div class="buttons">
                 <g:form>
-                    <g:hiddenField name="id" value="${userInstance?.id}" />
+                    <g:hiddenField name="id" value="${hondInstance?.id}" />
                     <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Weet je zeker dat je dit wilt verwijderen?')}');" /></span>
                 </g:form>

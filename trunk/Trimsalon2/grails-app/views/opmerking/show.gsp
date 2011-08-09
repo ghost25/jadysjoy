@@ -2,7 +2,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     	<meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
+        <g:set var="entityName" value="${message(code: 'opmerking.label', default: 'opmerking')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -22,30 +22,36 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.id.label" default="Id" /></td>
+                            <td valign="top" class="name"><g:message code="opmerking.Hond.label" default="Hond" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.login.label" default="Login" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "login")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: opmerkingInstance, field: "hond")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.password.label" default="Password" /></td>
+                            <td valign="top" class="name"><g:message code="opmerking.advies.label" default="Advies" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "password")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: opmerkingInstance, field: "advies")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.role.label" default="Role" /></td>
+                            <td valign="top" class="name"><g:message code="opmerking.gedrag.label" default="Gedrag" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "role")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: opmerkingInstance, field: "gedrag")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="opmerking.medischeKenmerken.label" default="Medische kenmerken" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: opmerkingInstance, field: "medischeKenmerken")}</td>
+                            
+                        </tr>
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="opmerking.dateCreated.label" default="Toegevoegd op" /></td>
+                            
+                            <td valign="top" class="value"><g:formatDate date="${opmerkingInsctance?.dateCreated}" format="yyyy-MMM-dd"/></td>
                             
                         </tr>
                     
@@ -54,7 +60,7 @@
             </div>
             <div class="buttons">
                 <g:form>
-                    <g:hiddenField name="id" value="${userInstance?.id}" />
+                    <g:hiddenField name="id" value="${opmerkingInstance?.id}" />
                     <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Weet je zeker dat je dit wilt verwijderen?')}');" /></span>
                 </g:form>

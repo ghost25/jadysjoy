@@ -1,5 +1,6 @@
 package com.dabis.trimsalon.model
 
+
 class Producten {
 	static searchable = true
 	
@@ -9,6 +10,7 @@ class Producten {
 	BigDecimal btw = 19;
 	Integer voorraad;
 	Integer drempel;
+
 
 	static hasMany = [afspraken:Afspraak]
 	

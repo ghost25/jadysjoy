@@ -36,8 +36,8 @@
                         
                             <td><g:link action="show" id="${boekhoudingInstance.id}">${fieldValue(bean: boekhoudingInstance, field: "id")}</g:link></td>                        
                             <td>${fieldValue(bean: boekhoudingInstance, field: "factuurnr")}</td>                        
-                            <td><g:formatDate date="${boekhoudingInsctance?.boekingsdatum}" format="yyyy-MMM-dd"/></td>                        
-                            <td><g:formatDate date="${boekhoudingInsctance?.factuurdatum}" format="yyyy-MMM-dd"/></td>
+                            <td><g:formatDate date="${boekhoudingInstance?.boekingsdatum}" format="dd-MMM-yyyy"/></td>                        
+                            <td><g:formatDate date="${boekhoudingInstance?.factuurdatum}" format="dd-MMM-yyyy"/></td>
                             <td>€<g:formatNumber number="${boekhoudingInstance?.prijsExbtw}" format="##0.00"/></td>
                             <td>${fieldValue(bean: boekhoudingInstance, field: "btw")}%</td>
                             <td>${fieldValue(bean: boekhoudingInstance, field: "betaald")}</td>                                                 

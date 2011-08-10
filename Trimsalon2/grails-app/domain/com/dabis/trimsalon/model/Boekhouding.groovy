@@ -9,7 +9,7 @@ class Boekhouding {
 	Date factuurdatum
 	BigDecimal prijsExbtw;
 	BigDecimal btw = 19;
-	Boolean betaald;
+	String betaald;
 	// Relationships
 	static belongsTo = [afspraak:Afspraak]
 	// Constraints and form sequence
@@ -20,6 +20,6 @@ class Boekhouding {
 		factuurdatum(blank:false)
 		prijsExbtw(blank:false)
 		btw(blank:false)
-		betaald()
+		betaald(inList: ["Nee", "Ja"])
     }
 }

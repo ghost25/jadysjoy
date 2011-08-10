@@ -39,7 +39,7 @@
                             <td>${fieldValue(bean: hondInstance, field: "geslacht")}</td>
                             <td>${fieldValue(bean: hondInstance, field: "kleur")}</td>
                             <td>${fieldValue(bean: hondInstance, field: "gecastreerd")}</td>
-                            <td><g:formatDate date="${hondInsctance?.geboortedatum}" format="yyyy-MMM-dd"/></td>
+                            <td><g:formatDate date="${hondInstance?.geboortedatum}" format="dd-MMM-yyyy"/></td>
                             <td>${fieldValue(bean: hondInstance, field: "klant")}</td>                                                    
                         </tr>
                     </g:each>

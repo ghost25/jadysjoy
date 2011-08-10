@@ -55,7 +55,7 @@
                                     <label for="kleur"><g:message code="hond.kleur.label" default="Kleur" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: kleurhondInstance, field: 'kleur', 'errors')}">
-                                    <g:textField name="kleur" value="${hondInstance?.btw}" />
+                                    <g:textField name="kleur" value="${hondInstance?.kleur}" />
                                 </td>
                              </tr> 
                               <tr class="prop">
@@ -71,7 +71,7 @@
                                     <label for="geboortedatum"><g:message code="hond.geboortedatum.label" default="Geboortedatum" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: hondInstance, field: 'geboortedatum', 'errors')}">
-                                    <g:textField name="geboortedatum" value="${hondInstance?.geboortedatum}" />
+                                                                 
                                 </td>
                              </tr> 
                               <tr class="prop">
@@ -79,7 +79,7 @@
                                     <label for="klant"><g:message code="hond.klant.label" default="Klant" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: hondInstance, field: 'klant', 'errors')}">
-                                    <g:textField name="klant" value="${hondInstance?.klant}" />
+                                    <g:select name="klant" from="${hondInstance?.constraints.klant.inList}" value="${hondInstance?.klant}" valueMessagePrefix="hond.klant"  />                                 
                                 </td>
                              </tr>  
                         </tbody>

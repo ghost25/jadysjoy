@@ -31,14 +31,14 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="boekhouding.boekingsdatum.label" default="Boekingsdatum" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${boekhoudingInsctance?.boekingsdatum}" format="yyyy-MMM-dd"/></td>
+                            <td valign="top" class="value"><g:formatDate date="${boekhoudingInstance?.boekingsdatum}" format="dd-MMM-yyyy"/></td>
                             
                         </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="boekhouding.factuurdatum.label" default="Factuurdatum" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${boekhoudingInsctance?.factuurdatum}" format="yyyy-MMM-dd"/></td>
+                            <td valign="top" class="value"><g:formatDate date="${boekhoudingInstance?.factuurdatum}" format="dd-MMM-yyyy"/></td>
                             
                         </tr>
                     

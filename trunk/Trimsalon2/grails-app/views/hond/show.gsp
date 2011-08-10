@@ -57,7 +57,7 @@
                          <tr class="prop">
                             <td valign="top" class="name"><g:message code="hond.geboortedatum.label" default="Geboortedatum" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${hondInsctance?.geboortedatum}" format="yyyy-MMM-dd"/></td>
+                            <td valign="top" class="value"><g:formatDate date="${hondInstance?.geboortedatum}" format="dd-MMM-yyyy"/></td>
                             
                         </tr>
                         <tr class="prop">

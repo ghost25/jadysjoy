@@ -12,7 +12,7 @@ class Klant {
 	String telefoon
 	String telefoon2
 	String email
-	Boolean ophalen = false
+	String ophalen
 	String opmerkingen
 	Date dateCreated
 	
@@ -29,7 +29,7 @@ class Klant {
 		telefoon(blank:false, maxLength:11)
 		telefoon2(maxLength:11)
 		email(email:true)
-		ophalen()
+		ophalen(inList: ["Nee", "Ja"])
 		opmerkingen()
 		dateCreated()
     }

@@ -24,7 +24,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="afspraak.datum.label" default="Datum" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${afspraakInsctance?.datum}" format="yyyy-MMM-dd"/></td>
+                            <td valign="top" class="value"><g:formatDate date="${afspraakInstance?.datum}" format="dd-MMM-yyyy"/></td>
                             
                         </tr>
                     

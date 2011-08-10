@@ -10,8 +10,8 @@ class Afspraak {
 	Hond hond
 	Klant klant
 	String opmerkingen
-	Boolean ophalen
-	Boolean afgehandeld
+	String ophalen
+	String afgehandeld
 	User user
 	
 	// Relationships
@@ -82,8 +82,8 @@ class Afspraak {
 		hond()
 		klant()
 		opmerkingen()
-		ophalen()
-		afgehandeld()
+		ophalen(inList: ["Nee", "Ja"])
+		afgehandeld(inList: ["Nee", "Ja"])
 		user()
     }
 	

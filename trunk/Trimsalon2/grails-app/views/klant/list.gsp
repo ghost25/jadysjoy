@@ -32,7 +32,7 @@
                             <g:sortableColumn property="email" title="${message(code: 'klant.email.label', default: 'Email')}" />
                             <g:sortableColumn property="ophalen" title="${message(code: 'klant.ophalen.label', default: 'Ophalen')}" />
                             <g:sortableColumn property="opmerkingen" title="${message(code: 'klant.opmerkingen.label', default: 'Opmerking')}" />
-                            <g:sortableColumn property="dateCreated" title="${message(code: 'klant.dateCreated.label', default: 'Toegevoegd')}" />                  
+                            <g:sortableColumn property="dateCreated" title="${message(code: 'klant.dateCreated.label', default: 'Toegevoegd op')}" />                  
                         </tr>
                     </thead>
                     <tbody>
@@ -50,7 +50,7 @@
                             <td>${fieldValue(bean: klantInstance, field: "email")}</td>
                             <td>${fieldValue(bean: klantInstance, field: "ophalen")}</td>
                             <td>${fieldValue(bean: klantInstance, field: "opmerkingen")}</td>
-                            <td><g:formatDate date="${klantInsctance?.dateCreated}" format="yyyy-MMM-dd"/></td>                                                    
+                            <td><g:formatDate date="${klantInstance?.dateCreated}" format="dd-MMM-yyyy HH:mm"/></td>                                                    
                         </tr>
                     </g:each>
                     </tbody>

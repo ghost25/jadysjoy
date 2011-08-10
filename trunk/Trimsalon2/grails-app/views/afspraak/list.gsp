@@ -38,7 +38,7 @@
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
                             <td><g:link action="show" id="${afspraakInstance.id}">${fieldValue(bean: afspraakInstance, field: "id")}</g:link></td>                        
-                            <td><g:formatDate date="${afspraakInsctance?.datum}" format="yyyy-MMM-dd"/></td>                        
+                            <td><g:formatDate date="${afspraakInstance?.datum}" format="dd-MMM-yyyy"/></td>                        
                             <td>${fieldValue(bean: afspraakInstance, field: "begintijd")}</td>                        
                             <td>${fieldValue(bean: afspraakInstance, field: "eindtijd")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "producten")}</td>

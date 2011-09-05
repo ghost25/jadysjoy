@@ -9,25 +9,23 @@ class Klant {
 	String huisnummer
 	String postcode
 	String woonplaats
-	String telefoon
-	String telefoon2
+	Integer telefoon
 	String email
 	String ophalen
 	String opmerkingen
 	Date dateCreated
 	
 	// Relationships
-	static hasMany = [honden:Hond, afspraken:Afspraak]
+	static hasMany = [hond:Hond, afspraken:Afspraak]
 	
 	// Constraints and from sequence
     static constraints = {
 		naam(blank:false)
 		adres(blank:false)
-		huisnummer(blank:false)
-		postcode(blank:false)
+		huisnummer(blank:false, maxlengt:4)
+		postcode(blank:false, matches:/^[1-9][0-9]{3}[\s]([A-Z]|[a-z]){2}$/)
 		woonplaats(blank:false)
-		telefoon(blank:false, maxLength:11)
-		telefoon2(maxLength:11)
+		telefoon(blank:false, maxLength:11, minLength:10)
 		email(email:true)
 		ophalen(inList: ["Nee", "Ja"])
 		opmerkingen()
@@ -40,3 +38,4 @@ class Klant {
 	}
 
 }
+

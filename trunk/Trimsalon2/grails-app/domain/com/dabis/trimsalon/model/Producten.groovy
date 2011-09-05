@@ -6,25 +6,29 @@ class Producten {
 	
 	String naam;
 	String omschrijving;
+	String ras;
 	BigDecimal prijsExbtw;
-	BigDecimal btw = 19;
+	BigDecimal prijs;
+	BigDecimal getprijs() {
+		prijsExbtw * 1.19
+		}
 	Integer voorraad;
-	Integer drempel;
 
-
-	static hasMany = [afspraken:Afspraak]
+	static hasMany = [afspraak:Afspraak, boekhouding:Boekhouding]
 	
     static constraints = {
 		naam(blank:false)
 		omschrijving(blank:false)
-		prijsExbtw(blank:false, scale:2)
-		btw(blank:false)
+		ras()
+		prijsExbtw(scale:2)
+		prijs()
 		voorraad(min:1)
-		drempel(min:1)
     }
+		
+	static transients = ['prijs']
 	
 	// as it will be shown in the Afspraak form
 	String toString(){
-		return "${naam}"
+		return "${naam}, ${prijs} euro"
 	}
 } 

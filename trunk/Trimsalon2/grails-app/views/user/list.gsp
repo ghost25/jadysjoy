@@ -11,6 +11,23 @@
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link action="logout">Logout</g:link></span>	  
         </div>
+        <div id="top5Panel" class="top5Panel">
+		<h2>Laatste klant</h2>
+		<div id="klant" class="top5Item">
+		<g:render template="/klant/klant5"
+		model="[klant: top5Klant]"/>
+		</div>
+		<h2>Laatste hond</h2>
+		<div id="hond" class="top5Item">
+		<g:render template="/hond/hond5"
+		model="[hond: top5Hond]"/>
+		</div>
+		<h2>Laatste afspraak</h2>
+		<div id="afspraak" class="top5Item">
+		<g:render template="/afspraak/afspraak5"
+		model="[afspraak: top5Afspraak]"/>
+		</div>
+		</div>
         <div class="body">
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -27,6 +44,8 @@
                         
                             <g:sortableColumn property="password" title="${message(code: 'user.password.label', default: 'Password')}" />
                         
+                        	<g:sortableColumn property="naam" title="${message(code: 'user.naam.label', default: 'Naam')}" />                        	
+                        
                             <g:sortableColumn property="role" title="${message(code: 'user.role.label', default: 'Role')}" />
                         
                         </tr>
@@ -39,14 +58,19 @@
                         
                             <td>${fieldValue(bean: userInstance, field: "login")}</td>
                         
-                            <td>${fieldValue(bean: userInstance, field: "password")}</td>
+                            <td>********</td>
+                            
+                            <td>${fieldValue(bean: userInstance, field: "naam")}</td>
                         
                             <td>${fieldValue(bean: userInstance, field: "role")}</td>
                         
                         </tr>
-                    </g:each>
+                    </g:each>               
                     </tbody>
                 </table>
+            </div>
+            <div> 
+            <g:jasperReport jasper="test" format="PDF" name="All user" />
             </div>
             <div class="paginateButtons">
                 <g:paginate total="${userInstanceTotal}" />

@@ -45,14 +45,14 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="producten.prijsExbtw.label" default="Prijs exbtw" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: productenInstance, field: "prijsExbtw")}</td>
+                            <td valign="top" class="value">€<g:formatNumber number="${productenInstance?.prijsExbtw}" format="##0.00"/></td>
                             
                         </tr>
                         
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="producten.btw.label" default="Btw" /></td>
+                            <td valign="top" class="name"><g:message code="producten.prijs.label" default="Prijs" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: productenInstance, field: "btw")}</td>
+                            <td valign="top" class="value">€<g:formatNumber number="${productenInstance?.prijs}" format="##0.00"/></td>
                             
                         </tr>
                         
@@ -62,13 +62,7 @@
                             <td valign="top" class="value">${fieldValue(bean: productenInstance, field: "voorraad")}</td>
                             
                         </tr>
-                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="producten.drempel.label" default="Drempel voorraad" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: productenInstance, field: "drempel")}</td>
-                            
-                        </tr>
-                    
+                                             
                     </tbody>
                 </table>
             </div>

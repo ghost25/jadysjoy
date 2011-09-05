@@ -46,6 +46,15 @@
                                     <g:passwordField name="password" value="${userInstance?.password}" />
                                 </td>
                             </tr>
+                            
+                             <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="naam"><g:message code="user.naam.label" default="Naam" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'naam', 'errors')}">
+                                    <g:textField name="naam" value="${userInstance?.naam}" />
+                                </td>
+                            </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">

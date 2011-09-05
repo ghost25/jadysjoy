@@ -55,9 +55,9 @@
                             
                         </tr>
                          <tr class="prop">
-                            <td valign="top" class="name"><g:message code="hond.geboortedatum.label" default="Geboortedatum" /></td>
+                            <td valign="top" class="name"><g:message code="hond.leeftijd.label" default="Leeftijd" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${hondInstance?.geboortedatum}" format="dd-MMM-yyyy"/></td>
+                            <td valign="top" class="value">${fieldValue(bean: hondInstance, field: "leeftijd")}</td>
                             
                         </tr>
                         <tr class="prop">
@@ -65,9 +65,13 @@
                             
                             <td valign="top" class="value">${fieldValue(bean: hondInstance, field: "klant")}</td>
                             
-                        </tr>
-                        
-                    
+                        </tr> 
+                       	<tr class="prop">
+                            <td valign="top" class="name"><g:message code="hond.postcode.label" default="Postcode" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: hondInstance, field: "klant.postcode")}</td>
+                            
+                        </tr>  						                                                                                                                    
                     </tbody>
                 </table>
             </div>

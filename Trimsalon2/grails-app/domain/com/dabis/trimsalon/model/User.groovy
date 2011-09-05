@@ -7,14 +7,12 @@ class User {
 	String login
 	String password
 	String naam
-	Date indienst
 	String role = "user"
 	
 	static constraints = {
 		login(blank:false, nullable:false, unique:true)
-		password(blank:false, password:true)
+		password(blank:false, password:true, size: 4..8)
 		naam(blank:false)
-		indienst(blank:false, nullable:true)
 		role(inList:["admin", "user"])
 	}
 	
@@ -27,7 +25,6 @@ class User {
 	}
 	
 	String toString(){
-		login
 		return "${login}"
 	}
 }

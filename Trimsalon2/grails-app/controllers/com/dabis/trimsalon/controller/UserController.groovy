@@ -1,6 +1,9 @@
 package com.dabis.trimsalon.controller
 
 import com.dabis.trimsalon.model.User
+import com.dabis.trimsalon.model.Klant
+import com.dabis.trimsalon.model.Hond
+import com.dabis.trimsalon.model.Afspraak
 
 class UserController {
 	
@@ -11,6 +14,14 @@ class UserController {
 	
 		def auth() {
 		  if(!session.user) {
+			  
+			  def originalRequestParams =
+			  [controller:controllerName,
+			  action:actionName]
+			  originalRequestParams.putAll(params)
+			  session.originalRequestParams =
+			  originalRequestParams
+			  
 			redirect(controller:"user", action:"login")
 			return false
 		  }
@@ -33,7 +44,13 @@ class UserController {
 			params.password)
 			if (user) {
 			session.userId = user.userId
-			redirect(controller:'race')
+			
+			def redirectParams =
+			session.originalRequestParams ?
+			session.originalRequestParams :
+			[controller:'afspraak']
+			redirect(redirectParams)
+			
 			}
 			else {
 			flash['message'] = 'Please enter a valid user ID and password'
@@ -54,7 +71,7 @@ class UserController {
 			session.user = user
 			flash.message = "Welkom ${user.login}!"
 			if(user.admin){
-			  redirect(controller:"admin", action:"index.gsp")
+			  redirect(controller:"afspraak", action:"list")
 			} else{
 			  redirect(controller:"afspraak", action:"list")
 			}
@@ -72,9 +89,17 @@ class UserController {
 		}
 	
 		def list = {
-			params.max = Math.min(params.max ? params.int('max') : 10, 100)
-			[userInstanceList: User.list(params), userInstanceTotal: User.count()]
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+	
+		def userList = User.withCriteria {
+		projections {
+		distinct "naam"
+			}
 		}
+		[userInstanceList: User.list(params), userInstanceTotal: User.count(), top5Klant: Klant.list(max:5, sort:"dateCreated", order:"desc"),
+			top5Hond: Hond.list(max:5, sort:"naam", order:"desc"),
+			top5Afspraak: Afspraak.list(max:5, sort:"datum", order:"desc"),]
+	}
 	
 		def create = {
 			def userInstance = new User()
@@ -161,4 +186,3 @@ class UserController {
 			}
 		}
 	}
-	

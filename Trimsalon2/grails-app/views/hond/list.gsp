@@ -10,7 +10,24 @@
         <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Home</a></span>
         <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         <span class="menuButton"><g:link action="logout">Logout</g:link></span>	  
-    </div>
+    </div>    
+    <div id="top5Panel" class="top5Panel">
+		<h2>Laatste klant</h2>
+		<div id="klant" class="top5Item">
+		<g:render template="/klant/klant5"
+		model="[klant: top5Klant]"/>
+		</div>
+		<h2>Laatste hond</h2>
+		<div id="hond" class="top5Item">
+		<g:render template="/hond/hond5"
+		model="[hond: top5Hond]"/>
+		</div>
+		<h2>Laatste afspraak</h2>
+		<div id="afspraak" class="top5Item">
+		<g:render template="/afspraak/afspraak5"
+		model="[afspraak: top5Afspraak]"/>
+		</div>
+		</div>
     <div class="body"> 
      <h1><g:message code="default.list.label" args="[entityName]" /></h1>
       <g:if test="${flash.message}"> 
@@ -26,7 +43,7 @@
                             <g:sortableColumn property="geslacht" title="${message(code: 'hond.geslacht.label', default: 'Geslacht')}" />                            
                             <g:sortableColumn property="kleur" title="${message(code: 'hond.kleur.label', default: 'Kleur')}" />
                             <g:sortableColumn property="gecastreerd" title="${message(code: 'hond.gecastreerd.label', default: 'Gecastreerd')}" />
-                            <g:sortableColumn property="geboortedatum" title="${message(code: 'hond.geboortedatum.label', default: 'Geboortedatum')}" />
+                            <g:sortableColumn property="leeftijd" title="${message(code: 'hond.leeftijd.label', default: 'Leeftijd')}" />
                             <g:sortableColumn property="klant" title="${message(code: 'hond.klant.label', default: 'Klant')}" />                  
                         </tr>
                     </thead>
@@ -39,7 +56,7 @@
                             <td>${fieldValue(bean: hondInstance, field: "geslacht")}</td>
                             <td>${fieldValue(bean: hondInstance, field: "kleur")}</td>
                             <td>${fieldValue(bean: hondInstance, field: "gecastreerd")}</td>
-                            <td><g:formatDate date="${hondInstance?.geboortedatum}" format="dd-MMM-yyyy"/></td>
+                            <td>${fieldValue(bean: hondInstance, field: "leeftijd")}</td>
                             <td>${fieldValue(bean: hondInstance, field: "klant")}</td>                                                    
                         </tr>
                     </g:each>

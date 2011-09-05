@@ -6,17 +6,16 @@ class Afspraak {
 	Date datum
 	String begintijd
 	String eindtijd
-	Producten producten
+	Producten afspraken
 	Hond hond
-	Klant klant
 	String opmerkingen
 	String ophalen
-	String afgehandeld
+	boolean afgehandeld
 	User user
 	
 	// Relationships
-	static hasOne = [klant:Klant, hond:Hond, producten:Producten, user:User]
-	
+	static hasOne = [hond:Hond, user:User, klant:Klant]
+		
 	// Constraints and form sequence
     static constraints = {
 		datum(blank:false)
@@ -78,13 +77,12 @@ class Afspraak {
 							"19:00",
 							"19:30",
 							"20:00"]) 
-		producten()
-		hond()
-		klant()
+		afspraken(blank:false)
+		hond(blank:false)
 		opmerkingen()
 		ophalen(inList: ["Nee", "Ja"])
-		afgehandeld(inList: ["Nee", "Ja"])
-		user()
+		afgehandeld()
+		user(blank:false)
     }
 	
 	String toString(){

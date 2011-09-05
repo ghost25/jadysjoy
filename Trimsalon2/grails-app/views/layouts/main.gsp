@@ -22,6 +22,13 @@
 				Welkom <span id="userNaam">${session?.user?.naam}!</span>				
 				</div>
 			</g:if>
+			<g:else>
+			<div style="margin-top:20px">
+					<div style="float:right;">
+						<g:link controller="user" action="login">Login</g:link>
+					</div>				
+				</div>
+			</g:else>
 			</div>
 		<g:render template="/layouts/header" />
 		<g:layoutBody />		

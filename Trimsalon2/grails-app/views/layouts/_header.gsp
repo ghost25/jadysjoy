@@ -6,9 +6,6 @@
                     <div id="controllerList" class="dialog">
                 	<ul>
                 	<g:if test="${!session.user}">
-					<g:link controller="user" action="login">
-					Login
-					</g:link></p>
 					<g:link controller="afspraak" action="list">
 					Toon afspraken
 					</g:link></p>

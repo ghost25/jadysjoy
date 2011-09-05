@@ -6,7 +6,7 @@ html * {
 #page-wrap {
 	background: white;
 	min-width: 780px;
-	max-width: 1260px;
+	max-width: 1300px;
 	margin: 10px auto;
 	}
 
@@ -21,10 +21,10 @@ html * {
 
 .loginBox {
 	position:absolute;
-	right:70px;
-	top:40px;
+	right:150px;
+	top:20px;
 	background-color:white;
-	padding-top:30px;
+	padding-top:25px;
 	padding-right:10px;
 	padding-left:20px;
 	padding-bottom:53px;
@@ -34,14 +34,14 @@ html * {
 
 #top5Panel {
 	float:right;
-	margin-right:20px;
+	margin-right:10px;
 }
 .top5Item {
 	border:1px dashed grey;
 	padding:10px;
 	margin-bottom:10px;
 	background-color:#F0F0F1;				
-	width:200px;
+	width:170px;
 }
 .top5Item a:link, .top5Item a:visited {
 

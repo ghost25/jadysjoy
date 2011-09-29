@@ -77,6 +77,22 @@ class KlantController {
 			top5Hond: Hond.list(max:5, sort:"naam", order:"desc"),
 			top5Afspraak: Afspraak.list(max:5, sort:"datum", order:"desc"),]
 			}
+	
+	def mailKlant = {
+		try {
+		sendMail {
+			to  "${userInstance.email}"
+			from "rob.daalman@gmail.com"
+			subject "Afspraak trimsalon JadysJoy"
+			html g.render(template:'/email/afspraak',model:[user:UserInstance])
+		}
+		flash.message = "Bevestiging afspraak is verstuurd naar ${userInstance.naam}"
+		} catch(Exception e){
+		log.error "Probleem met versturen email $e.message", e
+		flash.message = "Email is niet verstuurd"
+			redirect(controller:"klant", action: "list")
+		}
+	}
 }
 	
 

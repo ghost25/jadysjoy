@@ -8,8 +8,7 @@
     <body>
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Home</a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
-            <span class="menuButton"><g:link action="logout">Logout</g:link></span>	  
+            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>	  
         </div>
         <div id="top5Panel" class="top5Panel">
 		<h2>Laatste klant</h2>

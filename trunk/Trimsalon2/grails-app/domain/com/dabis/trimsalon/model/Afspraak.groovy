@@ -6,7 +6,7 @@ class Afspraak {
 	Date datum
 	String begintijd
 	String eindtijd
-	Producten afspraken
+	Producten producten
 	Hond hond
 	String opmerkingen
 	String ophalen
@@ -77,7 +77,7 @@ class Afspraak {
 							"19:00",
 							"19:30",
 							"20:00"]) 
-		afspraken(blank:false)
+		producten(blank:false)
 		hond(blank:false)
 		opmerkingen()
 		ophalen(inList: ["Nee", "Ja"])

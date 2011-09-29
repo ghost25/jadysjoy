@@ -35,22 +35,52 @@ class AfspraakController {
 		def afspraakInstance = new Afspraak(params)
 				
 		if (afspraakInstance.save(flush: true)) {
-			
+							
 			println afspraakInstance.dump()
 			println params.dump()
 			
-			 if( afspraakInstance.afgehandeld==true ) {
+			 if( afspraakInstance.afgehandeld==true ) {				 
 				flash.message = "${message(code: 'default.created.message', args: [message(code: 'afspraak.label', default: 'Afspraak'), afspraakInstance.id])}"
-				redirect(action: "list", id: afspraakInstance.id)
+				redirect(controller:"boekhouding", action: "create")
 			}
 			else {
-			flash.message = "${message(code: 'default.created.message', args: [message(code: 'afspraak.label', default: 'Afspraak'), afspraakInstance.id])}"
-			redirect(action: "show", id: afspraakInstance.id)}
+			
+				try  {
+					sendMail {
+						to  "${afspraakInstance.klant.email}"
+						from "rob.daalman@gmail.com"
+						subject "Afspraak trimsalon JadysJoy"
+						html g.render(template:'/email/afspraak',model:[afspraakInstance: afspraakInstance])
+					}
+					flash.message = "Bevestiging afspraak is verstuurd naar ${afspraakInstance.klant.naam}"
+					} catch(Exception e){
+					log.error "Probleem met versturen email $e.message", e
+					flash.message = "Email is niet verstuurd"
+						redirect(action: "show", id: afspraakInstance.id)
+					}
+				}
 		}
 		else {
 			render(view: "create", model: [afspraakInstance: afspraakInstance])
 		}
 	}
+
+	def mail = {
+		try  {
+			sendMail {
+				to  "${klantInstance.email}"
+				from "rob.daalman@gmail.com"
+				subject "Afspraak trimsalon JadysJoy"
+				html g.render(template:'/email/afspraak',model:[klant:klantInstance])
+			}
+			flash.message = "Bevestiging afspraak is verstuurd naar ${klantInstance.naam}"
+			} catch(Exception e){
+			log.error "Probleem met versturen email $e.message", e
+			flash.message = "Email is niet verstuurd"
+				redirect(controller:"afspraak", action: "list")
+			}
+		}
+
 	
 	def update = {
 		def afspraakInstance = Afspraak.get(params.id)
@@ -68,11 +98,24 @@ class AfspraakController {
 			if (!afspraakInstance.hasErrors() && afspraakInstance.save(flush: true)) {
 				if( afspraakInstance.afgehandeld==true ){
 			    flash.message = "${message(code: 'default.updated.message', args: [message(code: 'afspraak.label', default: 'Afspraak'), afspraakInstance.id])}"
-				redirect(action: "show", id: afspraakInstance.id)
+				redirect(controller:"boekhouding", action: "create")
 				}
 			    else {
-					flash.message = "${message(code: 'default.created.message', args: [message(code: 'afspraak.label', default: 'Afspraak'), afspraakInstance.id])}"
-					redirect(action: "show", id: afspraakInstance.id)}
+					try  {
+						sendMail {
+							to  "${afspraakInstance.klant.email}"
+							from "rob.daalman@gmail.com"
+							subject "Afspraak trimsalon JadysJoy"
+							html g.render(template:'/email/afspraak',model:[afspraakInstance: afspraakInstance])
+						}
+						flash.message = "Bevestiging afspraak is verstuurd naar ${afspraakInstance.klant.naam}"
+						} catch(Exception e){
+						log.error "Probleem met versturen email $e.message", e
+						flash.message = "Email is niet verstuurd"
+							redirect(action: "show", id: afspraakInstance.id)
+						}
+					
+						}
 				}
 			else {
 				render(view: "edit", model: [userInstance: afspraakInstance])
@@ -106,6 +149,63 @@ class AfspraakController {
 			top5Afspraak: Afspraak.list(max:5, sort:"datum", order:"desc"),]
 	}
 	
+	def json={
+		render createJSON(Long.parseLong(params.id))
+	}
+
+	private String createJSON(long id){
+		def json="["
+		boolean first=true
+		Calendar c=Calendar.get(id)
+		c.events.each{
+			if(first){
+				first=false
+				json+="{"
+			}
+			else {
+				json+=",{"
+			}
+
+			json+="title:\""+it.summary+"\","
+			json+="start:'"+it.startDate+"',"
+			json+="end:'"+it.endDate+"',"
+			json+="allDay:"+it.allDay+","
+			json+="url:\"${request.contextPath}/event/show/"+it.id+"\","
+			json+="backgroundColor:'"+c.color+"',"
+			json+="textColor:'"+c.textColor+"'"
+			json+="}"
+		}
+		json+="]"
+		return json
+	}
+
+
+	def ical={
+		render createIcal(Long.parseLong(params.id))
+	}
+
+	private String createIcal(long id){
+		def df=new java.text.SimpleDateFormat("yyyyMMdd'T'HHmmss")
+		Calendar c=Calendar.get(id)
+		def ical='''BEGIN:VCALENDAR
+X-WR-CALNAME:'''+c.name+'''
+X-WR-CALDESC:GRAILS Plugin Calendar
+PRODID:-//Francois-Xavier Thoorens/NONSGML Bennu 0.1//EN
+VERSION:2.0
+'''
+		c.events.each{
+			ical+="BEGIN:VEVENT\n"
+			ical+="UID:"+c.name+it.id+"@grails\n"
+			ical+="DTSTAMP:"+df.format(new Date())+"Z\n"
+			ical+="SUMMARY:"+it.summary+"\n"
+			ical+="DTSTART:"+df.format(it.startDate)+"\n"
+			ical+="DTEND:"+df.format(it.endDate)+"\n"
+			ical+="DESCRIPTION:"+it.description+"\n"
+			ical+="LOCATION:"+it.location+"\n"
+			ical+="END:VEVENT\n"
+		}
+		ical+="END:VCALENDAR\n"
+		return ical
+	}
+
 }
-
-

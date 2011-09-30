@@ -22,13 +22,13 @@ class Afspraak {
 		omschrijving()
 		begindatum(attributes:[precision:"minute"])
 		einddatum(attributes:[precision:"minute"])
+		allDay()
 		producten(blank:false)
 		hond(blank:false)
 		opmerkingen()
 		ophalen(inList: ["Nee", "Ja"])
 		afgehandeld()
 		user(blank:false)
-		allDay()
     }
 
 public int compareTo(Object that){

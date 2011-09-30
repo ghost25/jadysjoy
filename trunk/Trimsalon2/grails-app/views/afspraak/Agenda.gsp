@@ -25,7 +25,7 @@
 	  timeFormat: 'HH:mm{ - HH:mm}',
 	  selectable: true,
 	  selectHelper: true,
-	  select: function(begindatum, einddatum, allDay) {javascript:window.location="${createLink(controller:'event',action:'create', params:['afspraak.id':afspraakInstance?.id])}&allDay="+allDay+"&begindatum_year="+begindatum.getFullYear()+"&begindatum_month="+(begindatum.getMonth()+1)+"&begindatum_day="+begindatum.getDate()+"&begindatum_hour="+begindatum.getHours()+"&begindatum_minute="+begindatum.getMinutes()+"&begindatum_year="+einddatum.getFullYear()+"&einddatum_month="+(einddatum.getMonth()+1)+"&einddatum_day="+einddatum.getDate()+"&einddatum_hour="+einddatum.getHours()+"&einddatum_minute="+einddatum.getMinutes()},
+	  select: function(begindatum, einddatum, allDay) {javascript:window.location="${createLink(controller:'afspraak',action:'create', params:['afspraak.id':afspraakInstance?.id])}&allDay="+allDay+"&begindatum_year="+begindatum.getFullYear()+"&begindatum_month="+(begindatum.getMonth()+1)+"&begindatum_day="+begindatum.getDate()+"&begindatum_hour="+begindatum.getHours()+"&begindatum_minute="+begindatum.getMinutes()+"&begindatum_year="+einddatum.getFullYear()+"&einddatum_month="+(einddatum.getMonth()+1)+"&einddatum_day="+einddatum.getDate()+"&einddatum_hour="+einddatum.getHours()+"&einddatum_minute="+einddatum.getMinutes()},
 	  editable: true,	
 	  events:${include(controller:"afspraak", action:"json", id:afspraakInstance?.id)}
 	</fullcal:calendar>

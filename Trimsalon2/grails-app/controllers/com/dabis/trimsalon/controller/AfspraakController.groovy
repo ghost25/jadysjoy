@@ -58,6 +58,8 @@ class AfspraakController {
 					flash.message = "Email is niet verstuurd"
 						redirect(action: "show", id: afspraakInstance.id)
 					}
+					
+					redirect(action: "show", id: afspraakInstance.id)
 				}
 		}
 		else {
@@ -141,12 +143,12 @@ class AfspraakController {
 	
 		def afspraakList = Afspraak.withCriteria {
 		projections {
-		distinct "datum"
+		distinct "begindatum"
 			}
 		}
 		[afspraakInstanceList: Afspraak.list(params), afspraakInstanceTotal: Afspraak.count(), top5Klant: Klant.list(max:5, sort:"dateCreated", order:"desc"),
 			top5Hond: Hond.list(max:5, sort:"naam", order:"desc"),
-			top5Afspraak: Afspraak.list(max:5, sort:"datum", order:"desc"),]
+			top5Afspraak: Afspraak.list(max:5, sort:"begindatum", order:"desc"),]
 	}
 	
 	def json={
@@ -156,7 +158,7 @@ class AfspraakController {
 	private String createJSON(long id){
 		def json="["
 		boolean first=true
-		Calendar c=Calendar.get(id)
+		Afspraak c=Afspraak.get(id)
 		c.events.each{
 			if(first){
 				first=false
@@ -166,11 +168,11 @@ class AfspraakController {
 				json+=",{"
 			}
 
-			json+="title:\""+it.summary+"\","
-			json+="start:'"+it.startDate+"',"
-			json+="end:'"+it.endDate+"',"
+			json+="title:\""+it.omschrijving+"\","
+			json+="begin:'"+it.begindatum+"',"
+			json+="eind:'"+it.einddatum+"',"
 			json+="allDay:"+it.allDay+","
-			json+="url:\"${request.contextPath}/event/show/"+it.id+"\","
+			json+="url:\"${request.contextPath}/afspraak/show/"+it.id+"\","
 			json+="backgroundColor:'"+c.color+"',"
 			json+="textColor:'"+c.textColor+"'"
 			json+="}"
@@ -186,22 +188,21 @@ class AfspraakController {
 
 	private String createIcal(long id){
 		def df=new java.text.SimpleDateFormat("yyyyMMdd'T'HHmmss")
-		Calendar c=Calendar.get(id)
+		Afspraak c=Afspraak.get(id)
 		def ical='''BEGIN:VCALENDAR
-X-WR-CALNAME:'''+c.name+'''
-X-WR-CALDESC:GRAILS Plugin Calendar
-PRODID:-//Francois-Xavier Thoorens/NONSGML Bennu 0.1//EN
-VERSION:2.0
-'''
+		X-WR-CALNAME:'''+c.name+'''
+		X-WR-CALDESC:GRAILS Plugin Calendar
+		PRODID:-//Francois-Xavier Thoorens/NONSGML Bennu 0.1//EN
+		VERSION:2.0
+		'''
 		c.events.each{
 			ical+="BEGIN:VEVENT\n"
 			ical+="UID:"+c.name+it.id+"@grails\n"
 			ical+="DTSTAMP:"+df.format(new Date())+"Z\n"
-			ical+="SUMMARY:"+it.summary+"\n"
-			ical+="DTSTART:"+df.format(it.startDate)+"\n"
-			ical+="DTEND:"+df.format(it.endDate)+"\n"
-			ical+="DESCRIPTION:"+it.description+"\n"
-			ical+="LOCATION:"+it.location+"\n"
+			ical+="SUMMARY:"+it.omschrijving+"\n"
+			ical+="DTSTART:"+df.format(it.begindatum)+"\n"
+			ical+="DTEND:"+df.format(it.einddatum)+"\n"
+			ical+="DESCRIPTION:"+it.producten+"\n"
 			ical+="END:VEVENT\n"
 		}
 		ical+="END:VCALENDAR\n"

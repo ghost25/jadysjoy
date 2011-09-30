@@ -37,9 +37,9 @@
                     <thead>
                         <tr>                        
                             <g:sortableColumn property="id" title="${message(code: 'afspraak.id.label', default: 'Id')}" />
-                            <g:sortableColumn property="datum" title="${message(code: 'afspraak.datum.label', default: 'Datum')}" />                        
-                            <g:sortableColumn property="begintijd" title="${message(code: 'afspraak.begintijd.label', default: 'Begintijd')}" />                        
-                            <g:sortableColumn property="eindtijd" title="${message(code: 'afspraak.eindtijd.label', default: 'Eindtijd')}" />                            
+                            <g:sortableColumn property="omschrijving" title="${message(code: 'afspraak.omschrijving.label', default: 'Omschrijving')}" />                        
+                            <g:sortableColumn property="begintijd" title="${message(code: 'afspraak.begindatum.label', default: 'Begindatum')}" />                        
+                            <g:sortableColumn property="eindtijd" title="${message(code: 'afspraak.einddatum.label', default: 'Einddatum')}" />                            
                             <g:sortableColumn property="producten" title="${message(code: 'afspraak.producten.label', default: 'Behandeling')}" />
                             <g:sortableColumn property="hond" title="${message(code: 'afspraak.hond.label', default: 'Hond')}" />
                             <g:sortableColumn property="klant" title="${message(code: 'afspraak.klant.label', default: 'Klant')}" />
@@ -54,9 +54,9 @@
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
                             <td><g:link action="show" id="${afspraakInstance.id}">${fieldValue(bean: afspraakInstance, field: "id")}</g:link></td>                        
-                            <td><g:formatDate date="${afspraakInstance?.datum}" format="dd-MMM-yyyy"/></td>                        
-                            <td>${fieldValue(bean: afspraakInstance, field: "begintijd")}</td>                        
-                            <td>${fieldValue(bean: afspraakInstance, field: "eindtijd")}</td>
+                            <td>${fieldValue(bean: afspraakInstance, field: "omschrijving")}</td>                        
+                            <td>${fieldValue(bean: afspraakInstance, field: "begindatum")}</td>                        
+                            <td>${fieldValue(bean: afspraakInstance, field: "einddatum")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "producten")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "hond")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "klant")}</td>

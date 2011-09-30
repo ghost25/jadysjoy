@@ -4,7 +4,7 @@ class Boekhouding {
 	static searchable = true
 	
 	// Fields
-	Afspraak datum;
+	Afspraak begindatum;
 	Date dateCreated;
 	Producten prijsExbtw;
 	Producten prijs;
@@ -17,7 +17,7 @@ class Boekhouding {
 	// Constraints and form sequence
 	
     static constraints = {
-		datum(blank:false)
+		begindatum(blank:false)
 		dateCreated(blank:false)
 		prijsExbtw(blank:false)
 		prijs(blsnk:false)

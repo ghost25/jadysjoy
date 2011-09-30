@@ -21,23 +21,23 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="afspraak.datum.label" default="Datum" /></td>
+                            <td valign="top" class="name"><g:message code="afspraak.omschrijving.label" default="Omschrijving" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${afspraakInstance?.datum}" format="dd-MMM-yyyy"/></td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="afspraak.begintijd.label" default="Begintijd" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: afspraakInstance, field: "begintijd")}</td>
+                            <td valign="top" class="value"><g:formatDate date="${afspraakInstance?.omschrijving}"/></td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="afspraak.eindtijd.label" default="Eindtijd" /></td>
+                            <td valign="top" class="name"><g:message code="afspraak.begindatum.label" default="Begindatum" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: afspraakInstance, field: "eindtijd")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: afspraakInstance, field: "begindatum")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="afspraak.einddatum.label" default="Einddatum" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: afspraakInstance, field: "einddatum")}</td>
                             
                         </tr>
                         

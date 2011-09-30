@@ -53,6 +53,6 @@ class HondController {
 		}
 		[hondInstanceList: Hond.list(params), hondInstanceTotal: Hond.count(), top5Klant: Klant.list(max:5, sort:"dateCreated", order:"desc"),
 			top5Hond: Hond.list(max:5, sort:"naam", order:"desc"),
-			top5Afspraak: Afspraak.list(max:5, sort:"datum", order:"desc"),]
+			top5Afspraak: Afspraak.list(max:5, sort:"begindatum", order:"desc"),]
 	}
 }

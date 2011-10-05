@@ -23,7 +23,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="afspraak.omschrijving.label" default="Omschrijving" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${afspraakInstance?.omschrijving}"/></td>
+                            <td valign="top" class="value">${fieldValue(bean: afspraakInstance, field: "omschrijving")}</td>
                             
                         </tr>
                     

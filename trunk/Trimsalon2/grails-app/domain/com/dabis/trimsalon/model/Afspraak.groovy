@@ -1,6 +1,6 @@
 package com.dabis.trimsalon.model
 
-class Afspraak {
+class Afspraak implements Comparable{
 	
 	// Fields
 	String omschrijving
@@ -12,10 +12,11 @@ class Afspraak {
 	String ophalen
 	boolean afgehandeld
 	User user
-	Boolean allDay=Boolean.FALSE
+	boolean allDay=boolean.FALSE
 	
 	// Relationships
 	static hasOne = [hond:Hond, user:User, klant:Klant]
+	static belongsTo = [calendar:Calendar]
 		
 	// Constraints and form sequence
     static constraints = {

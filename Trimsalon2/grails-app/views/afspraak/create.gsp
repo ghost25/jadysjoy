@@ -27,10 +27,10 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="datum"><g:message code="afspraak.datum.label" default="Datum" /></label>
+                                    <label for="omschrijving"><g:message code="afspraak.omschrijving.label" default="Omschrijving" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'datum', 'errors')}">
-                                    <g:textField name="datum" value="${afspraakInstance?.datum}" />
+                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'omschrijving', 'errors')}">
+                                    <g:textField name="omschrijving" value="${afspraakInstance?.omschrijving}" />
                                 </td>
                             </tr>                        
                             <tr class="prop">
@@ -38,7 +38,7 @@
                                     <label for="begintijd"><g:message code="afspraak.begintijd.label" default="Begintijd" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'begintijd', 'errors')}">
-                                    <g:textField name="begintijd" value="${afspraakInstance?.begintijd}" />
+                                <g:datePicker name="begindatum" value="${afspraakInstance?.begindatum}" ></g:datePicker>
                                 </td>
                             </tr>
   							<tr class="prop">
@@ -46,15 +46,23 @@
                                     <label for="eindtijd"><g:message code="afspraak.eindtijd.label" default="Eindtijd" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'eindtijd', 'errors')}">
-                                    <g:textField name="eindtijd" value="${afspraakInstance?.eindtijd}" />
+                                <g:datePicker name="einddatum" value="${afspraakInstance?.einddatum}" ></g:datePicker>
+                                </td>                           
+                            </tr>
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="allday"><g:message code="afspraak.alldaylabel" default="Hele dag" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'allDay', 'errors')}">
+                                <g:checkBox name="allDay" value="${afspraakInstance?.allDay}" />
                                 </td>                           
                             </tr>
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="producten"><g:message code="afspraak.producten.label" default="Behandeling" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'producten', 'errors')}">
-                                    <g:textField name="producten" value="${afspraakInstance?.producten}" />
+                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'producten', 'errors')}">                                                                    
+                                    <g:select name="producten" from="${afspraakInstance.constraints.producten}" value="${afspraakInstance?.producten}" valueMessagePrefix="afspraak.producten"  />
                                 </td>
                              </tr> 
                               <tr class="prop">
@@ -62,17 +70,9 @@
                                     <label for="hond"><g:message code="afspraak.hond.label" default="Hond" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'hond', 'errors')}">
-                                    <g:textField name="hond" value="${afspraakInstance?.hond}" />
+                                    <g:select name="hond" from="${afspraakInstance.constraints.hond}" value="${afspraakInstance?.hond}" valueMessagePrefix="afspraak.hond"  />
                                 </td>
-                             </tr> 
-                             <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="klant"><g:message code="afspraak.klant.label" default="Klant" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'klant', 'errors')}">
-                                    <g:textField name="klant" value="${afspraakInstance?.klant}" />
-                                </td>
-                             </tr>
+                             </tr>                           
                              <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="opmerkingen"><g:message code="afspraak.opmerkingen.label" default="Opmerking" /></label>
@@ -86,15 +86,15 @@
                                     <label for="ophalen"><g:message code="afspraak.ophalen.label" default="Ophalen" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'ophalen', 'errors')}">
-                                    <g:textField name="ophalen" value="${afspraakInstance?.ophalen}" />
+                                    <g:select name="ophalen" from="${afspraakInstance.constraints.ophalen.inList}" value="${afspraakInstance?.ophalen}" valueMessagePrefix="afspraak.ophalen"  />
                                 </td>
                              </tr>
                               <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="afgehandeld"><g:message code="afspraak.afgehandeld.label" default="Afgehandeld" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'afgehandeld', 'errors')}">
-                                    <g:textField name="afgehandeld" value="${afspraakInstance?.afgehandeld}" />
+                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'afgehandeld', 'errors')}">                                    
+                                    <g:checkBox name="afgehandeld" value="${afspraakInstance?.afgehandeld}" />
                                 </td>
                              </tr> 
                              <tr class="prop">
@@ -102,9 +102,17 @@
                                     <label for="user"><g:message code="afspraak.user.label" default="Door" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'user', 'errors')}">
-                                    <g:textField name="user" value="${afspraakInstance?.afgehandeld}" />
+                                    <g:select name="user" from="${afspraakInstance.constraints.user}" value="${afspraakInstance?.user}" valueMessagePrefix="afspraak.user"  />
                                 </td>
-                             </tr>    
+                             </tr>
+                             <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="calendar"><g:message code="afspraak.user.label" default="Door" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'calendar', 'errors')}">
+                                    <g:select name="calendar" from="${afspraakInstance.constraints.calendar}" value="${afspraakInstance?.calendar}" valueMessagePrefix="afspraak.calendar"  />
+                                </td>
+                             </tr>        
                         </tbody>
                     </table>
                 </div>

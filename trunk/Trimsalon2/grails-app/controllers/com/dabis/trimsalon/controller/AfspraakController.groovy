@@ -58,8 +58,6 @@ class AfspraakController {
 					flash.message = "Email is niet verstuurd"
 						redirect(action: "show", id: afspraakInstance.id)
 					}
-					
-					redirect(action: "show", id: afspraakInstance.id)
 				}
 		}
 		else {

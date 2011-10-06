@@ -12,10 +12,11 @@ class Afspraak implements Comparable{
 	String ophalen
 	boolean afgehandeld
 	User user
-	boolean allDay=boolean.FALSE
+	Boolean allDay=Boolean.FALSE
+	Calendar calendar
 	
 	// Relationships
-	static hasOne = [hond:Hond, user:User, klant:Klant]
+	static hasOne = [hond:Hond, user:User]
 	static belongsTo = [calendar:Calendar]
 		
 	// Constraints and form sequence

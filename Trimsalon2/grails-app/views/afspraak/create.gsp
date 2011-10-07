@@ -62,7 +62,7 @@
                                     <label for="producten"><g:message code="afspraak.producten.label" default="Behandeling" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'producten', 'errors')}">                                                                    
-                                    <g:select name="producten" from="${afspraakInstance.constraints.producten}" value="${afspraakInstance?.producten}" valueMessagePrefix="afspraak.producten"  />
+                                  <g:select name="producten" from="${product}" value="${afspraakInstance?.producten}" valueMessagePrefix="afspraak.producten" noSelection="${['null':'Select One...']}" />
                                 </td>
                              </tr> 
                               <tr class="prop">
@@ -70,8 +70,8 @@
                                     <label for="hond"><g:message code="afspraak.hond.label" default="Hond" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'hond', 'errors')}">
-                                    <g:select name="hond" from="${afspraakInstance.constraints.hond}" value="${afspraakInstance?.hond}" valueMessagePrefix="afspraak.hond"  />
-                                </td>
+			 					 <g:select name="hond" from="${honden}" value="${afspraakInstance?.hond}" valueMessagePrefix="afspraak.hond" noSelection="${['null':'Select One...']}" />
+ 							</td>
                              </tr>                           
                              <tr class="prop">
                                 <td valign="top" class="name">
@@ -86,7 +86,7 @@
                                     <label for="ophalen"><g:message code="afspraak.ophalen.label" default="Ophalen" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'ophalen', 'errors')}">
-                                    <g:select name="ophalen" from="${afspraakInstance.constraints.ophalen.inList}" value="${afspraakInstance?.ophalen}" valueMessagePrefix="afspraak.ophalen"  />
+                                    <g:select name="ophalen" from="${afspraakInstance.constraints.ophalen.inList}" value="${afspraakInstance?.ophalen}" valueMessagePrefix="afspraak.ophalen" noSelection="${['null':'Select One...']}" />
                                 </td>
                              </tr>
                               <tr class="prop">
@@ -102,15 +102,15 @@
                                     <label for="user"><g:message code="afspraak.user.label" default="Door" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'user', 'errors')}">
-                                    <g:select name="user" from="${afspraakInstance.constraints.user}" value="${afspraakInstance?.user}" valueMessagePrefix="afspraak.user"  />
+			 					 <g:select name="user" from="${users}" value="${afspraakInstance?.user}" valueMessagePrefix="afspraak.user" noSelection="${['null':'Select One...']}" />
                                 </td>
                              </tr>
                              <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="calendar"><g:message code="afspraak.user.label" default="Door" /></label>
+                                    <label for="calendar"><g:message code="afspraak.user.label" default="Kalendar" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'calendar', 'errors')}">
-                                    <g:select name="calendar" from="${afspraakInstance.constraints.calendar}" value="${afspraakInstance?.calendar}" valueMessagePrefix="afspraak.calendar"  />
+			 					 <g:select name="calender" from="${kalender}" value="${afspraakInstance?.calendar}" valueMessagePrefix="afspraak.calendar" noSelection="${['null':'Select One...']}" />
                                 </td>
                              </tr>        
                         </tbody>

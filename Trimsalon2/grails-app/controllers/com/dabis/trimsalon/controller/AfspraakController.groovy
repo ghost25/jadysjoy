@@ -3,6 +3,9 @@ package com.dabis.trimsalon.controller
 import com.dabis.trimsalon.model.Afspraak
 import com.dabis.trimsalon.model.Klant
 import com.dabis.trimsalon.model.Hond
+import com.dabis.trimsalon.model.Producten
+import com.dabis.trimsalon.model.User
+import com.dabis.trimsalon.model.Calendar
 
 class AfspraakController {
 
@@ -30,6 +33,16 @@ class AfspraakController {
 		  return false
 		}
     }
+	
+	def create = {
+		def afspraakInstance = new Afspraak()
+		afspraakInstance.properties = params
+		def honden = Hond.list(afspraakInstance.hond)
+		def product = Producten.list(afspraakInstance.producten)
+		def users = User.list(afspraakInstance.user)
+		def kalender = Calendar.list(afspraakInstance.calendar)
+		return [afspraakInstance: afspraakInstance, honden: honden, product: product, users: users, kalender:kalender]
+		}
 	
 	def save = {
 		def afspraakInstance = new Afspraak(params)

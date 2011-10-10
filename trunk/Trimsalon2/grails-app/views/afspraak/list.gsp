@@ -42,7 +42,6 @@
                             <g:sortableColumn property="eindtijd" title="${message(code: 'afspraak.einddatum.label', default: 'Einddatum')}" />                            
                             <g:sortableColumn property="producten" title="${message(code: 'afspraak.producten.label', default: 'Behandeling')}" />
                             <g:sortableColumn property="hond" title="${message(code: 'afspraak.hond.label', default: 'Hond')}" />
-                            <g:sortableColumn property="klant" title="${message(code: 'afspraak.klant.label', default: 'Klant')}" />
                             <g:sortableColumn property="opmerkingen" title="${message(code: 'afspraak.opmerkingen.label', default: 'Opmerking')}" />
                             <g:sortableColumn property="ophalen" title="${message(code: 'afspraak.ophalen.label', default: 'Ophalen')}" />
                             <g:sortableColumn property="afgehandeld" title="${message(code: 'afspraak.afgehandeld.label', default: 'Afgehandeld')}" />
@@ -59,7 +58,6 @@
                             <td>${fieldValue(bean: afspraakInstance, field: "einddatum")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "producten")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "hond")}</td>
-                            <td>${fieldValue(bean: afspraakInstance, field: "klant")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "opmerkingen")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "ophalen")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "afgehandeld")}</td>

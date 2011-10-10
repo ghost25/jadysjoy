@@ -56,13 +56,6 @@
                         </tr>
                         
                          <tr class="prop">
-                            <td valign="top" class="name"><g:message code="afspraak.klant.label" default="Klant" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: afspraakInstance, field: "klant")}</td>
-                            
-                        </tr>
-                        
-                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="afspraak.opmerkingen.label" default="Opmerking" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: afspraakInstance, field: "opmerkingen")}</td>

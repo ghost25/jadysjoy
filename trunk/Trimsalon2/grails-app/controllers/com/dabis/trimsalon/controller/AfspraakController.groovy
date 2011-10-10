@@ -6,6 +6,7 @@ import com.dabis.trimsalon.model.Hond
 import com.dabis.trimsalon.model.Producten
 import com.dabis.trimsalon.model.User
 import com.dabis.trimsalon.model.Calendar
+import grails.converters.JSON
 
 class AfspraakController {
 
@@ -34,16 +35,6 @@ class AfspraakController {
 		}
     }
 	
-	def create = {
-		def afspraakInstance = new Afspraak()
-		afspraakInstance.properties = params
-		def honden = Hond.list(afspraakInstance.hond)
-		def product = Producten.list(afspraakInstance.producten)
-		def users = User.list(afspraakInstance.user)
-		def kalender = Calendar.list(afspraakInstance.calendar)
-		return [afspraakInstance: afspraakInstance, honden: honden, product: product, users: users, kalender:kalender]
-		}
-	
 	def save = {
 		def afspraakInstance = new Afspraak(params)
 				
@@ -60,12 +51,12 @@ class AfspraakController {
 			
 				try  {
 					sendMail {
-						to  "${afspraakInstance.klant.email}"
+						to  "${afspraakInstance.hond.klant.email}"
 						from "rob.daalman@gmail.com"
 						subject "Afspraak trimsalon JadysJoy"
 						html g.render(template:'/email/afspraak',model:[afspraakInstance: afspraakInstance])
 					}
-					flash.message = "Bevestiging afspraak is verstuurd naar ${afspraakInstance.klant.naam}"
+					flash.message = "Bevestiging afspraak is verstuurd naar ${afspraakInstance.hond.klant.naam}"
 					} catch(Exception e){
 					log.error "Probleem met versturen email $e.message", e
 					flash.message = "Email is niet verstuurd"

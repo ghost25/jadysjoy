@@ -5,18 +5,18 @@
                     <h1>Menu</h1>
                     <div id="controllerList" class="dialog">
                 	<ul>
-                	<g:link controller="calendar" action="show">
+                	<g:link controller="calendar" action="show" id="1">
 					Kalender
 					</g:link></p>
-                	<g:if test="${!session.user}">
-					<g:link controller="afspraak" action="list">
-					Toon afspraken
-					</g:link></p>
+                	<g:if test="${!session.user}">			
 					<g:link controller="klant" action="list">
 					Toon klanten
 					</g:link></p>
 					<g:link controller="hond" action="list">
 					Toon honden
+					</g:link></p>
+					<g:link controller="producten" action="list">
+					Toon Producten
 					</g:link></p>
 					</g:if>
 					<g:else>
@@ -36,10 +36,13 @@
 					Toon afspraken
 					</g:link></p>
 					<g:link controller="afspraak" action="create">
-					Nieuwe Afspraak
+					Nieuwe afspraak
 					</g:link></p>
 					<g:link controller="producten" action="list">
 					Toon producten
+					</g:link></p>
+					<g:link controller="producten" action="create">
+					Nieuwe product
 					</g:link></p>
 					<g:link controller="boekhouding" action="list">
 					Toon boekhouding
@@ -50,6 +53,9 @@
 					</g:link></p>
 					<g:link controller="user" action="create">
 					Nieuwe gebruiker
+					</g:link></p>
+					<g:link controller="calendar" action="create">
+					Nieuwe kalender
 					</g:link></p>
 					</g:if>
 					</g:else>

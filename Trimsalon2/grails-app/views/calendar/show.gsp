@@ -18,6 +18,7 @@
 	</script>
 
   <h1>Agenda</h1>
+  <div id='calendar'>
   <button class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all" id="edit"><span class="ui-button-text"><g:message code="default.button.edit.label" default="Edit"/></span></button>
 	<fullcal:calendar id="afspraak">
 	  theme: true,
@@ -30,5 +31,6 @@
 	  editable: true,	
 	  events:${include(controller:"calendar", action:"json", id:calendarInstance?.id)}
 	</fullcal:calendar>
+	</div>
 </body>
 </html>

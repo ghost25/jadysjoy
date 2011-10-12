@@ -92,7 +92,7 @@
                     <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Weet je zeker dat je dit wilt verwijderen?')}');" /></span>
 					<g:if test="${afspraakInstance?.afgehandeld == 'Ja'}">
-                    <span class="button"><g:actionSubmit class="cretae" controller="boekhouding" action="create" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
+                    <span class="button"><g:actionSubmit class="create" controller="boekhouding" action="create" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                     </g:if>                
                 </g:form>
             </div>

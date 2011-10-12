@@ -1,4 +1,5 @@
 import com.dabis.trimsalon.model.User
+import com.dabis.trimsalon.model.Calendar
 import grails.util.GrailsUtil
 	
 class BootStrap {
@@ -15,6 +16,7 @@ class BootStrap {
 		if(admin.hasErrors()){
 			println admin.errors
 		}
+		
 		def jdoe = new User(login:"jdoe",
 			password:"password",
 			role:"user",
@@ -24,7 +26,16 @@ class BootStrap {
 			if(jdoe.hasErrors()){
 				println jdoe.errors
 	}
-
+			
+		def kalender = new Calendar( 
+		name:"Kalender",
+        color:"Wit",
+        textColor:"Zwart") 
+		
+		kalender.save()
+		if(kalender.hasErrors()){
+			println kalender.errors
+		}
 		}
 		}
 }

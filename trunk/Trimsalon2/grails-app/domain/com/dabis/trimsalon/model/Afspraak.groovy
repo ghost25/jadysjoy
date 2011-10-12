@@ -30,7 +30,7 @@ class Afspraak implements Comparable{
 		opmerkingen()
 		ophalen(inList: ["Nee", "Ja"])
 		afgehandeld()
-		user(blank:false)
+		user()
     }
 
 public int compareTo(Object that){

@@ -8,6 +8,17 @@ class CalendarController {
     def json={
         render createJSON(Long.parseLong(params.id))
     }
+	
+	def show = {
+		def calendarInstance = Calendar.get(params.id)
+		if (!calendarInstance) {
+			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'calendar.label', default: 'Calendar'), params.id])}"
+			redirect(action: "list")
+		}
+		else {
+			[calendarInstance: calendarInstance]
+		}
+	}
 
     private String createJSON(long id){
         def json="["

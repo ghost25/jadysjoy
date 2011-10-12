@@ -4,6 +4,7 @@ import com.dabis.trimsalon.model.User
 import com.dabis.trimsalon.model.Klant
 import com.dabis.trimsalon.model.Hond
 import com.dabis.trimsalon.model.Afspraak
+import com.dabis.trimsalon.model.Calendar
 
 class UserController {
 	
@@ -48,7 +49,7 @@ class UserController {
 			def redirectParams =
 			session.originalRequestParams ?
 			session.originalRequestParams :
-			[controller:'afspraak']
+			[controller:'calendar', action:'show', id:'1']
 			redirect(redirectParams)
 			
 			}
@@ -71,9 +72,9 @@ class UserController {
 			session.user = user
 			flash.message = "Welkom ${user.login}!"
 			if(user.admin){
-			  redirect(controller:"afspraak", action:"list")
+			  redirect(controller:'calendar', action:'show', id:'1')
 			} else{
-			  redirect(controller:"afspraak", action:"list")
+			  redirect(controller:'calendar', action:'show', id:'1')
 			}
 		  }else{
 			flash.message =

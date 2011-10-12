@@ -4,7 +4,7 @@ html * {
 }
 
 #calendar {
-	width: 800px;
+	width: 700px;
 	padding-left:10px;
 }
 
@@ -36,6 +36,12 @@ html * {
 	color:black;
 	width:180px;
 }
+
+#createAfspraak {
+	float:right;
+	margin-right:10px;
+	width:300px
+	}
 
 #top5Panel {
 	float:right;

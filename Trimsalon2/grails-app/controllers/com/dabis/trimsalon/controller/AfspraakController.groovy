@@ -6,7 +6,6 @@ import com.dabis.trimsalon.model.Hond
 import com.dabis.trimsalon.model.Producten
 import com.dabis.trimsalon.model.User
 import com.dabis.trimsalon.model.Calendar
-import grails.converters.JSON
 
 class AfspraakController {
 
@@ -151,64 +150,6 @@ class AfspraakController {
 		[afspraakInstanceList: Afspraak.list(params), afspraakInstanceTotal: Afspraak.count(), top5Klant: Klant.list(max:5, sort:"dateCreated", order:"desc"),
 			top5Hond: Hond.list(max:5, sort:"naam", order:"desc"),
 			top5Afspraak: Afspraak.list(max:5, sort:"begindatum", order:"desc"),]
-	}
-	
-	def json={
-		render createJSON(Long.parseLong(params.id))
-	}
-
-	private String createJSON(long id){
-		def json="["
-		boolean first=true
-		Afspraak c=Afspraak.get(id)
-		c.events.each{
-			if(first){
-				first=false
-				json+="{"
-			}
-			else {
-				json+=",{"
-			}
-
-			json+="title:\""+it.omschrijving+"\","
-			json+="begin:'"+it.begindatum+"',"
-			json+="eind:'"+it.einddatum+"',"
-			json+="allDay:"+it.allDay+","
-			json+="url:\"${request.contextPath}/afspraak/show/"+it.id+"\","
-			json+="backgroundColor:'"+c.color+"',"
-			json+="textColor:'"+c.textColor+"'"
-			json+="}"
-		}
-		json+="]"
-		return json
-	}
-
-
-	def ical={
-		render createIcal(Long.parseLong(params.id))
-	}
-
-	private String createIcal(long id){
-		def df=new java.text.SimpleDateFormat("yyyyMMdd'T'HHmmss")
-		Afspraak c=Afspraak.get(id)
-		def ical='''BEGIN:VCALENDAR
-		X-WR-CALNAME:'''+c.name+'''
-		X-WR-CALDESC:GRAILS Plugin Calendar
-		PRODID:-//Francois-Xavier Thoorens/NONSGML Bennu 0.1//EN
-		VERSION:2.0
-		'''
-		c.events.each{
-			ical+="BEGIN:VEVENT\n"
-			ical+="UID:"+c.name+it.id+"@grails\n"
-			ical+="DTSTAMP:"+df.format(new Date())+"Z\n"
-			ical+="SUMMARY:"+it.omschrijving+"\n"
-			ical+="DTSTART:"+df.format(it.begindatum)+"\n"
-			ical+="DTEND:"+df.format(it.einddatum)+"\n"
-			ical+="DESCRIPTION:"+it.producten+"\n"
-			ical+="END:VEVENT\n"
-		}
-		ical+="END:VCALENDAR\n"
-		return ical
 	}
 
 }

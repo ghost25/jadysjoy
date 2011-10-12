@@ -7,7 +7,7 @@ import com.dabis.trimsalon.model.Producten
 
 class ProductenController {
 
-	def beforeInterceptor = [action:this.&auth]
+	def beforeInterceptor = [action:this.&auth, except:'list']
 	
     def scaffold = com.dabis.trimsalon.model.Producten
 	

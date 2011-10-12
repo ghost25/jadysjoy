@@ -3,6 +3,11 @@ html * {
     /*padding: 0; SELECT NOT DISPLAYED CORRECTLY IN FIREFOX */
 }
 
+#calendar {
+	width: 800px;
+	padding-left:10px;
+}
+
 #page-wrap {
 	background: white;
 	min-width: 780px;

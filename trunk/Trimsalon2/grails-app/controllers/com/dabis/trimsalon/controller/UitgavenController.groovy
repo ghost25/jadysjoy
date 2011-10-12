@@ -1,4 +1,5 @@
-package com.dabis.trimsalon.model
+package com.dabis.trimsalon.controller
+import com.dabis.trimsalon.model.Uitgaven
 
 class UitgavenController {
 

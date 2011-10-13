@@ -59,8 +59,8 @@ class AfspraakController {
 					} catch(Exception e){
 					log.error "Probleem met versturen email $e.message", e
 					flash.message = "Email is niet verstuurd"
-						redirect(action: "show", id: afspraakInstance.id)
 					}
+					redirect(action: "show", id: afspraakInstance.id)
 				}
 		}
 		else {
@@ -153,18 +153,22 @@ class AfspraakController {
 	}
 	
 	def updateEndDate={
-		Afspraak e=Afspraak.get(params.id)
-		e.eindDate.time+=24*3600000*Long.parseLong(params.dayDelta)+60000*Long.parseLong(params.minuteDelta)
-		println e.eindDate
+		Afspraak e=Afspraak.get(params.id.toLong())
+		e.einddatum.time+=24*3600000*Long.parseLong(params.dayDelta)+60000*Long.parseLong(params.minuteDelta)
+		println e.einddatum
 		e.save(flush:true)
 		render 'update OK'
 		}
 		
 	def updateMoveDate={
-		Afspraak e=Afspraak.get(params.id)
+		
+		println "Dump voor get:"+params.dump()
+				
+		Afspraak e=Afspraak.get(params.afspraak)
+		
 		e.allDay=params.allDay=='true'
-		e.beginDate.time+=24*3600000*Long.parseLong(params.dayDelta)+60000*Long.parseLong(params.minuteDelta)
-		e.eindDate.time+=24*3600000*Long.parseLong(params.dayDelta)+60000*Long.parseLong(params.minuteDelta)
+		e.begindatum.time+=24*3600000*Long.parseLong(params.dayDelta)+60000*Long.parseLong(params.minuteDelta)
+		e.einddatum.time+=24*3600000*Long.parseLong(params.dayDelta)+60000*Long.parseLong(params.minuteDelta)
 		e.save(flush:true)
 		render 'update OK'
 		}

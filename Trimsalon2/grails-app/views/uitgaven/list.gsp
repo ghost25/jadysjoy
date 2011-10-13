@@ -28,6 +28,8 @@
                             <g:sortableColumn property="omschrijving" title="${message(code: 'uitgaven.omschrijving.label', default: 'Omschrijving')}" />
                         
                             <g:sortableColumn property="prijsExbtw" title="${message(code: 'uitgaven.prijsExbtw.label', default: 'Prijs Exbtw')}" />
+                            
+                            <g:sortableColumn property="prijs" title="${message(code: 'uitgaven.prijs.label', default: 'Prijs')}" />
                         
                         </tr>
                     </thead>
@@ -39,7 +41,9 @@
                         
                             <td>${fieldValue(bean: uitgavenInstance, field: "omschrijving")}</td>
                         
-                            <td>${fieldValue(bean: uitgavenInstance, field: "prijsExbtw")}</td>
+                            <td>€<g:formatNumber number="${uitgavenInstance?.prijsExbtw}" format="##0.00"/></td>
+                            
+                            <td>€<g:formatNumber number="${uitgavenInstance?.prijs}" format="##0.00"/></td>
                         
                         </tr>
                     </g:each>

@@ -1,15 +1,18 @@
+
+<%@ page import="com.dabis.trimsalon.model.Boekhouding" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    	<meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'boekhouding.label', default: 'boekhouding')}" />
+        <meta name="layout" content="main" />
+        <g:set var="entityName" value="${message(code: 'boekhouding.label', default: 'Boekhouding')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Home</a></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><g:link action="logout">Logout</g:link></span>
         </div>
         <div class="body">
             <h1><g:message code="default.show.label" args="[entityName]" /></h1>
@@ -17,46 +20,46 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <div class="dialog">
-                	<table>
+                <table>
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="boekhouding.factuurnr.label" default="Factuurnummer" /></td>
+                            <td valign="top" class="name"><g:message code="boekhouding.id.label" default="Id" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: boekhoudingInstance, field: "factuurnr")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="boekhouding.boekingsdatum.label" default="Boekingsdatum" /></td>
-                            
-                            <td valign="top" class="value"><g:formatDate date="${boekhoudingInstance?.boekingsdatum}" format="dd-MMM-yyyy"/></td>
+                            <td valign="top" class="value">${fieldValue(bean: boekhoudingInstance, field: "id")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="boekhouding.factuurdatum.label" default="Factuurdatum" /></td>
+                            <td valign="top" class="name"><g:message code="boekhouding.afspraak.label" default="Afspraak" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${boekhoudingInstance?.factuurdatum}" format="dd-MMM-yyyy"/></td>
+                            <td valign="top" class="value"><g:link controller="afspraak" action="show" id="${boekhoudingInstance?.afspraak?.id}">${boekhoudingInstance?.afspraak?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="boekhouding.prijsExbtw.label" default="Prijs exbtw" /></td>
+                            <td valign="top" class="name"><g:message code="boekhouding.dateCreated.label" default="Date Created" /></td>
                             
-                            <td valign="top" class="value">€<g:formatNumber number="${boekhoudingInstance?.prijsExbtw}" format="##0.00"/></td>
-                            
-                        </tr>
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="boekhouding.btw.label" default="Btw" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: boekhoudingInstance, field: "btw")}%</td>
+                            <td valign="top" class="value"><g:formatDate date="${boekhoudingInstance?.dateCreated}" /></td>
                             
                         </tr>
+                    
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="boekhouding.betaald.label" default="Betaald" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: boekhoudingInstance, field: "betaald")}</td>
+                            <td valign="top" class="value"><g:formatBoolean boolean="${boekhoudingInstance?.betaald}" /></td>
+                            
+                        </tr>
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="boekhouding.afspraak.label" default="Afspraak" /></td>
+                            
+                            <td valign="top" class="value">€<g:formatNumber number="${boekhoudingInstance?.afspraak?.producten?.prijsExbtw}" format="##0.00"/></td>
+
+                        </tr>
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="boekhouding.afspraak.label" default="Afspraak" /></td>
+                            
+                            <td valign="top" class="value">€<g:formatNumber number="${boekhoudingInstance?.afspraak?.producten?.prijs}" format="##0.00"/></td>
                             
                         </tr>
                     
@@ -71,6 +74,5 @@
                 </g:form>
             </div>
         </div>
-        <table>        
     </body>
 </html>

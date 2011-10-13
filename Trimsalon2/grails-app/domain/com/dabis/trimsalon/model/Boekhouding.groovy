@@ -4,24 +4,18 @@ class Boekhouding {
 	static searchable = true
 	
 	// Fields
-	Afspraak begindatum;
+	Afspraak afspraak;
 	Date dateCreated;
-	Producten prijsExbtw;
-	Producten prijs;
-	Afspraak hond;
 	Boolean betaald;
 	
 	// Relationships
-	static belongsTo = [afspraak:Afspraak, producten:Producten]
+	static belongsTo = [afspraak:Afspraak]
 
 	// Constraints and form sequence
 	
     static constraints = {
-		begindatum(blank:false)
+		afspraak(blank:false)
 		dateCreated(blank:false)
-		prijsExbtw(blank:false)
-		prijs(blsnk:false)
-		hond(blank:false)
 		betaald()
     }
 }

@@ -34,51 +34,6 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="begindatum"><g:message code="boekhouding.begindatum.label" default="Begindatum" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: boekhoudingInstance, field: 'begindatum', 'errors')}">
-                                    <g:select name="begindatum.id" from="${com.dabis.trimsalon.model.Afspraak.list()}" optionKey="id" value="${boekhoudingInstance?.begindatum?.id}"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="prijsExbtw"><g:message code="boekhouding.prijsExbtw.label" default="Prijs Exbtw" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: boekhoudingInstance, field: 'prijsExbtw', 'errors')}">
-                                    <g:select name="prijsExbtw.id" from="${com.dabis.trimsalon.model.Producten.list()}" optionKey="id" value="${boekhoudingInstance?.prijsExbtw?.id}"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="prijs"><g:message code="boekhouding.prijs.label" default="Prijs" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: boekhoudingInstance, field: 'prijs', 'errors')}">
-                                    <g:select name="prijs.id" from="${com.dabis.trimsalon.model.Producten.list()}" optionKey="id" value="${boekhoudingInstance?.prijs?.id}"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="hond"><g:message code="boekhouding.hond.label" default="Hond" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: boekhoudingInstance, field: 'hond', 'errors')}">
-                                    <g:select name="hond.id" from="${com.dabis.trimsalon.model.Afspraak.list()}" optionKey="id" value="${boekhoudingInstance?.hond?.id}"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="betaald"><g:message code="boekhouding.betaald.label" default="Betaald" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: boekhoudingInstance, field: 'betaald', 'errors')}">
-                                    <g:checkBox name="betaald" value="${boekhoudingInstance?.betaald}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
                                   <label for="afspraak"><g:message code="boekhouding.afspraak.label" default="Afspraak" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: boekhoudingInstance, field: 'afspraak', 'errors')}">
@@ -88,10 +43,10 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="producten"><g:message code="boekhouding.producten.label" default="Producten" /></label>
+                                  <label for="betaald"><g:message code="boekhouding.betaald.label" default="Betaald" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: boekhoudingInstance, field: 'producten', 'errors')}">
-                                    <g:select name="producten.id" from="${com.dabis.trimsalon.model.Producten.list()}" optionKey="id" value="${boekhoudingInstance?.producten?.id}"  />
+                                <td valign="top" class="value ${hasErrors(bean: boekhoudingInstance, field: 'betaald', 'errors')}">
+                                    <g:checkBox name="betaald" value="${boekhoudingInstance?.betaald}" />
                                 </td>
                             </tr>
                         

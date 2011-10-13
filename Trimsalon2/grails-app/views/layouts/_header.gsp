@@ -47,6 +47,9 @@
 					<g:link controller="boekhouding" action="list">
 					Toon boekhouding
 					</g:link></p>
+					<g:link controller="uitgaven" action="list">
+					Toon uitgaven
+					</g:link></p>
 					<g:if test="${session.user.role == 'admin'}">
 					<g:link controller="user" action="list">
 					Toon gebruikers

@@ -151,5 +151,22 @@ class AfspraakController {
 			top5Hond: Hond.list(max:5, sort:"naam", order:"desc"),
 			top5Afspraak: Afspraak.list(max:5, sort:"begindatum", order:"desc"),]
 	}
+	
+	def updateEndDate={
+		Afspraak e=Afspraak.get(params.id)
+		e.eindDate.time+=24*3600000*Long.parseLong(params.dayDelta)+60000*Long.parseLong(params.minuteDelta)
+		println e.eindDate
+		e.save(flush:true)
+		render 'update OK'
+		}
+		
+	def updateMoveDate={
+		Afspraak e=Afspraak.get(params.id)
+		e.allDay=params.allDay=='true'
+		e.beginDate.time+=24*3600000*Long.parseLong(params.dayDelta)+60000*Long.parseLong(params.minuteDelta)
+		e.eindDate.time+=24*3600000*Long.parseLong(params.dayDelta)+60000*Long.parseLong(params.minuteDelta)
+		e.save(flush:true)
+		render 'update OK'
+		}
 
 }

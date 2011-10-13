@@ -10,7 +10,6 @@
 		$("#edit").click(function() { window.location="${createLink(controller:'calendar',action:'edit', id:calendarInstance?.id)}"; });
 	});
 	</script>
-  <h1>Agenda</h1>
   <div id='createAfspraak'>
   	<h1>Maak afspraak</h1>
 	            <g:hasErrors bean="${afspraakInstance}">
@@ -117,12 +116,15 @@
                     </table>
                 </div>
                 <div class="buttons">
-                    <span class="button"><g:submitButton name="create" class="save" controller="afspraak"  params="['afspraak.id': afspraakInstance?.id]" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
+                    <span class="button"><g:submitButton controller="afspraak" name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>
                 </g:form>
 	</div>
   <div id='calendar'>
+  <h1>Agenda</h1>
+  <g:if test="${session.user.role == 'admin'}">>
   <button class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all" id="edit"><span class="ui-button-text"><g:message code="default.button.edit.label" default="Edit"/></span></button>
+	</g:if>
 	<fullcal:calendar id="afspraak">
 	  theme: true,
 	  header: {left: 'prev,next today',center: 'title', right: 'month,agendaWeek,agendaDay'},
@@ -131,7 +133,20 @@
 	  selectable: true,
 	  selectHelper: true,
 	  select: function(start, end, allDay) {javascript:window.location="${createLink(controller:'afspraak',action:'create', params:['calendar.id':calendarInstance?.id])}&allDay="+allDay+"&begindatum_year="+start.getFullYear()+"&begindatum_month="+(start.getMonth()+1)+"&begindatum_day="+start.getDate()+"&begindatum_hour="+start.getHours()+"&begindatum_minute="+start.getMinutes()+"&einddatum_year="+end.getFullYear()+"&einddatum_month="+(end.getMonth()+1)+"&einddatum_day="+end.getDate()+"&einddatum_hour="+end.getHours()+"&einddatum_minute="+end.getMinutes()},
-	  editable: true,	
+	  editable: true,
+	  eventResize: function(event,dayDelta,minuteDelta,revertFunc) {
+		       jQuery.ajax({type:'POST',data:{'dayDelta': dayDelta,'minuteDelta': minuteDelta}, url:'${createLink(controller:'afspraak', action:'updateEndDate')}'+'/'+event.id,success:function(data,textStatus){},error:function(XMLHttpRequest,textStatus,errorThrown){revertFunc()}});
+		  },
+		  eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
+		   jQuery.ajax({type:'POST',data:{'allDay': allDay, 'dayDelta': dayDelta,'minuteDelta': minuteDelta}, url:'${createLink(controller:'afspraak', action:'updateMoveDate')}'+'/'+event.id,success:function(data,textStatus){},error:function(XMLHttpRequest,textStatus,errorThrown){revertFunc()}});
+		  },
+		  loading: function(bool) {
+		if (bool) $('#loading').show();
+		else {
+		$('#loading').hide();
+		$('#cal').fullCalendar( 'rerenderEvents' );
+		}
+		  },	
 	  events:${include(controller:"calendar", action:"json", id:calendarInstance?.id)}
 	</fullcal:calendar>
 	</div>	

@@ -40,7 +40,14 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="uitgaven.prijsExbtw.label" default="Prijs Exbtw" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: uitgavenInstance, field: "prijsExbtw")}</td>
+                            <td valign="top" class="value">€<g:formatNumber number="${uitgavenInstance?.prijsExbtw}" format="##0.00"/></td>
+                            
+                        </tr>
+                        
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="uitgaven.prijs.label" default="Prijs" /></td>
+                            
+                            <td valign="top" class="value">€<g:formatNumber number="${uitgavenInstance?.prijs}" format="##0.00"/></td>                          
                             
                         </tr>
                     

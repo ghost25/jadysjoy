@@ -138,7 +138,7 @@
 		       jQuery.ajax({type:'POST',data:{'dayDelta': dayDelta,'minuteDelta': minuteDelta}, url:'${createLink(controller:'afspraak', action:'updateEndDate')}'+'/'+event.id,success:function(data,textStatus){},error:function(XMLHttpRequest,textStatus,errorThrown){revertFunc()}});
 		  },
 		  eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
-		   jQuery.ajax({type:'POST',data:{'allDay': allDay, 'dayDelta': dayDelta,'minuteDelta': minuteDelta}, url:'${createLink(controller:'afspraak', action:'updateMoveDate')}'+'/'+event.id,success:function(data,textStatus){},error:function(XMLHttpRequest,textStatus,errorThrown){revertFunc()}});
+		   jQuery.ajax({type:'POST',data:{'allDay': allDay, 'dayDelta': dayDelta,'minuteDelta': minuteDelta}, url:'${createLink(controller:'afspraak', action:'updateMoveDate', params:[afspraak:event?.afspraakid])}',success:function(data,textStatus){},error:function(XMLHttpRequest,textStatus,errorThrown){revertFunc()}});
 		  },
 		  loading: function(bool) {
 		if (bool) $('#loading').show();

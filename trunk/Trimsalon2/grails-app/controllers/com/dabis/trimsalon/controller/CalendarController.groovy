@@ -32,6 +32,7 @@ class CalendarController {
             else {
                 json+=",{"
             }
+			json+="afspraakid:\""+it.id+"\","
             json+="title:\""+it.omschrijving+"\","
             json+="start:'"+it.begindatum+"',"
             json+="end:'"+it.einddatum+"',"

@@ -19,8 +19,4 @@ class Uitgaven {
 		
 	static transients = ['prijs']
 	
-	// as it will be shown in the Afspraak form
-	String toString(){
-		return "${naam}, ${prijs} euro"
-	}
 } 

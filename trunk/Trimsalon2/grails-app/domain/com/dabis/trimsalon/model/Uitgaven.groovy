@@ -7,16 +7,19 @@ class Uitgaven {
 	String omschrijving;
 	BigDecimal prijsExbtw;
 	BigDecimal prijs;
-	BigDecimal getprijs() {
-		prijsExbtw * 1.19
-		}
 	
     static constraints = {
 		omschrijving(blank:false)
 		prijsExbtw(scale:2)
-		prijs()
+		prijs(scale:2)
     }
 		
 	static transients = ['prijs']
 	
+	public String getPrijs(){
+		if (prijsExbtw != null) {
+			prijs = prijsExbtw * 1.19
+		}
+		return prijs
+		}
 } 

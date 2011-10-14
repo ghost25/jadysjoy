@@ -44,8 +44,8 @@
 					<g:link controller="producten" action="create">
 					Nieuwe product
 					</g:link></p>
-					<g:link controller="boekhouding" action="list">
-					Toon boekhouding
+					<g:link controller="inkomsten" action="list">
+					Toon inkomsten
 					</g:link></p>
 					<g:link controller="uitgaven" action="list">
 					Toon uitgaven

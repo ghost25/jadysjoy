@@ -14,7 +14,7 @@ class Producten {
 		}
 	Integer voorraad;
 
-	static hasMany = [afspraak:Afspraak, boekhouding:Boekhouding]
+	static hasMany = [afspraak:Afspraak, boekhouding:Inkomsten]
 	
     static constraints = {
 		naam(blank:false)

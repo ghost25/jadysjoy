@@ -17,7 +17,7 @@
                 <g:renderErrors bean="${afspraakInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" >
+            <g:form action="save" controller="afspraak">
                 <div class="dialog">
                     <table>
                         <tbody>
@@ -84,6 +84,15 @@
                                     <g:textField name="opmerkingen" value="${afspraakInstance?.opmerkingen}" />
                                 </td>
                             </tr>
+                            
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="ophalen"><g:message code="afspraak.ophalen.label" default="Ophalen" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'ophalen', 'errors')}">
+                                    <g:select name="ophalen" from="${afspraakInstance?.constraints?.ophalen?.inList}" value="${afspraakInstance?.ophalen}" valueMessagePrefix="afspraak.ophalen"  />
+                                </td>
+                            </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
@@ -116,7 +125,7 @@
                     </table>
                 </div>
                 <div class="buttons">
-                    <span class="button"><g:submitButton controller="afspraak" name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
+                    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>
                 </g:form>
 	</div>

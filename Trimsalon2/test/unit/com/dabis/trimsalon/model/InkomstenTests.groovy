@@ -2,7 +2,7 @@ package com.dabis.trimsalon.model
 
 import grails.test.*
 
-class BoekhoudingTests extends GrailsUnitTestCase {
+class InkomstenTests extends GrailsUnitTestCase {
     protected void setUp() {
         super.setUp()
     }

@@ -9,9 +9,6 @@ class Producten {
 	String ras;
 	BigDecimal prijsExbtw;
 	BigDecimal prijs;
-	BigDecimal getprijs() {
-		prijsExbtw * 1.19
-		}
 	Integer voorraad;
 
 	static hasMany = [afspraak:Afspraak, boekhouding:Inkomsten]
@@ -21,7 +18,7 @@ class Producten {
 		omschrijving(blank:false)
 		ras()
 		prijsExbtw(scale:2)
-		prijs()
+		prijs(scale:2)
 		voorraad(min:1)
     }
 		
@@ -31,4 +28,11 @@ class Producten {
 	String toString(){
 		return "${naam}, ${prijs} euro"
 	}
+	
+	public String getPrijs(){
+		if (prijsExbtw != null) {
+			prijs = prijsExbtw * 1.19
+		}
+		return prijs
+		}
 } 

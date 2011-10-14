@@ -53,7 +53,7 @@
                             <td>${fieldValue(bean: productenInstance, field: "naam")}</td>                        
                             <td>${fieldValue(bean: productenInstance, field: "omschrijving")}</td>                        
                             <td>€<g:formatNumber number="${productenInstance?.prijsExbtw}" format="##0.00"/></td>
-                            <td>€<g:formatNumber number="${productInstance?.prijs}" format="##0.00"/></td>
+                            <td>€<g:formatNumber number="${productenInstance?.prijs}" format="##0.00"/></td>
                             <td>${fieldValue(bean: productenInstance, field: "voorraad")}</td>                                                   
                         </tr>
                     </g:each>

@@ -135,10 +135,10 @@
 	  select: function(start, end, allDay) {javascript:window.location="${createLink(controller:'afspraak',action:'create', params:['calendar.id':calendarInstance?.id])}&allDay="+allDay+"&begindatum_year="+start.getFullYear()+"&begindatum_month="+(start.getMonth()+1)+"&begindatum_day="+start.getDate()+"&begindatum_hour="+start.getHours()+"&begindatum_minute="+start.getMinutes()+"&einddatum_year="+end.getFullYear()+"&einddatum_month="+(end.getMonth()+1)+"&einddatum_day="+end.getDate()+"&einddatum_hour="+end.getHours()+"&einddatum_minute="+end.getMinutes()},
 	  editable: true,
 	  eventResize: function(event,dayDelta,minuteDelta,revertFunc) {
-		       jQuery.ajax({type:'POST',data:{'dayDelta': dayDelta,'minuteDelta': minuteDelta}, url:'${createLink(controller:'afspraak', action:'updateEndDate')}'+'/'+event.id,success:function(data,textStatus){},error:function(XMLHttpRequest,textStatus,errorThrown){revertFunc()}});
+		       jQuery.ajax({type:'POST',data:{'dayDelta': dayDelta,'minuteDelta': minuteDelta}, url:'${createLink(controller:'afspraak', action:'updateEndDate')}'+'/'+event.afspraakid,success:function(data,textStatus){},error:function(XMLHttpRequest,textStatus,errorThrown){revertFunc()}});
 		  },
 		  eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
-		   jQuery.ajax({type:'POST',data:{'allDay': allDay, 'dayDelta': dayDelta,'minuteDelta': minuteDelta}, url:'${createLink(controller:'afspraak', action:'updateMoveDate', params:[afspraak:event?.afspraakid])}',success:function(data,textStatus){},error:function(XMLHttpRequest,textStatus,errorThrown){revertFunc()}});
+		   jQuery.ajax({type:'POST',data:{'allDay': allDay, 'dayDelta': dayDelta,'minuteDelta': minuteDelta}, url:'${createLink(controller:'afspraak', action:'updateMoveDate')}'+'/'+event.afspraakid,success:function(data,textStatus){},error:function(XMLHttpRequest,textStatus,errorThrown){revertFunc()}});
 		  },
 		  loading: function(bool) {
 		if (bool) $('#loading').show();

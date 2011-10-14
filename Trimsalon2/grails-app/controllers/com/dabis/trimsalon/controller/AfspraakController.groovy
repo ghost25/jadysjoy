@@ -111,7 +111,7 @@ class AfspraakController {
 							subject "Afspraak trimsalon JadysJoy"
 							html g.render(template:'/email/afspraak',model:[afspraakInstance: afspraakInstance])
 						}
-						flash.message = "Bevestiging afspraak is verstuurd naar ${afspraakInstance.klant.naam}"
+						flash.message = "Bevestiging afspraak is verstuurd naar ${afspraakInstance.hond.klant.naam}"
 						} catch(Exception e){
 						log.error "Probleem met versturen email $e.message", e
 						flash.message = "Email is niet verstuurd"
@@ -164,7 +164,7 @@ class AfspraakController {
 		
 		println "Dump voor get:"+params.dump()
 				
-		Afspraak e=Afspraak.get(params.afspraak)
+		Afspraak e=Afspraak.get(params.id.toLong())
 		
 		e.allDay=params.allDay=='true'
 		e.begindatum.time+=24*3600000*Long.parseLong(params.dayDelta)+60000*Long.parseLong(params.minuteDelta)

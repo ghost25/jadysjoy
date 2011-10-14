@@ -38,6 +38,6 @@ public int compareTo(Object that){
 }
 	
 	String toString(){
-		return "${begindatum.format('dd-MM-yyyy')} ${klant}"
+		return "${begindatum.format('dd-MM-yyyy')} ${hond}"
 	}
 }

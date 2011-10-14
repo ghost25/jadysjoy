@@ -45,7 +45,7 @@
                         </tr>
                         
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="uitgaven.prijs.label" default="Prijs" /></td>
+                            <td valign="top" class="name"><g:message code="uitgaven.prijs.label" default="Prijs Inclbtw" /></td>
                             
                             <td valign="top" class="value">€<g:formatNumber number="${uitgavenInstance?.prijs}" format="##0.00"/></td>                          
                             

@@ -3,11 +3,11 @@ package com.dabis.trimsalon.controller
 import com.dabis.trimsalon.model.Klant
 import com.dabis.trimsalon.model.Hond
 import com.dabis.trimsalon.model.Afspraak
-import com.dabis.trimsalon.model.Boekhouding
+import com.dabis.trimsalon.model.Inkomsten
 
-class BoekhoudingController {
+class InkomstenController {
 
-    def scaffold = com.dabis.trimsalon.model.Boekhouding
+    def scaffold = com.dabis.trimsalon.model.Inkomsten
 	
 	def logout = {
 		flash.message = "Prettige dag, ${session.user.login}"
@@ -35,12 +35,12 @@ class BoekhoudingController {
 	def list = {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
 	
-		def boekhoudingList = Boekhouding.withCriteria {
+		def inkomstenList = Inkomsten.withCriteria {
 		projections {
-		distinct "begindatum"
+		distinct "afspraak"
 			}
 		}
-		[boekhoudingInstanceList: Boekhouding.list(params), boekhoudingInstanceTotal: Boekhouding.count(), top5Klant: Klant.list(max:5, sort:"dateCreated", order:"desc"),
+		[inkomstenInstanceList: Inkomsten.list(params), inkomstenInstanceTotal: Inkomsten.count(), top5Klant: Klant.list(max:5, sort:"dateCreated", order:"desc"),
 			top5Hond: Hond.list(max:5, sort:"naam", order:"desc"),
 			top5Afspraak: Afspraak.list(max:5, sort:"begindatum", order:"desc"),]
 	}

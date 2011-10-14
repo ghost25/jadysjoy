@@ -1,6 +1,6 @@
 package com.dabis.trimsalon.model
 
-class Boekhouding {
+class Inkomsten {
 	static searchable = true
 	
 	// Fields

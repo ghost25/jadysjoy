@@ -1,7 +1,7 @@
-#Thu Oct 13 14:54:33 CEST 2011
+#Fri Oct 14 14:13:39 CEST 2011
 eclipse.preferences.version=1
-encoding//grails-app/views/boekhouding/list.gsp=UTF-8
-encoding//grails-app/views/boekhouding/show.gsp=UTF-8
+encoding//grails-app/views/inkomsten/list.gsp=UTF-8
+encoding//grails-app/views/inkomsten/show.gsp=UTF-8
 encoding//grails-app/views/klant/info.gsp=UTF-8
 encoding//grails-app/views/producten/list.gsp=UTF-8
 encoding//grails-app/views/producten/show.gsp=UTF-8

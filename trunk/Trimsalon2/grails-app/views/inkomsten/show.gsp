@@ -1,10 +1,10 @@
 
-<%@ page import="com.dabis.trimsalon.model.Boekhouding" %>
+<%@ page import="com.dabis.trimsalon.model.Inkomsten" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'boekhouding.label', default: 'Boekhouding')}" />
+        <g:set var="entityName" value="${message(code: 'inkomsten.label', default: 'Inkomsten')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -24,42 +24,42 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="boekhouding.id.label" default="Id" /></td>
+                            <td valign="top" class="name"><g:message code="inkomsten.id.label" default="Id" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: boekhoudingInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="boekhouding.afspraak.label" default="Afspraak" /></td>
-                            
-                            <td valign="top" class="value"><g:link controller="afspraak" action="show" id="${boekhoudingInstance?.afspraak?.id}">${boekhoudingInstance?.afspraak?.encodeAsHTML()}</g:link></td>
+                            <td valign="top" class="value">${fieldValue(bean: inkomstenInstance, field: "id")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="boekhouding.dateCreated.label" default="Date Created" /></td>
+                            <td valign="top" class="name"><g:message code="inkomsten.afspraak.label" default="Afspraak" /></td>
                             
-                            <td valign="top" class="value"><g:formatDate date="${boekhoudingInstance?.dateCreated}" /></td>
+                            <td valign="top" class="value"><g:link controller="afspraak" action="show" id="${inkomstenInstance?.afspraak?.id}">${inkomstenInstance?.afspraak?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="boekhouding.betaald.label" default="Betaald" /></td>
+                            <td valign="top" class="name"><g:message code="inkomsten.dateCreated.label" default="Date Created" /></td>
                             
-                            <td valign="top" class="value"><g:formatBoolean boolean="${boekhoudingInstance?.betaald}" /></td>
+                            <td valign="top" class="value"><g:formatDate date="${inkomstenInstance?.dateCreated}" /></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="inkomsten.betaald.label" default="Betaald" /></td>
+                            
+                            <td valign="top" class="value"><g:formatBoolean boolean="${inkomstenInstance?.betaald}" /></td>
                             
                         </tr>
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="boekhouding.afspraak.label" default="Afspraak" /></td>
+                            <td valign="top" class="name"><g:message code="inkomsten.afspraak.label" default="Afspraak" /></td>
                             
-                            <td valign="top" class="value">€<g:formatNumber number="${boekhoudingInstance?.afspraak?.producten?.prijsExbtw}" format="##0.00"/></td>
+                            <td valign="top" class="value">€<g:formatNumber number="${inkomstenInstance?.afspraak?.producten?.prijsExbtw}" format="##0.00"/></td>
 
                         </tr>
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="boekhouding.afspraak.label" default="Afspraak" /></td>
+                            <td valign="top" class="name"><g:message code="inkomsten.afspraak.label" default="Afspraak" /></td>
                             
-                            <td valign="top" class="value">€<g:formatNumber number="${boekhoudingInstance?.afspraak?.producten?.prijs}" format="##0.00"/></td>
+                            <td valign="top" class="value">€<g:formatNumber number="${inkomstenInstance?.afspraak?.producten?.prijs}" format="##0.00"/></td>
                             
                         </tr>
                     
@@ -68,7 +68,7 @@
             </div>
             <div class="buttons">
                 <g:form>
-                    <g:hiddenField name="id" value="${boekhoudingInstance?.id}" />
+                    <g:hiddenField name="id" value="${inkomstenInstance?.id}" />
                     <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Weet je zeker dat je dit wilt verwijderen?')}');" /></span>
                 </g:form>

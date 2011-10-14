@@ -51,13 +51,13 @@
                             
                         </tr>
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="inkomsten.afspraak.label" default="Afspraak" /></td>
+                            <td valign="top" class="name"><g:message code="inkomsten.afspraak.label" default="Prijs Exbtw" /></td>
                             
                             <td valign="top" class="value">€<g:formatNumber number="${inkomstenInstance?.afspraak?.producten?.prijsExbtw}" format="##0.00"/></td>
 
                         </tr>
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="inkomsten.afspraak.label" default="Afspraak" /></td>
+                            <td valign="top" class="name"><g:message code="inkomsten.afspraak.label" default="Prijs Inclbtw" /></td>
                             
                             <td valign="top" class="value">€<g:formatNumber number="${inkomstenInstance?.afspraak?.producten?.prijs}" format="##0.00"/></td>
                             

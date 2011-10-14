@@ -44,7 +44,7 @@ class AfspraakController {
 			
 			 if( afspraakInstance.afgehandeld==true ) {				 
 				flash.message = "${message(code: 'default.created.message', args: [message(code: 'afspraak.label', default: 'Afspraak'), afspraakInstance.id])}"
-				redirect(controller:"boekhouding", action: "create")
+				redirect(controller:"inkomsten", action: "create")
 			}
 			else {
 			
@@ -101,7 +101,7 @@ class AfspraakController {
 			if (!afspraakInstance.hasErrors() && afspraakInstance.save(flush: true)) {
 				if( afspraakInstance.afgehandeld==true ){
 			    flash.message = "${message(code: 'default.updated.message', args: [message(code: 'afspraak.label', default: 'Afspraak'), afspraakInstance.id])}"
-				redirect(controller:"boekhouding", action: "create")
+				redirect(controller:"inkomsten", action: "create")
 				}
 			    else {
 					try  {

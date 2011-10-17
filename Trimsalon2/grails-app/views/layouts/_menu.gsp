@@ -5,9 +5,6 @@
                     <h1>Menu</h1>
                     <div id="controllerList" class="dialog">
                 	<ul>
-                	<g:link controller="calendar" action="show" id="1">
-					Kalender
-					</g:link></p>
                 	<g:if test="${!session.user}">			
 					<g:link controller="klant" action="list">
 					Toon klanten
@@ -20,6 +17,9 @@
 					</g:link></p>
 					</g:if>
 					<g:else>
+					<g:link controller="calendar" action="show" id="1">
+					Kalender
+					</g:link></p>
                     <g:link controller="klant" action="list">
 					Toon klanten
 					</g:link></p>

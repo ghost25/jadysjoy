@@ -34,7 +34,7 @@
                                     <label for="afspraak"><g:message code="inkomsten.afspraak.label" default="Afspraak" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: inkomstenInstance, field: 'afspraak', 'errors')}">
-                                    <g:select name="afspraak.id" from="${com.dabis.trimsalon.model.Afspraak.list()}" optionKey="id" value="${inkomstenInstance?.afspraak?.id}"  />
+                                    <g:select name="afspraak.id" from="${com.dabis.trimsalon.model.Afspraak.list()}" optionKey="id" value="${inkomstenInstance?.afspraak?.id}"   noSelection="${['null':'Selecteer...']}"/>
                                 </td>
                             </tr>
                         

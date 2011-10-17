@@ -94,15 +94,6 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="ophalen"><g:message code="klant.ophalen.label" default="Ophalen" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'ophalen', 'errors')}">
-                                    <g:select name="ophalen" from="${klantInstance.constraints.ophalen.inList}" value="${klantInstance?.ophalen}" valueMessagePrefix="klant.ophalen"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
                                     <label for="opmerkingen"><g:message code="klant.opmerkingen.label" default="Opmerkingen" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'opmerkingen', 'errors')}">

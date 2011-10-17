@@ -93,16 +93,7 @@
                                 <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'email', 'errors')}">
                                     <g:textField name="email" value="${klantInstance?.email}" />
                                 </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="ophalen"><g:message code="klant.ophalen.label" default="Ophalen" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'ophalen', 'errors')}">
-                                    <g:select name="ophalen" from="${klantInstance.constraints.ophalen.inList}" value="${klantInstance?.ophalen}" valueMessagePrefix="klant.ophalen"  />
-                                </td>
-                            </tr>
+                            </tr>                    
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
@@ -112,29 +103,34 @@
                                     <g:textField name="opmerkingen" value="${klantInstance?.opmerkingen}" />
                                 </td>
                             </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="afspraken"><g:message code="klant.afspraken.label" default="Afspraken" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'afspraken', 'errors')}">
-                                    <g:select name="afspraken" from="${com.dabis.trimsalon.model.Afspraak.list()}" multiple="yes" optionKey="id" size="5" value="${klantInstance?.afspraken*.id}" />
-                                </td>
-                            </tr>
-                        
+                                                                           
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="hond"><g:message code="klant.hond.label" default="Hond" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'hond', 'errors')}">
                                     
-<ul>
-<g:each in="${klantInstance?.hond?}" var="h">
-    <li><g:link controller="hond" action="show" id="${h.id}">${h?.encodeAsHTML()}</g:link></li>
-</g:each>
-</ul>
-<g:link controller="hond" action="create" params="['klant.id': klantInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'hond.label', default: 'Hond')])}</g:link>
+								<ul>
+								<g:each in="${klantInstance?.hond?}" var="h">
+								    <li><g:link controller="hond" action="show" id="${h.id}">${h?.encodeAsHTML()}</g:link></li>
+								</g:each>
+								</ul>
+								<g:link controller="hond" action="create" params="['klant.id': klantInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'hond.label', default: 'Hond')])}</g:link>
 
+                                </td>
+                            </tr>
+                            
+                             <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="afspraken"><g:message code="klant.afspraken.label" default="Afspraken" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'afspraken', 'errors')}">
+								<ul>
+								<g:each in="${klantInstance?.hond?.afspraken?}" var="h">
+								    <li><g:link controller="afspraak" action="show" id="${h.id}">${h?.encodeAsHTML()}</g:link></li>
+								</g:each>
+								</ul>
+								<g:link controller="afspraak" action="create" params="['klant.id': klantInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'afspraak.label', default: 'Afspraak')])}</g:link>
                                 </td>
                             </tr>
                         

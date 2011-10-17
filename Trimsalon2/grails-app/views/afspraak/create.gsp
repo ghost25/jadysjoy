@@ -1,5 +1,3 @@
-
-
 <%@ page import="com.dabis.trimsalon.model.Afspraak" %>
 <html>
     <head>
@@ -70,7 +68,7 @@
                                     <label for="producten"><g:message code="afspraak.producten.label" default="Producten" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'producten', 'errors')}">
-                                    <g:select name="producten.id" from="${com.dabis.trimsalon.model.Producten.list()}" optionKey="id" value="${afspraakInstance?.producten?.id}"  />
+                                    <g:select name="producten.id" from="${com.dabis.trimsalon.model.Producten.list()}" optionKey="id" value="${afspraakInstance?.producten?.id}" noSelection="${['null':'Selecteer...']}" />
                                 </td>
                             </tr>
                         
@@ -79,7 +77,16 @@
                                     <label for="hond"><g:message code="afspraak.hond.label" default="Hond" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'hond', 'errors')}">
-                                    <g:select name="hond.id" from="${com.dabis.trimsalon.model.Hond.list()}" optionKey="id" value="${afspraakInstance?.hond?.id}"  />
+                                    <g:select name="hond.id" from="${com.dabis.trimsalon.model.Hond.list()}" optionKey="id" value="${afspraakInstance?.hond?.id}" noSelection="${['null':'Selecteer...']}" />
+                                </td>
+                            </tr>
+                            
+                         	 <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="ophalen"><g:message code="afspraak.ophalen.label" default="Ophalen" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'ophalen', 'errors')}">
+                                    <g:select name="ophalen" from="${afspraakInstance?.constraints?.ophalen?.inList}" value="${afspraakInstance?.ophalen}" valueMessagePrefix="afspraak.ophalen"  />
                                 </td>
                             </tr>
                         
@@ -90,16 +97,7 @@
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'opmerkingen', 'errors')}">
                                     <g:textField name="opmerkingen" value="${afspraakInstance?.opmerkingen}" />
                                 </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="ophalen"><g:message code="afspraak.ophalen.label" default="Ophalen" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'ophalen', 'errors')}">
-                                    <g:select name="ophalen" from="${afspraakInstance.constraints.ophalen.inList}" value="${afspraakInstance?.ophalen}" valueMessagePrefix="afspraak.ophalen"  />
-                                </td>
-                            </tr>
+                            </tr>                     
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
@@ -115,7 +113,7 @@
                                     <label for="user"><g:message code="afspraak.user.label" default="User" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'user', 'errors')}">
-                                    <g:select name="user.id" from="${com.dabis.trimsalon.model.User.list()}" optionKey="id" value="${afspraakInstance?.user?.id}"  />
+                                    <g:select name="user.id" from="${com.dabis.trimsalon.model.User.list()}" optionKey="id" value="${afspraakInstance?.user?.id}" noSelection="${['null':'Selecteer...']}" />
                                 </td>
                             </tr>
                         

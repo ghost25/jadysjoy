@@ -16,6 +16,18 @@ class HondController {
 	
 	def beforeInterceptor = [action:this.&auth, except:'list']
 	
+	def save = {
+		def hondInstance = new Hond(params)
+		hondInstance = hondInstance.merge(flush:true)
+		if (hondInstance.save()) {
+			flash.message = "${message(code: 'default.created.message', args: [message(code: 'hond.label', default: 'Hond'), hondInstance.naam])}"
+			redirect(controller:"hond", action: "list")
+		}
+		else {
+			render(view: "create", model: [hondInstance: hondInstance])
+		}
+	}
+	
 	def auth() {
 		if(!session.user) {
 			

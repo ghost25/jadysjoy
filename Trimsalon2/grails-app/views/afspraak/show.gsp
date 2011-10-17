@@ -41,12 +41,26 @@
                             
                         </tr>
                         
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="afspraak.allDay.label" default="Hele dag" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: afspraakInstance, field: "allDay")}</td>
+                            
+                        </tr>
+                        
                          <tr class="prop">
                             <td valign="top" class="name"><g:message code="afspraak.producten.label" default="Producten" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: afspraakInstance, field: "producten")}</td>
                             
                         </tr>
+                        
+						<tr class="prop">
+                            <td valign="top" class="name"><g:message code="afspraak.prijs.label" default="Prijs" /></td>
+                            
+                            <td valign="top" class="value">€<g:formatNumber number="${afspraakInstance?.producten?.prijs}" format="##0.00"/></td>
+                                                   
+                        </tr> 
                         
                          <tr class="prop">
                             <td valign="top" class="name"><g:message code="afspraak.hond.label" default="Hond" /></td>
@@ -55,19 +69,19 @@
                             
                         </tr>
                         
+                   		<tr class="prop">
+                            <td valign="top" class="name"><g:message code="afspraak.hond.klant.ophalen.label" default="Ophalen" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: afspraakInstance, field: "ophalen")}</td>
+                            
+                        </tr>
+                        
                          <tr class="prop">
                             <td valign="top" class="name"><g:message code="afspraak.opmerkingen.label" default="Opmerking" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: afspraakInstance, field: "opmerkingen")}</td>
                             
-                        </tr>
-                        
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="afspraak.ophalen.label" default="Ophalen" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: afspraakInstance, field: "ophalen")}</td>
-                            
-                        </tr>
+                        </tr>                    
                         
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="afspraak.afgehandeld.label" default="Afgehandeld" /></td>

@@ -64,12 +64,6 @@
                             <td valign="top" class="value">${fieldValue(bean: klantInstance, field: "email")}</td>
                             
                         </tr>
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="klant.ophalen.label" default="Ophalen" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: klantInstance, field: "ophalen")}</td>
-                            
-                        </tr>
                         
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="klant.opmerkingen.label" default="Opmerking" /></td>
@@ -82,6 +76,13 @@
                             <td valign="top" class="name"><g:message code="klant.hond.label" default="Hond" /></td>
                             
                             <td valign="top" class="value"><ul><g:each in="${klantInstance}" var="klant"><li>${klant.hond.naam}</li></g:each></ul></td>
+                            
+                        </tr>
+                        
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="klant.afspraak.label" default="Afspraken" /></td>
+                            
+                            <td valign="top" class="value"><ul><g:each in="${klantInstance}" var="klant"><li>${klant.afspraken.begindatum}</li></g:each></ul></td>
                             
                         </tr>
                         

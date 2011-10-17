@@ -17,7 +17,7 @@
                 <g:renderErrors bean="${afspraakInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" controller="afspraak">
+            <g:form action="saveAfspraak" controller="afspraak">
                 <div class="dialog">
                     <table>
                         <tbody>
@@ -63,7 +63,7 @@
                                     <label for="producten"><g:message code="afspraak.producten.label" default="Producten" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'producten', 'errors')}">
-                                    <g:select name="producten.id" from="${com.dabis.trimsalon.model.Producten.list()}" optionKey="id" value="${afspraakInstance?.producten?.id}"  />
+                                    <g:select name="producten.id" from="${com.dabis.trimsalon.model.Producten.list()}" optionKey="id" value="${afspraakInstance?.producten?.id}"  noSelection="${['null':'Selecteer...']}"  />
                                 </td>
                             </tr>
                         
@@ -72,7 +72,16 @@
                                     <label for="hond"><g:message code="afspraak.hond.label" default="Hond" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'hond', 'errors')}">
-                                    <g:select name="hond.id" from="${com.dabis.trimsalon.model.Hond.list()}" optionKey="id" value="${afspraakInstance?.hond?.id}"  />
+                                    <g:select name="hond.id" from="${com.dabis.trimsalon.model.Hond.list()}" optionKey="id" value="${afspraakInstance?.hond?.id}"  noSelection="${['null':'Selecteer...']}" />
+                                </td>
+                            </tr>
+                           
+                             <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="ophalen"><g:message code="afspraak.ophalen.label" default="Ophalen" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'ophalen', 'errors')}">
+                                    <g:select name="ophalen" from="${com.dabis.trimsalon.model.Afspraak.constraints.ophalen.inList}" value="${afspraakInstance?.ophalen}" valueMessagePrefix="afspraak.ophalen"  />
                                 </td>
                             </tr>
                         
@@ -83,17 +92,8 @@
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'opmerkingen', 'errors')}">
                                     <g:textField name="opmerkingen" value="${afspraakInstance?.opmerkingen}" />
                                 </td>
-                            </tr>
-                            
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="ophalen"><g:message code="afspraak.ophalen.label" default="Ophalen" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'ophalen', 'errors')}">
-                                    <g:select name="ophalen" from="${afspraakInstance?.constraints?.ophalen?.inList}" value="${afspraakInstance?.ophalen}" valueMessagePrefix="afspraak.ophalen"  />
-                                </td>
-                            </tr>
-                        
+                            </tr>                   
+                                                
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="afgehandeld"><g:message code="afspraak.afgehandeld.label" default="Afgehandeld" /></label>
@@ -108,7 +108,7 @@
                                     <label for="user"><g:message code="afspraak.user.label" default="User" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'user', 'errors')}">
-                                    <g:select name="user.id" from="${com.dabis.trimsalon.model.User.list()}" optionKey="id" value="${afspraakInstance?.user?.id}"  />
+                                    <g:select name="user.id" from="${com.dabis.trimsalon.model.User.list()}" optionKey="id" value="${afspraakInstance?.user?.id}"  noSelection="${['null':'Selecteer...']}" />
                                 </td>
                             </tr>
                         
@@ -117,7 +117,7 @@
                                     <label for="calendar"><g:message code="afspraak.calendar.label" default="Calendar" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'calendar', 'errors')}">
-                                    <g:select name="calendar.id" from="${com.dabis.trimsalon.model.Calendar.list()}" optionKey="id" value="${afspraakInstance?.calendar?.id}"  />
+                                    <g:select name="calendar.id" from="${com.dabis.trimsalon.model.Calendar.list()}" optionKey="id" value="${afspraakInstance?.calendar?.id}" />
                                 </td>
                             </tr>
                         
@@ -125,13 +125,13 @@
                     </table>
                 </div>
                 <div class="buttons">
-                    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
+                    <span class="button"><g:submitButton name="create" class="saveAfspraak" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>
                 </g:form>
 	</div>
   <div id='calendar'>
   <h1>Agenda</h1>
-  <g:if test="${session.user.role == 'admin'}">>
+  <g:if test="${session.user.role == 'admin'}">
   <button class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all" id="edit"><span class="ui-button-text"><g:message code="default.button.edit.label" default="Edit"/></span></button>
 	</g:if>
 	<fullcal:calendar id="afspraak">

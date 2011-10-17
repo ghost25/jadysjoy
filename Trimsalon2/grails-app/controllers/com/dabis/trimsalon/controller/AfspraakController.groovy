@@ -36,8 +36,8 @@ class AfspraakController {
 	
 	def save = {
 		def afspraakInstance = new Afspraak(params)
-				
-		if (afspraakInstance.save(flush: true)) {
+		afspraakInstance = afspraakInstance.merge(flush:true)
+		if (afspraakInstance.save()) {
 							
 			println afspraakInstance.dump()
 			println params.dump()
@@ -61,6 +61,40 @@ class AfspraakController {
 					flash.message = "Email is niet verstuurd"
 					}
 					redirect(action: "show", id: afspraakInstance.id)
+				}
+		}
+		else {
+			render(view: "create", model: [afspraakInstance: afspraakInstance])
+		}
+	}
+	
+	def saveAfspraak = {
+		def afspraakInstance = new Afspraak(params)
+		afspraakInstance = afspraakInstance.merge(flush:true)
+		if (afspraakInstance.save()) {
+							
+			println afspraakInstance.dump()
+			println params.dump()
+			
+			 if( afspraakInstance.afgehandeld==true ) {
+				flash.message = "${message(code: 'default.created.message', args: [message(code: 'afspraak.label', default: 'Afspraak'), afspraakInstance.id])}"
+				redirect(controller:"inkomsten", action: "create")
+			}
+			else {
+			
+				try  {
+					sendMail {
+						to  "${afspraakInstance.hond.klant.email}"
+						from "rob.daalman@gmail.com"
+						subject "Afspraak trimsalon JadysJoy"
+						html g.render(template:'/email/afspraak',model:[afspraakInstance: afspraakInstance])
+					}
+					flash.message = "Bevestiging afspraak is verstuurd naar ${afspraakInstance.hond.klant.naam}"
+					} catch(Exception e){
+					log.error "Probleem met versturen email $e.message", e
+					flash.message = "Email is niet verstuurd"
+					}
+					redirect(controller: "calendar", action: "show", id: "1")
 				}
 		}
 		else {
@@ -98,7 +132,8 @@ class AfspraakController {
 				}
 			}
 			afspraakInstance.properties = params
-			if (!afspraakInstance.hasErrors() && afspraakInstance.save(flush: true)) {
+			afspraakInstance = afspraakInstance.merge(flush:true)
+			if (!afspraakInstance.hasErrors() && afspraakInstance.save()) {
 				if( afspraakInstance.afgehandeld==true ){
 			    flash.message = "${message(code: 'default.updated.message', args: [message(code: 'afspraak.label', default: 'Afspraak'), afspraakInstance.id])}"
 				redirect(controller:"inkomsten", action: "create")

@@ -46,7 +46,6 @@
                             <g:sortableColumn property="woonplaats" title="${message(code: 'klant.woonplaats.label', default: 'Woonplaats')}" />
                             <g:sortableColumn property="telefoon" title="${message(code: 'klant.telefoon.label', default: 'Telefoon')}" />
                             <g:sortableColumn property="email" title="${message(code: 'klant.email.label', default: 'Email')}" />
-                            <g:sortableColumn property="ophalen" title="${message(code: 'klant.ophalen.label', default: 'Ophalen')}" />
                             <g:sortableColumn property="opmerkingen" title="${message(code: 'klant.opmerkingen.label', default: 'Opmerking')}" />
                             <g:sortableColumn property="hond" title="${message(code: 'klant.hond.label', default: 'Hond')}" /> 
                             <g:sortableColumn property="dateCreated" title="${message(code: 'klant.dateCreated.label', default: 'Toegevoegd op')}" />                  
@@ -64,7 +63,6 @@
                             <td>${fieldValue(bean: klantInstance, field: "woonplaats")}</td>
                             <td>${fieldValue(bean: klantInstance, field: "telefoon")}</td>
                             <td>${fieldValue(bean: klantInstance, field: "email")}</td>
-                            <td>${fieldValue(bean: klantInstance, field: "ophalen")}</td>
                             <td>${fieldValue(bean: klantInstance, field: "opmerkingen")}</td>
                             <td><ul><g:each in="${klantInstance}" var="klant"><li>${klant.hond.naam}</li></g:each></ul></td>
                             <td><g:formatDate date="${klantInstance?.dateCreated}" format="dd-MMM-yyyy HH:mm"/></td>                                                    

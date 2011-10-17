@@ -2,6 +2,8 @@ package com.dabis.trimsalon.model
 
 class Hond {
 	
+	static searchable = true
+	
 	// Fields
 	String naam
 	String ras

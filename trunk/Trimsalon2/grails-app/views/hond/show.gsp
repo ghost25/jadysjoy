@@ -65,12 +65,7 @@
                             <td valign="top" class="value">${fieldValue(bean: hondInstance, field: "klant")}</td>
                             
                         </tr> 
-                       	<tr class="prop">
-                            <td valign="top" class="name"><g:message code="hond.postcode.label" default="Postcode" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: hondInstance, field: "klant.postcode")}</td>
-                            
-                        </tr>  						                                                                                                                    
+ 						                                                                                                                    
                     </tbody>
                 </table>
             </div>

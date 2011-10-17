@@ -11,7 +11,6 @@ class Klant {
 	String woonplaats
 	Integer telefoon
 	String email
-	String ophalen
 	String opmerkingen
 	Date dateCreated
 	
@@ -27,7 +26,6 @@ class Klant {
 		woonplaats(blank:false)
 		telefoon(blank:false, maxLength:11, minLength:10)
 		email(email:true)
-		ophalen(inList: ["Nee", "Ja"])
 		opmerkingen()
 		dateCreated()
     }

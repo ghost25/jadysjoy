@@ -2,14 +2,16 @@ package com.dabis.trimsalon.model
 
 class Afspraak implements Comparable{
 	
+	static searchable = true
+	
 	// Fields
 	String omschrijving
 	Date begindatum
 	Date einddatum
 	Producten producten
 	Hond hond
-	String opmerkingen
 	String ophalen
+	String opmerkingen
 	boolean afgehandeld
 	User user
 	Boolean allDay=Boolean.FALSE
@@ -27,8 +29,8 @@ class Afspraak implements Comparable{
 		allDay()
 		producten(blank:false)
 		hond(blank:false)
-		opmerkingen()
 		ophalen(inList: ["Nee", "Ja"])
+		opmerkingen()
 		afgehandeld()
 		user()
     }

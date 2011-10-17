@@ -33,7 +33,7 @@
                             
                             <g:sortableColumn property="prijsExbtw" title="${message(code: 'inkomsten.prijsExbtw.label', default: 'Prijs Exbtw')}" />
                             
-                            <g:sortableColumn property="prijs" title="${message(code: 'inkomsten.prijs.label', default: 'Prijs Inclbtw')}" />
+                            <g:sortableColumn property="prijs" title="${message(code: 'inkomsten.prijs.label', default: 'Prijs')}" />
                         
                         </tr>
                     </thead>

@@ -91,7 +91,7 @@
                                   <label for="klant"><g:message code="hond.klant.label" default="Klant" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: hondInstance, field: 'klant', 'errors')}">
-                                    <g:select name="klant.id" from="${com.dabis.trimsalon.model.Klant.list()}" optionKey="id" value="${hondInstance?.klant?.id}"  />
+                                    <g:select name="klant.id" from="${com.dabis.trimsalon.model.Klant.list()}" optionKey="id" value="${hondInstance?.klant?.id}"  noSelection="${['null':'Selecteer...']}" />
                                 </td>
                             </tr>
                         

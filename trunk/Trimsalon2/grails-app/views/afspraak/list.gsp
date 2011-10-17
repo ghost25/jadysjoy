@@ -39,11 +39,13 @@
                             <g:sortableColumn property="id" title="${message(code: 'afspraak.id.label', default: 'Id')}" />
                             <g:sortableColumn property="omschrijving" title="${message(code: 'afspraak.omschrijving.label', default: 'Omschrijving')}" />                        
                             <g:sortableColumn property="begintijd" title="${message(code: 'afspraak.begindatum.label', default: 'Begindatum')}" />                        
-                            <g:sortableColumn property="eindtijd" title="${message(code: 'afspraak.einddatum.label', default: 'Einddatum')}" />                            
-                            <g:sortableColumn property="producten" title="${message(code: 'afspraak.producten.label', default: 'Behandeling')}" />
+                            <g:sortableColumn property="eindtijd" title="${message(code: 'afspraak.einddatum.label', default: 'Einddatum')}" /> 
+                            <g:sortableColumn property="allDay" title="${message(code: 'afspraak.allDay.label', default: 'Hele dag')}" />                          
+                            <g:sortableColumn property="producten" title="${message(code: 'afspraak.producten.label', default: 'Product')}" />
+                            <g:sortableColumn property="prijs" title="${message(code: 'afspraak.prijs.label', default: 'Prijs')}" />
                             <g:sortableColumn property="hond" title="${message(code: 'afspraak.hond.label', default: 'Hond')}" />
+ 							<g:sortableColumn property="ophalen" title="${message(code: 'afspraak.ophalen.label', default: 'Ophalen')}" />
                             <g:sortableColumn property="opmerkingen" title="${message(code: 'afspraak.opmerkingen.label', default: 'Opmerking')}" />
-                            <g:sortableColumn property="ophalen" title="${message(code: 'afspraak.ophalen.label', default: 'Ophalen')}" />
                             <g:sortableColumn property="afgehandeld" title="${message(code: 'afspraak.afgehandeld.label', default: 'Afgehandeld')}" />
                             <g:sortableColumn property="user" title="${message(code: 'afspraak.user.label', default: 'Door')}" />               
                         </tr>
@@ -56,10 +58,12 @@
                             <td>${fieldValue(bean: afspraakInstance, field: "omschrijving")}</td>                        
                             <td>${fieldValue(bean: afspraakInstance, field: "begindatum")}</td>                        
                             <td>${fieldValue(bean: afspraakInstance, field: "einddatum")}</td>
+                            <td>${fieldValue(bean: afspraakInstance, field: "allDay")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "producten")}</td>
+                            <td>€<g:formatNumber number="${afspraakInstance?.producten.prijs}" format="##0.00"/></td>
                             <td>${fieldValue(bean: afspraakInstance, field: "hond")}</td>
-                            <td>${fieldValue(bean: afspraakInstance, field: "opmerkingen")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "ophalen")}</td>
+                            <td>${fieldValue(bean: afspraakInstance, field: "opmerkingen")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "afgehandeld")}</td>
                             <td>${fieldValue(bean: afspraakInstance, field: "user")}</td>                                                   
                         </tr>

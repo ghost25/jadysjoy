@@ -31,16 +31,15 @@ class KlantController {
     }
 	
 	def search = {
-			if (request.method == 'POST') {
-			def criteria = Naam.createCriteria()
-			def results = criteria {
-			and {
-			like('city', '%' + params.naam + '%')
-			like('state', '%' + params.woonplaats + '%')
-			}
-			}
-			render(view:'searchresults', model:[ klantList: results ])
-			}
+	  def searchResults = Klant.search(params.q, params)
+	  flash.message = "${searchResults.total} resultaten gevonden binnen zoekopdracht naar: ${params.q}"
+	  flash.q = params.q
+	  if (searchResults != null) {
+	  return [searchResults:searchResults.results, resultCount:searchResults.total]}
+	  else {
+		  redirect(controller:"klant", action: "list")
+	  }
+	  
 	}
 	
 	def save = {

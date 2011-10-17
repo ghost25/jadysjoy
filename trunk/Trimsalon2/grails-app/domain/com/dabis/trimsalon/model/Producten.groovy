@@ -8,7 +8,6 @@ class Producten {
 	String omschrijving;
 	String ras;
 	BigDecimal prijsExbtw;
-	BigDecimal prijs;
 	Integer voorraad;
 
 	static hasMany = [afspraak:Afspraak, boekhouding:Inkomsten]
@@ -18,21 +17,17 @@ class Producten {
 		omschrijving(blank:false)
 		ras()
 		prijsExbtw(scale:2)
-		prijs(scale:2)
 		voorraad(min:1)
     }
+	
+	BigDecimal getprijs(){		
+		return prijsExbtw * 1.19
+		}
 		
 	static transients = ['prijs']
 	
 	// as it will be shown in the Afspraak form
 	String toString(){
-		return "${naam}, ${prijs} euro"
+		return "${naam}"
 	}
-	
-	public String getPrijs(){
-		if (prijsExbtw != null) {
-			prijs = prijsExbtw * 1.19
-		}
-		return prijs
-		}
 } 

@@ -1,5 +1,8 @@
-#Fri Oct 14 14:13:39 CEST 2011
+#Mon Oct 17 10:17:16 CEST 2011
 eclipse.preferences.version=1
+encoding//grails-app/views/afspraak/create.gsp=UTF-8
+encoding//grails-app/views/afspraak/list.gsp=UTF-8
+encoding//grails-app/views/afspraak/show.gsp=UTF-8
 encoding//grails-app/views/inkomsten/list.gsp=UTF-8
 encoding//grails-app/views/inkomsten/show.gsp=UTF-8
 encoding//grails-app/views/klant/info.gsp=UTF-8

@@ -3,10 +3,24 @@ html * {
     /*padding: 0; SELECT NOT DISPLAYED CORRECTLY IN FIREFOX */
 }
 
+#search {
+    float: right;
+    margin: 4em 0em;
+}
+
+#loginBox {
+	float: right;
+}
+
 #calendar {
 	width: 700px;
 	padding-left:10px;
 }
+
+#header {
+  padding: 2em 1em 2em 1em;
+  margin-bottom: 1em;
+	}
 
 #page-wrap {
 	background: white;
@@ -24,22 +38,10 @@ html * {
     right: 0;
 }
 
-.loginBox {
-	position:absolute;
-	right:150px;
-	top:20px;
-	background-color:white;
-	padding-top:25px;
-	padding-right:10px;
-	padding-left:20px;
-	padding-bottom:53px;
-	color:black;
-	width:180px;
-}
-
 #createAfspraak {
 	float:right;
 	margin-right:10px;
+	margin-top: 34px;
 	width:315px
 	}
 
@@ -70,6 +72,7 @@ body {
 }
 #grailsLogo {
 	padding:20px;
+	width: 600px;
 }
 
 a:link, a:visited, a:hover {

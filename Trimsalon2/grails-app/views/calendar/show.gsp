@@ -5,6 +5,10 @@
     <r:require module="full-calendar"/>
 </head>
 <body>
+  <div class="nav">
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
+            <span class="menuButton"><g:link action="logout">Logout</g:link></span>
+        </div>
   <script>
 	$(function() {
 		$("#edit").click(function() { window.location="${createLink(controller:'calendar',action:'edit', id:calendarInstance?.id)}"; });

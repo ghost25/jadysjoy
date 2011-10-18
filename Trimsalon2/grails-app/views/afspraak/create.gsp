@@ -5,6 +5,8 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'afspraak.label', default: 'Afspraak')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <g:javascript library="application" />
+		<modalbox:modalIncludes />
     </head>
     <body>
         <div class="nav">
@@ -123,6 +125,16 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'calendar', 'errors')}">
                                     <g:select name="calendar.id" from="${com.dabis.trimsalon.model.Calendar.list()}" optionKey="id" value="${afspraakInstance?.calendar?.id}"  />
+                                </td>
+                            </tr>
+                            
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="user"><g:message code="afspraak.user.label" default="User" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'user', 'errors')}">
+                                    <g:select name="user.id" from="${com.dabis.trimsalon.model.User.list()}" optionKey="id" value="${afspraakInstance?.user?.id}" noSelection="${['null':'Selecteer...']}" />
+                                	<modalbox:createLink controller="user" action="listPopup" id="${user}" title="Show user!" width="500">Users</modalbox:createLink>
                                 </td>
                             </tr>
                         

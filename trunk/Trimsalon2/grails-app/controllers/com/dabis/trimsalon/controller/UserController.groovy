@@ -101,6 +101,17 @@ class UserController {
 			top5Hond: Hond.list(max:5, sort:"naam", order:"desc"),
 			top5Afspraak: Afspraak.list(max:5, sort:"begindatum", order:"desc"),]
 	}
+		
+		def listPopup = {
+			params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		
+			def userList = User.withCriteria {
+			projections {
+			distinct "naam"
+				}
+			}
+			[userInstanceList: User.list(params), userInstanceTotal: User.count()]
+		}
 	
 		def create = {
 			def userInstance = new User()

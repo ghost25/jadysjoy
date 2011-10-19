@@ -208,4 +208,38 @@ class AfspraakController {
 		render 'update OK'
 		}
 
+	
+	def listUser = {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+	
+		def userList = User.withCriteria {
+		projections {
+		distinct "naam"
+			}
+		}
+		[userInstanceList: User.list(params)]
+	}
+	
+	def listHond = {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+	
+		def hondList = Hond.withCriteria {
+		projections {
+		distinct "naam"
+			}
+		}
+		[hondInstanceList: Hond.list(params)]
+	}
+	
+	def listProduct = {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+	
+		def productenList = Producten.withCriteria {
+		projections {
+		distinct "naam"
+			}
+		}
+		[productenInstanceList: Producten.list(params)]
+	}
+
 }

@@ -44,5 +44,16 @@ class ProductenController {
 			top5Hond: Hond.list(max:5, sort:"naam", order:"desc"),
 			top5Afspraak: Afspraak.list(max:5, sort:"begindatum", order:"desc"),]
 	}
+	
+	def listProduct = {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+	
+		def productenList = Producten.withCriteria {
+		projections {
+		distinct "naam"
+			}
+		}
+		[productenInstanceList: Producten.list(params)]
+	}
 
 }

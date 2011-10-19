@@ -92,6 +92,17 @@ class KlantController {
 			redirect(controller:"klant", action: "list")
 		}
 	}
+	
+	def listKlant = {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+	
+		def klantList = Klant.withCriteria {
+		projections {
+		distinct "naam"
+			}
+		}
+		[klantInstanceList: Klant.list(params)]
+	}
 }
 	
 

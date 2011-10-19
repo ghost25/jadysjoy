@@ -67,4 +67,26 @@ class HondController {
 			top5Hond: Hond.list(max:5, sort:"naam", order:"desc"),
 			top5Afspraak: Afspraak.list(max:5, sort:"begindatum", order:"desc"),]
 	}
+		
+		def listHond = {
+			params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		
+			def hondList = Hond.withCriteria {
+			projections {
+			distinct "naam"
+				}
+			}
+			[hondInstanceList: Hond.list(params)]
+		}
+		
+		def listKlant = {
+			params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		
+			def klantList = Klant.withCriteria {
+			projections {
+			distinct "naam"
+				}
+			}
+			[klantInstanceList: Klant.list(params)]
+		}
 }

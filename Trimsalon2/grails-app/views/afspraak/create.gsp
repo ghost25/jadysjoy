@@ -58,7 +58,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="allDay"><g:message code="afspraak.allDay.label" default="All Day" /></label>
+                                    <label for="allDay"><g:message code="afspraak.allDay.label" default="Hele dag" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'allDay', 'errors')}">
                                     <g:checkBox name="allDay" value="${afspraakInstance?.allDay}" />
@@ -71,6 +71,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'producten', 'errors')}">
                                     <g:select name="producten.id" from="${com.dabis.trimsalon.model.Producten.list()}" optionKey="id" value="${afspraakInstance?.producten?.id}" noSelection="${['null':'Selecteer...']}" />
+                               		<modalbox:createLink controller="producten" action="listProduct" id="${producten}" title="Show producten!" width="500">Producten</modalbox:createLink>                                                     	                               
                                 </td>
                             </tr>
                         
@@ -80,6 +81,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'hond', 'errors')}">
                                     <g:select name="hond.id" from="${com.dabis.trimsalon.model.Hond.list()}" optionKey="id" value="${afspraakInstance?.hond?.id}" noSelection="${['null':'Selecteer...']}" />
+                              		<modalbox:createLink controller="hond" action="listHond" id="${hond}" title="Show hond!" width="500">Honden</modalbox:createLink>                                                     	                                                                
                                 </td>
                             </tr>
                             
@@ -116,6 +118,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'user', 'errors')}">
                                     <g:select name="user.id" from="${com.dabis.trimsalon.model.User.list()}" optionKey="id" value="${afspraakInstance?.user?.id}" noSelection="${['null':'Selecteer...']}" />
+                                <modalbox:createLink controller="afspraak" action="listUser" id="${user}" title="Show user!" width="500">Users</modalbox:createLink>                                
                                 </td>
                             </tr>
                         
@@ -126,18 +129,7 @@
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'calendar', 'errors')}">
                                     <g:select name="calendar.id" from="${com.dabis.trimsalon.model.Calendar.list()}" optionKey="id" value="${afspraakInstance?.calendar?.id}"  />
                                 </td>
-                            </tr>
-                            
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="user"><g:message code="afspraak.user.label" default="User" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'user', 'errors')}">
-                                    <g:select name="user.id" from="${com.dabis.trimsalon.model.User.list()}" optionKey="id" value="${afspraakInstance?.user?.id}" noSelection="${['null':'Selecteer...']}" />
-                                	<modalbox:createLink controller="user" action="listPopup" id="${user}" title="Show user!" width="500">Users</modalbox:createLink>
-                                </td>
-                            </tr>
-                        
+                            </tr>                                                                          
                         </tbody>
                     </table>
                 </div>

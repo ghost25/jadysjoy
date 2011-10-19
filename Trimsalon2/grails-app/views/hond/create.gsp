@@ -7,6 +7,8 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'hond.label', default: 'Hond')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <g:javascript library="application" />
+		<modalbox:modalIncludes />
     </head>
     <body>
         <div class="nav">
@@ -89,6 +91,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: hondInstance, field: 'klant', 'errors')}">
                                     <g:select name="klant.id" from="${com.dabis.trimsalon.model.Klant.list()}" optionKey="id" value="${hondInstance?.klant?.id}"  noSelection="${['null':'Selecteer...']}" />
+                              		<modalbox:createLink controller="klant" action="listKlant" id="${klant}" title="Show klant!" width="500">Klanten</modalbox:createLink>                                                     	                                                                                                	
                                 </td>
                             </tr>
                         

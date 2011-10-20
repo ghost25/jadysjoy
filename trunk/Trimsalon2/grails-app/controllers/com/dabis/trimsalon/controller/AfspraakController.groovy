@@ -241,5 +241,11 @@ class AfspraakController {
 		}
 		[productenInstanceList: Producten.list(params)]
 	}
+	
+	def selectUser={
+		def userInstance = User.get(params.id)
+		println "Dump voor get:"+params.dump()
+				
+		}
 
 }

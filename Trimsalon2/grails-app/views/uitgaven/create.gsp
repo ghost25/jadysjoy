@@ -1,5 +1,3 @@
-
-
 <%@ page import="com.dabis.trimsalon.model.Uitgaven" %>
 <html>
     <head>

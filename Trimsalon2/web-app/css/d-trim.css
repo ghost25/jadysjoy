@@ -1,0 +1,199 @@
+html * {
+	margin: 0;
+	/*padding: 0; SELECT NOT DISPLAYED CORRECTLY IN FIREFOX */
+}
+
+/***********/
+/* GENERAL */
+/***********/
+
+.spinner {
+	padding: 5px;
+	position: absolute;
+	right: 0;
+}
+
+.glink {
+	text-decoration: none;
+}
+
+.message {
+    background: #f3f8fc url(../images/skin/information.png) 8px 50% no-repeat;
+    border: 1px solid #b2d1ff;
+    color: #006dba;
+    margin: 10px 0 5px 0;
+    padding: 5px 5px 5px 30px
+}
+
+div.errors {
+    background: #fff3f3;
+    border: 1px solid red;
+    color: #cc0000;
+    margin: 10px 0 5px 0;
+    padding: 5px 0 5px 0;
+}
+
+div.errors ul {
+    list-style: none;
+    padding: 0;
+}
+
+div.errors li {
+	background: url(../images/skin/exclamation.png) 8px 0% no-repeat;
+    line-height: 16px;
+    padding-left: 30px;
+}
+
+td.errors select {
+    border: 1px solid red;
+}
+
+td.errors input {
+    border: 1px solid red;
+}
+
+td.errors textarea {
+    border: 1px solid red;
+}
+
+.value {
+	width: 300px;
+}
+
+.value input {
+	width: 300px;
+}
+
+.prop {
+	padding: 0px 5px 0px 5px;
+}
+
+/***************/
+/* Page header */
+/***************/
+
+#logo {
+	background: white;
+}
+
+#mainTitle {
+	color: white;
+	font-weight: Bold;
+	font-size: 20px;
+	text-align: center;
+}
+
+#loginBox {
+	background: white;
+	color:blue;
+	margin-top: 15px;
+	float:right;
+}
+
+/*************/
+/* Left menu */
+/*************/
+
+#navpanel {
+	margin:0 10px 0 10px;
+	width:300px;
+}
+
+#navpanel ul {
+	list-style-type:none;
+	margin-bottom:10px;
+}
+	
+#navpanel .menu {
+	background: #EAF5FF;
+	padding:5px;
+}
+	
+#navpanel .header {
+	font-size: 16px;
+	padding:10px;
+}
+
+#navpanel .current .glink {
+	color:red;
+	font-style:italic;
+}
+
+/**************/
+/* Main panel */
+/**************/
+
+.mainnav {
+	padding:5px;
+}
+
+.mainbody h1 {
+	font-size:18px;
+	padding-bottom:5px;
+}
+
+/**************/
+/* List pages */
+/**************/
+
+.list table {
+	border: 1px solid #aaaaaa;
+}
+
+.list th {
+	padding:5px;
+}
+
+.sortable a {
+	text-decoration: none;
+}
+
+.list td a {
+	margin: 0 5px 0 5px;
+}
+
+.odd {
+	background: white;
+}
+.even {
+	background: lavender;
+}
+
+/*******************/
+/* show/edit pages */
+/*******************/
+
+.show {
+	
+}
+
+.show * .name {
+	color: dimgrey;
+	text-align: right;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.edit * .name {
+	color: dimgrey;
+	padding-top: 5px;
+	padding-right: 5px;
+	text-align:right;
+}
+
+.edit * .value {
+	text-align:left;
+	}
+
+.show * .value {
+	font-style: italic;
+	padding-right: 5px;
+}
+
+.tablehead {
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+	border: 1px solid #ccc;
+	padding: 5px 7px;
+	font-size: 14px;
+}
+

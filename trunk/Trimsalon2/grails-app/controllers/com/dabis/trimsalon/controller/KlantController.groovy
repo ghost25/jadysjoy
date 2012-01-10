@@ -3,6 +3,7 @@ package com.dabis.trimsalon.controller
 import com.dabis.trimsalon.model.Klant
 import com.dabis.trimsalon.model.Hond
 import com.dabis.trimsalon.model.Afspraak
+import grails.converters.JSON
 
 class KlantController {
 
@@ -14,7 +15,7 @@ class KlantController {
 		redirect(controller:"user", action:"login")
 	  }
 	
-	def beforeInterceptor = [action:this.&auth, except:'list']
+	def beforeInterceptor = [action:this.&auth, except:['list','jq_klant_list']]
 		
 	def auth() {
 		if(!session.user) {
@@ -65,6 +66,121 @@ class KlantController {
 			top5Hond: Hond.list(max:5, sort:"naam", order:"desc"),
 			top5Afspraak: Afspraak.list(max:5, sort:"begindatum", order:"desc"),]
 	}
+	
+	// return JSON list of klant
+	def jq_klant_list = {
+			def sortIndex = params.sidx ?: 'naam'
+			def sortOrder  = params.sord ?: 'asc'
+	  
+			def maxRows = Integer.valueOf(params.rows)
+			def currentPage = Integer.valueOf(params.page) ?: 1
+	  
+			def rowOffset = currentPage == 1 ? 0 : (currentPage - 1) * maxRows
+			
+			def klant = Klant.createCriteria().list(max:maxRows, offset:rowOffset) {
+				
+							// first name case insensitive where the field begins with the search term
+							if (params.naam)
+								ilike('naam',params.naam + '%')
+							
+							if (params.adres)
+								ilike('adres',params.adres + '%')
+								
+							if (params.huisnummer)
+								ilike('huisnummer',params.huisnummer + '%')
+								
+							if (params.postcode)
+								ilike('postcode',params.postcode + '%')
+										
+							// last name case insensitive where the field begins with the search term
+							if (params.woonplaats)
+								ilike('woonplaats',params.woonplaats + '%')
+				
+							// age search where the age Equals the search term
+							if (params.telefoon)
+								eq('telefoon', Integer.valueOf(params.telefoon))
+				
+							// email case insensitive where the field contains search term
+							if (params.email)
+								ilike('email','%' + params.email + '%')
+							
+							if (params.opmerkingen)
+								ilike('opmerkingen',params.opmerkingen + '%')
+							
+							// set the order and direction
+							order(sortIndex, sortOrder).ignoreCase()
+					  }
+			
+			def totalRows = klant.totalCount
+			def numberOfPages = Math.ceil(totalRows / maxRows)
+	  
+			def jsonCells = klant.collect {
+				 [cell: [it.naam,
+					 it.adres,
+					 it.huisnummer,
+					 it.postcode,
+					 it.woonplaats,
+					 it.telefoon,
+					 it.email,
+					 it.opmerkingen
+					], id: it.id]
+			  }
+			  def jsonData= [rows: jsonCells,page:currentPage,records:totalRows,total:numberOfPages]
+			  render jsonData as JSON
+	}
+	
+	def jq_edit_klant = {
+		def klant = null
+		def message = ""
+		def state = "FAIL"
+		def id
+  
+		// determine our action
+		switch (params.oper) {
+		  case 'add':
+			// add instruction sent
+			klant = new Klant(params)
+			if (! klant.hasErrors() && klant.save()) {
+			  message = "Klant ${klant.naam} toegevoegd"
+			  id = klant.id
+			  state = "OK"
+			} else {
+			  message = "Kan klant niet opslaan"
+			}
+  
+			break;
+		  case 'del':
+			// check klant exists
+			klant = Klant.get(params.id)
+			if (klant) {
+			  // delete klant
+			  customer.delete()
+			  message = "Klant ${klant.naam} verwijderd"
+			  state = "OK"
+			}
+			break;
+		  default:
+			// default edit action
+			// first retrieve the klant by its ID
+			klant = Klant.get(params.id)
+			if (klant) {
+			  // set the properties according to passed in parameters
+			  klant.properties = params
+			  if (! klant.hasErrors() && klant.save()) {
+				message = "Klant ${klant.naam} bijgewerkt"
+				id = klant.id
+				state = "OK"
+			  } else {
+				message = "Kan de klant niet bijwerken"
+			  }
+			}
+			break;
+		}
+  
+		def response = [message:message,state:state,id:id]
+  
+		render response as JSON
+	  }
 	
 	def info = {
 		def klantList = Klant.withCriteria {

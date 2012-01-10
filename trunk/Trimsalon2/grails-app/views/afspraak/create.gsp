@@ -118,7 +118,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'user', 'errors')}">
                                     <g:select name="user.id" from="${com.dabis.trimsalon.model.User.list()}" optionKey="id" value="${afspraakInstance?.user?.id}" noSelection="${['null':'Selecteer...']}" />
-                                <modalbox:createLink controller="afspraak" action="listUser" id="${user}" title="Show user!" width="500">Users</modalbox:createLink>                                
+                                <modalbox:createLink controller="afspraak" action="listUser" id="${user}" title="Show user!" width="500">Users</modalbox:createLink>
                                 </td>
                             </tr>
                         

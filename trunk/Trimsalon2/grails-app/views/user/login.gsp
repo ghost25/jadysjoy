@@ -6,7 +6,7 @@
     </head>
     <body>
          <div class="nav">
- 	        <span class="menuButton"><a class="home" href="${createLink(uri: '/home.gsp')}">Home</a></span>	    
+ 	        <a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>	    	    
         </div>
         <div class="body">
              <h1>Welkom bij D-Trim</h1>
@@ -22,9 +22,8 @@
             </g:if>
             <g:form action="authenticate" method="post" >
                 <div class="dialog">
-                    <table style="width:270px">
-                        <tbody>
-                        
+                    <table style="width:270px" class="ui-widget-content">
+                        <tbody>                        
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="login"><g:message code="user.login.label" default="Login:" /></label>
@@ -32,25 +31,20 @@
                                 <td valign="top">
                                     <input type="text" id="login" name="login" />
                                 </td>
-                            </tr>
-                        
+                            </tr>                        
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="password"><g:message code="user.password.label" default="Wachtwoord:" /></label>
                                 </td>
                                 <td valign="top" >
-                                    <input type="password" id="password" name="password" />
-                                    
+                                    <input type="password" id="password" name="password" />                                    
                                 </td>
-                            </tr>
-                        
-
-                        
+                            </tr>     
                         </tbody>
                     </table>
                 </div>
                 <div class="buttons" style="width:270px">
-                    <span class="button"><input type="submit" value="Login" /></span>
+                    <span class="button"><g:actionSubmit class="login" action="authenticate" value="${message(code: 'default.button.login.label', default: 'Login')}" /></span>
                 </div>
             </g:form>
         </div>

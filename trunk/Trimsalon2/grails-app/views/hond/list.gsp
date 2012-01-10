@@ -34,7 +34,7 @@
       </g:if> 
 		 <div class="list">
                 <table>
-                    <thead>
+                    <thead class="ui-widget-header">
                         <tr>                        
                             <g:sortableColumn property="id" title="${message(code: 'hond.id.label', default: 'Id')}" />
                             <g:sortableColumn property="naam" title="${message(code: 'hond.naam.label', default: 'Naam')}" />                        

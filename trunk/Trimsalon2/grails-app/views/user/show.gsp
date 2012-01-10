@@ -1,3 +1,4 @@
+<%@ page import="com.dabis.trimsalon.model.User" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -21,40 +22,25 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
+                            <td valign="top" class="name"><g:message code="user.id.label" default="Id" /></td>                            
+                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "id")}</td>                            
+                        </tr>                    
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.login.label" default="Login" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "login")}</td>
-                            
-                        </tr>
-                    
+                            <td valign="top" class="name"><g:message code="user.login.label" default="Login" /></td>                            
+                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "login")}</td>                            
+                        </tr>                    
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.password.label" default="Password" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "password")}</td>
-                            
-                        </tr>
-                        
+                            <td valign="top" class="name"><g:message code="user.password.label" default="Password" /></td>                            
+                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "password")}</td>                            
+                        </tr>                        
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="user.naam.label" default="Naam" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "naam")}</td>
-                            
-                        </tr>
-                    
+                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "naam")}</td>                            
+                        </tr>                    
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.role.label" default="Role" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "role")}</td>
-                            
-                        </tr>
-                    
+                            <td valign="top" class="name"><g:message code="user.role.label" default="Role" /></td>                            
+                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "role")}</td>                            
+                        </tr>                    
                     </tbody>
                 </table>
             </div>

@@ -1,5 +1,33 @@
-#Wed Oct 19 14:13:18 CEST 2011
+#Tue Dec 06 11:48:03 CET 2011
 eclipse.preferences.version=1
+encoding//.link_to_grails_plugins/full-calendar-1.5.1.0/grails-app/i18n=UTF-8
+encoding//.link_to_grails_plugins/full-calendar-1.5.1.0/grails-app/i18n/messages.properties=UTF-8
+encoding//.link_to_grails_plugins/jasper-1.2.2/grails-app/i18n=UTF-8
+encoding//.link_to_grails_plugins/jasper-1.2.2/grails-app/i18n/jasper.properties=UTF-8
+encoding//.link_to_grails_plugins/jasper-1.2.2/grails-app/i18n/messages.properties=UTF-8
+encoding//.link_to_grails_plugins/jquery-1.6.1.1/grails-app/i18n=UTF-8
+encoding//.link_to_grails_plugins/jquery-1.6.1.1/grails-app/i18n/messages.properties=UTF-8
+encoding//.link_to_grails_plugins/jquery-ui-1.8.15/grails-app/i18n=UTF-8
+encoding//.link_to_grails_plugins/jquery-ui-1.8.15/grails-app/i18n/messages.properties=UTF-8
+encoding//.link_to_grails_plugins/mail-1.0-SNAPSHOT/grails-app/i18n=UTF-8
+encoding//.link_to_grails_plugins/mail-1.0-SNAPSHOT/grails-app/i18n/messages.properties=UTF-8
+encoding//.link_to_grails_plugins/mail-1.0-SNAPSHOT/grails-app/i18n/messages_fr.properties=UTF-8
+encoding//.link_to_grails_plugins/quartz-0.4.2/grails-app/i18n=UTF-8
+encoding//.link_to_grails_plugins/quartz-0.4.2/grails-app/i18n/messages.properties=UTF-8
+encoding//grails-app/i18n=UTF-8
+encoding//grails-app/i18n/messages.properties=UTF-8
+encoding//grails-app/i18n/messages_da.properties=UTF-8
+encoding//grails-app/i18n/messages_de.properties=UTF-8
+encoding//grails-app/i18n/messages_es.properties=UTF-8
+encoding//grails-app/i18n/messages_fr.properties=UTF-8
+encoding//grails-app/i18n/messages_it.properties=UTF-8
+encoding//grails-app/i18n/messages_ja.properties=UTF-8
+encoding//grails-app/i18n/messages_nl.properties=UTF-8
+encoding//grails-app/i18n/messages_pt_BR.properties=UTF-8
+encoding//grails-app/i18n/messages_pt_PT.properties=UTF-8
+encoding//grails-app/i18n/messages_ru.properties=UTF-8
+encoding//grails-app/i18n/messages_th.properties=UTF-8
+encoding//grails-app/i18n/messages_zh_CN.properties=UTF-8
 encoding//grails-app/views/afspraak/create.gsp=UTF-8
 encoding//grails-app/views/afspraak/list.gsp=UTF-8
 encoding//grails-app/views/afspraak/listProduct.gsp=UTF-8

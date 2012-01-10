@@ -1,9 +1,14 @@
+<%@ page import="com.dabis.trimsalon.model.Klant" %>
 <html> 
   <head> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'klant.label', default: 'Klant')}" />
-    <title><g:message code="default.list.label" args="[entityName]" /></title> 
+    <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <g:javascript library="jquery/jquery-1.6.4.min"/>
+        <g:javascript library="jquery/jquery-ui-1.8.16.custom.min"/>
+        <g:javascript library="jquery/grid.locale-en"/>
+        <g:javascript library="jquery/jquery.jqGrid.min"/>
   </head> 
   <body> 
     <div class="nav">
@@ -34,46 +39,129 @@
         <div class="message">${flash.message}</div> 
       </g:if> 
 		 <div class="list">
-                <table>
-                    <thead>
-                        <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'klant.id.label', default: 'Id')}" />
-                            <g:sortableColumn property="naam" title="${message(code: 'klant.naam.label', default: 'Naam')}" />                        
-                            <g:sortableColumn property="adres" title="${message(code: 'klant.adres.label', default: 'Adres')}" />                        
-                            <g:sortableColumn property="huisnummer" title="${message(code: 'klant.huisnummer.label', default: 'Huisnummer')}" />                            
-                            <g:sortableColumn property="postcode" title="${message(code: 'klant.postcode.label', default: 'Postcode')}" />
-                            <g:sortableColumn property="woonplaats" title="${message(code: 'klant.woonplaats.label', default: 'Woonplaats')}" />
-                            <g:sortableColumn property="telefoon" title="${message(code: 'klant.telefoon.label', default: 'Telefoon')}" />
-                            <g:sortableColumn property="email" title="${message(code: 'klant.email.label', default: 'Email')}" />
-                            <g:sortableColumn property="opmerkingen" title="${message(code: 'klant.opmerkingen.label', default: 'Opmerking')}" />
-                            <g:sortableColumn property="hond" title="${message(code: 'klant.hond.label', default: 'Hond')}" /> 
-                            <g:sortableColumn property="dateCreated" title="${message(code: 'klant.dateCreated.label', default: 'Toegevoegd op')}" />                  
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${klantInstanceList}" status="i" var="klantInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${klantInstance.id}">${fieldValue(bean: klantInstance, field: "id")}</g:link></td>                        
-                            <td>${fieldValue(bean: klantInstance, field: "naam")}</td>                        
-                            <td>${fieldValue(bean: klantInstance, field: "adres")}</td>                        
-                            <td>${fieldValue(bean: klantInstance, field: "huisnummer")}</td>
-                            <td>${fieldValue(bean: klantInstance, field: "postcode")}</td>
-                            <td>${fieldValue(bean: klantInstance, field: "woonplaats")}</td>
-                            <td>${fieldValue(bean: klantInstance, field: "telefoon")}</td>
-                            <td>${fieldValue(bean: klantInstance, field: "email")}</td>
-                            <td>${fieldValue(bean: klantInstance, field: "opmerkingen")}</td>
-                            <td><ul><g:each in="${klantInstance}" var="klant"><li>${klant.hond.naam}</li></g:each></ul></td>
-                            <td><g:formatDate date="${klantInstance?.dateCreated}" format="dd-MMM-yyyy HH:mm"/></td>                                                    
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
-            </div>
-            <div class="paginateButtons">
-                <g:paginate total="${klantInstanceTotal}" />
-            </div>
-        </div>
+            <!-- table tag will hold our grid -->
+            <table id="klant_list" class="scroll jqTable" cellpadding="0" cellspacing="0"></table>
+            <!-- pager will hold our paginator -->
+            <div id="klant_list_pager" class="scroll" style="text-align:center;"></div>
+
+            <script type="text/javascript">
+            var lastSelectedId;
+            
+            /* when the page has finished loading.. execute the following */
+            $(document).ready(function () {
+
+                // set on click events for non toolbar buttons
+                $("#btnAdd").click(function(){
+                  $("#klant_list").jqGrid("editGridRow","new",
+                     {addCaption:'Creeer nieuwe klant',
+                     afterSubmit:afterSubmitEvent,
+                     savekey:[true,13]});
+                });
+
+                $("#btnEdit").click(function(){
+                   var gr = $("#klant_list").jqGrid('getGridParam','selrow');
+                   if( gr != null )
+                     $("#klant_list").jqGrid('editGridRow',gr,
+                     {closeAfterEdit:true,
+                      afterSubmit:afterSubmitEvent
+                     });
+                   else
+                     alert("Selecteer een regel voorbewerken");
+                });
+
+                $("#btnDelete").click(function(){
+                  var gr = $("#klant_list").jqGrid('getGridParam','selrow');
+                  if( gr != null )
+                    $("#klant_list").jqGrid('delGridRow',gr,
+                     {afterSubmit:afterSubmitEvent});
+                  else
+                    alert("Selecteer regel voor verwijderen!");
+                });
+                
+
+                $("#klant_list").jqGrid({
+                  url:'jq_klant_list',
+                  editurl:'jq_edit_klant',
+                  datatype: "json",
+                  colNames:['Naam','Adres','Huisnr','Postcode','Woonplaats','Telefoon','Email','Omerkingen','Id'],
+                  colModel:[
+                    {name:'naam',
+                     editable:true,
+                     editrules:{required:true},
+                     cellurl:'jq_edit_klant'
+                    },
+                    {name:'adres',
+                        editable:true,
+                        editrules:{required:true}
+                    },
+                    {name:'huisnummer',
+                        editable:true,
+                        editoptions:{size:4},
+                        editrules:{required:true,integer:true}
+                     }, 
+                     {name:'postcode',
+                         editable:true,
+                         editrules:{required:true}
+                     }, 
+                    {name:'woonplaats',
+                     editable:true,
+                     editrules:{required:true}
+                    },
+                    {name:'telefoon',
+                      editable:true,
+                      editoptions:{size:10},
+                      editrules:{required:true,integer:true}
+                    },
+                    {name:'email',                    
+                     editable:true,
+                     editoptions:{size:30},
+                     editrules:{required:true,email:true}
+                    },
+                    {name:'opmerkingen',
+                        editable:true,
+                        editrules:{required:true}
+                    },
+                    {name:'id',hidden:true}
+                  ],
+                  rowNum:2,
+                  rowList:[1,2,3,4,5,6,7,8,9],
+                  pager:'#klant_list_pager',
+                  viewrecords: true,
+                  gridview: true
+
+                }).navGrid('#klant_list_pager',
+                    {add:false,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
+                    {closeAfterEdit:true,
+                     afterSubmit:afterSubmitEvent
+                    },                                   // edit options
+                    {addCaption:'Creeer nieuwe klant',
+                     afterSubmit:afterSubmitEvent,
+                     savekey:[true,13]},            // add options
+                    {afterSubmit:afterSubmitEvent}  // delete options
+                );
+
+
+                $("#klant_list").jqGrid('filterToolbar',{autosearch:true});
+            });
+
+            function afterSubmitEvent(response, postdata) {
+                var success = true;
+                console.log ('here')
+                var json = eval('(' + response.responseText + ')');
+                var message = json.message;
+
+                if(json.state == 'FAIL') {
+                    success = false;
+                } else {
+                  $('#message').html(message);
+                  $('#message').show().fadeOut(10000);  // 10 second fade
+                }
+
+                var new_id = json.id
+                return [success,message,new_id];
+            }
+            </script>
+           </div>
+      </div>
     </body>
 </html>

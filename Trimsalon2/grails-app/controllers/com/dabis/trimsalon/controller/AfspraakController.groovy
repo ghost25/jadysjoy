@@ -4,35 +4,18 @@ import com.dabis.trimsalon.model.Afspraak
 import com.dabis.trimsalon.model.Klant
 import com.dabis.trimsalon.model.Hond
 import com.dabis.trimsalon.model.Producten
-import com.dabis.trimsalon.model.User
 import com.dabis.trimsalon.model.Calendar
+import grails.converters.JSON
 
 class AfspraakController {
 
     def scaffold = com.dabis.trimsalon.model.Afspraak
 	
 	def logout = {
-		flash.message = "Prettige dag, ${session.user.login}"
-		session.user = null
-		redirect(controller:"user", action:"login")
+		flash.message = "Prettige dag, ${session.afspraak.login}"
+		session.afspraak = null
+		redirect(controller:"afspraak", action:"login")
 	  }
-	
-	def beforeInterceptor = [action:this.&auth, except:'list']
-	
-	def auth() {
-		if(!session.user) {
-			
-			def originalRequestParams =
-			[controller:controllerName,
-			action:actionName]
-			originalRequestParams.putAll(params)
-			session.originalRequestParams =
-			originalRequestParams
-			
-		  redirect(controller:"user", action:"login")
-		  return false
-		}
-    }
 	
 	def save = {
 		def afspraakInstance = new Afspraak(params)
@@ -126,7 +109,7 @@ class AfspraakController {
 				def version = params.version.toLong()
 				if (afspraakInstance.version > version) {
 					
-					afspraakance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'user.label', default: 'Afspraak')] as Object[], "Another user has updated this User while you were editing")
+					afspraakance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'afspraak.label', default: 'Afspraak')] as Object[], "Another afspraak has updated this afspraak while you were editing")
 					render(view: "edit", model: [afspraakInstance: afspraakInstance])
 					return
 				}
@@ -156,7 +139,7 @@ class AfspraakController {
 						}
 				}
 			else {
-				render(view: "edit", model: [userInstance: afspraakInstance])
+				render(view: "edit", model: [afspraakInstance: afspraakInstance])
 			}
 		}
 		else {
@@ -209,15 +192,15 @@ class AfspraakController {
 		}
 
 	
-	def listUser = {
+	def listafspraak = {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
 	
-		def userList = User.withCriteria {
+		def afspraakList = afspraak.withCriteria {
 		projections {
 		distinct "naam"
 			}
 		}
-		[userInstanceList: User.list(params)]
+		[afspraakInstanceList: afspraak.list(params)]
 	}
 	
 	def listHond = {
@@ -242,10 +225,126 @@ class AfspraakController {
 		[productenInstanceList: Producten.list(params)]
 	}
 	
-	def selectUser={
-		def userInstance = User.get(params.id)
+	def selectafspraak={
+		def afspraakInstance = afspraak.get(params.id)
 		println "Dump voor get:"+params.dump()
 				
 		}
+	
+	// return JSON list of afspraak
+	def jq_afspraak_list = {
+			def sortIndex = params.sidx ?: 'omschrijving'
+			def sortOrder  = params.sord ?: 'asc'
+	  
+			def maxRows = Integer.valueOf(params.rows)
+			def currentPage = Integer.valueOf(params.page) ?: 1
+	  
+			def rowOffset = currentPage == 1 ? 0 : (currentPage - 1) * maxRows
+			
+			def afspraak = Afspraak.createCriteria().list(max:maxRows, offset:rowOffset) {
+				
+							// first name case insensitive where the field begins with the search term
+							if (params.omschrijving)
+								ilike('omschrijving',params.omschrijving + '%')
+							
+							if (params.begindatum)
+								ilike('begindatum',params.begindatum + '%')
+								
+							if (params.einddatum)
+								ilike('einddatum',params.einddatum + '%')
+								
+							if (params.producten)
+								ilike('producten',params.producten + '%')
+							
+							if (params.hond)
+								ilike('hond',params.hond + '%')
+								
+							if (params.ophalen)
+								ilike('ophalen',params.ophalen + '%')
+								
+							if (params.opmerkingen)
+								ilike('opmerkingen',params.opmerkingen + '%')
+								
+							if (params.afgehandeld)
+								ilike('afgehandeld',params.afgehandeld + '%')
+								
+							if (params.user)
+								ilike('user',params.user + '%')						
+							
+							// set the order and direction
+							order(sortIndex, sortOrder).ignoreCase()
+					  }
+			
+			def totalRows = afspraak.totalCount
+			def numberOfPages = Math.ceil(totalRows / maxRows)
+	  
+			def jsonCells = afspraak.collect {
+				 [cell: [it.omschrijving,
+					 it.begindatum,
+					 it.einddatum,
+					 it.producten,
+					 it.hond,
+					 it.ophalen,
+					 it.opmerkingen,
+					 it.afgehandeld,
+					 it.user
+					], id: it.id]
+			  }
+			  def jsonData= [rows: jsonCells,page:currentPage,records:totalRows,total:numberOfPages]
+			  render jsonData as JSON
+	}
+	
+	def jq_edit_afspraak = {
+		def afspraak = null
+		def message = ""
+		def state = "FAIL"
+		def id
+  
+		// determine our action
+		switch (params.oper) {
+		  case 'add':
+			// add instruction sent
+			afspraak = new Afspraak(params)
+			if (! afspraak.hasErrors() && afspraak.save()) {
+			  message = "Afspraak ${afspraak.omschrijving} toegevoegd"
+			  id = afspraak.id
+			  state = "OK"
+			} else {
+			  message = "Kan afspraak niet opslaan"
+			}
+  
+			break;
+		  case 'del':
+			// check exists
+			afspraak = Afspraak.get(params.id)
+			if (afspraak) {
+			  // delete afspraak
+			  afspraak.delete()
+			  message = "Afspraak ${afspraak.omschrijving} verwijderd"
+			  state = "OK"
+			}
+			break;
+		  default:
+			// default edit action
+			// first retrieve the afspraak by its ID
+			afspraak = Afspraak.get(params.id)
+			if (afspraak) {
+			  // set the properties according to passed in parameters
+			  afspraak.properties = params
+			  if (! afspraak.hasErrors() && afspraak.save()) {
+				message = "Afspraak ${afspraak.omschrijving} bijgewerkt"
+				id = afspraak.id
+				state = "OK"
+			  } else {
+				message = "Kan de afspraak niet bijwerken"
+			  }
+			}
+			break;
+		}
+  
+		def response = [message:message,state:state,id:id]
+  
+		render response as JSON
+	  }
 
 }

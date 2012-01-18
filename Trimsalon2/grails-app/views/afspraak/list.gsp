@@ -33,47 +33,130 @@
         <div class="message">${flash.message}</div> 
       </g:if> 
 		 <div class="list">
-                <table>
-                    <thead>
-                        <tr>                        
-                            <g:sortableColumn property="id" title="${message(code: 'afspraak.id.label', default: 'Id')}" />
-                            <g:sortableColumn property="omschrijving" title="${message(code: 'afspraak.omschrijving.label', default: 'Omschrijving')}" />                        
-                            <g:sortableColumn property="begintijd" title="${message(code: 'afspraak.begindatum.label', default: 'Begindatum')}" />                        
-                            <g:sortableColumn property="eindtijd" title="${message(code: 'afspraak.einddatum.label', default: 'Einddatum')}" /> 
-                            <g:sortableColumn property="allDay" title="${message(code: 'afspraak.allDay.label', default: 'Hele dag')}" />                          
-                            <g:sortableColumn property="producten" title="${message(code: 'afspraak.producten.label', default: 'Product')}" />
-                            <g:sortableColumn property="prijs" title="${message(code: 'afspraak.prijs.label', default: 'Prijs')}" />
-                            <g:sortableColumn property="hond" title="${message(code: 'afspraak.hond.label', default: 'Hond')}" />
- 							<g:sortableColumn property="ophalen" title="${message(code: 'afspraak.ophalen.label', default: 'Ophalen')}" />
-                            <g:sortableColumn property="opmerkingen" title="${message(code: 'afspraak.opmerkingen.label', default: 'Opmerking')}" />
-                            <g:sortableColumn property="afgehandeld" title="${message(code: 'afspraak.afgehandeld.label', default: 'Afgehandeld')}" />
-                            <g:sortableColumn property="user" title="${message(code: 'afspraak.user.label', default: 'Door')}" />               
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${afspraakInstanceList}" status="i" var="afspraakInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${afspraakInstance.id}">${fieldValue(bean: afspraakInstance, field: "id")}</g:link></td>                        
-                            <td>${fieldValue(bean: afspraakInstance, field: "omschrijving")}</td>                        
-                            <td>${fieldValue(bean: afspraakInstance, field: "begindatum")}</td>                        
-                            <td>${fieldValue(bean: afspraakInstance, field: "einddatum")}</td>
-                            <td>${fieldValue(bean: afspraakInstance, field: "allDay")}</td>
-                            <td>${fieldValue(bean: afspraakInstance, field: "producten")}</td>
-                            <td>€<g:formatNumber number="${afspraakInstance?.producten.prijs}" format="##0.00"/></td>
-                            <td>${fieldValue(bean: afspraakInstance, field: "hond")}</td>
-                            <td>${fieldValue(bean: afspraakInstance, field: "ophalen")}</td>
-                            <td>${fieldValue(bean: afspraakInstance, field: "opmerkingen")}</td>
-                            <td>${fieldValue(bean: afspraakInstance, field: "afgehandeld")}</td>
-                            <td>${fieldValue(bean: afspraakInstance, field: "user")}</td>                                                   
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
-            </div>
-            <div class="paginateButtons">
-                <g:paginate total="${afspraakInstanceTotal}" />
-            </div>
-        </div>
+            <!-- table tag will hold our grid -->
+            <table id="afspraak_list" class="scroll jqTable" cellpadding="0" cellspacing="0"></table>
+            <!-- pager will hold our paginator -->
+            <div id="afspraak_list_pager" class="scroll" style="text-align:center;"></div>
+
+            <script type="text/javascript">
+            var lastSelectedId;
+            
+            /* when the page has finished loading.. execute the following */
+            $(document).ready(function () {
+
+                // set on click events for non toolbar buttons
+                $("#btnAdd").click(function(){
+                  $("#afspraak_list").jqGrid("editGridRow","new",
+                     {addCaption:'Creeer nieuwe afspraak',
+                     afterSubmit:afterSubmitEvent,
+                     savekey:[true,13]});
+                });
+
+                $("#btnEdit").click(function(){
+                   var gr = $("#afspraak_list").jqGrid('getGridParam','selrow');
+                   if( gr != null )
+                     $("#afspraak_list").jqGrid('editGridRow',gr,
+                     {closeAfterEdit:true,
+                      afterSubmit:afterSubmitEvent
+                     });
+                   else
+                     alert("Selecteer een regel voorbewerken");
+                });
+
+                $("#btnDelete").click(function(){
+                  var gr = $("#afspraak_list").jqGrid('getGridParam','selrow');
+                  if( gr != null )
+                    $("#afspraak_list").jqGrid('delGridRow',gr,
+                     {afterSubmit:afterSubmitEvent});
+                  else
+                    alert("Selecteer regel voor verwijderen!");
+                });
+                
+
+                $("#afspraak_list").jqGrid({
+                  url:'jq_afspraak_list',
+                  editurl:'jq_edit_afspraak',
+                  datatype: "json",
+                  colNames:['Omschrijving','Begindatum','Einddatum','Product','Hond','Ophalen','Opmerking','Afgehandeld','Gebruiker','Id'],
+                  colModel:[
+                    {name:'omschrijving',
+                     editable:true,
+                     editrules:{required:true},
+                     cellurl:'jq_edit_afspraak'
+                    },
+                    {name:'begindatum',
+                        editable:true,
+                        editrules:{required:true}
+                    },
+                    {name:'einddatum',hidden:true,
+                        editable:true,
+                        editrules:{required:true}
+                     }, 
+                     {name:'producten',
+                         editable:true,
+                         editrules:{required:true}
+                     },
+                     {name:'hond',
+                         editable:false,
+                         editrules:{required:true}
+                     }, 
+                     {name:'ophalen',
+                         editable:true,
+                         editrules:{required:true}
+                     }, 
+                     {name:'opmerkingen',hidden:true,
+                         editable:true,
+                         editrules:{required:true}
+                     },
+                     {name:'afgehandeld',hidden:true,
+                         editable:true,
+                         editrules:{required:true}
+                     },
+                     {name:'user',hidden:true,
+                         editable:false,
+                         editrules:{required:true}
+                     },    
+                    {name:'id',hidden:true}
+                  ],
+                  rowNum:2,
+                  rowList:[1,2,3,4,5,6,7,8,9],
+                  pager:'#afspraak_list_pager',
+                  viewrecords: true,
+                  gridview: true
+
+                }).navGrid('#afspraak_list_pager',
+                    {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
+                    {closeAfterEdit:true,
+                     afterSubmit:afterSubmitEvent
+                    },                                   // edit options
+                    {addCaption:'Creeer nieuwe afspraak',
+                     afterSubmit:afterSubmitEvent,
+                     savekey:[true,13]},            // add options
+                    {afterSubmit:afterSubmitEvent}  // delete options
+                );
+
+
+                $("#afspraak_list").jqGrid('filterToolbar',{autosearch:true});
+            });
+
+            function afterSubmitEvent(response, postdata) {
+                var success = true;
+                console.log ('here')
+                var json = eval('(' + response.responseText + ')');
+                var message = json.message;
+
+                if(json.state == 'FAIL') {
+                    success = false;
+                } else {
+                  $('#message').html(message);
+                  $('#message').show().fadeOut(10000);  // 10 second fade
+                }
+
+                var new_id = json.id
+                return [success,message,new_id];
+            }
+            </script>
+           </div>
+      </div>
     </body>
 </html>

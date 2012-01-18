@@ -5,10 +5,7 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'klant.label', default: 'Klant')}" />
     <title><g:message code="default.list.label" args="[entityName]" /></title>
-        <g:javascript library="jquery/jquery-1.6.4.min"/>
-        <g:javascript library="jquery/jquery-ui-1.8.16.custom.min"/>
-        <g:javascript library="jquery/grid.locale-en"/>
-        <g:javascript library="jquery/jquery.jqGrid.min"/>
+
   </head> 
   <body> 
     <div class="nav">
@@ -99,7 +96,7 @@
                         editoptions:{size:4},
                         editrules:{required:true,integer:true}
                      }, 
-                     {name:'postcode',
+                     {name:'postcode',hidden:true,
                          editable:true,
                          editrules:{required:true}
                      }, 
@@ -112,12 +109,12 @@
                       editoptions:{size:10},
                       editrules:{required:true,integer:true}
                     },
-                    {name:'email',                    
+                    {name:'email',hidden:true,                    
                      editable:true,
                      editoptions:{size:30},
                      editrules:{required:true,email:true}
                     },
-                    {name:'opmerkingen',
+                    {name:'opmerkingen',hidden:true,
                         editable:true,
                         editrules:{required:true}
                     },
@@ -130,7 +127,7 @@
                   gridview: true
 
                 }).navGrid('#klant_list_pager',
-                    {add:false,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
+                    {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
                     {closeAfterEdit:true,
                      afterSubmit:afterSubmitEvent
                     },                                   // edit options

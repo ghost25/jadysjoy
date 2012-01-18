@@ -33,38 +33,122 @@
         <div class="message">${flash.message}</div> 
       </g:if> 
 		 <div class="list">
-                <table>
-                    <thead class="ui-widget-header">
-                        <tr>                        
-                            <g:sortableColumn property="id" title="${message(code: 'hond.id.label', default: 'Id')}" />
-                            <g:sortableColumn property="naam" title="${message(code: 'hond.naam.label', default: 'Naam')}" />                        
-                            <g:sortableColumn property="ras" title="${message(code: 'hond.ras.label', default: 'Ras')}" />                        
-                            <g:sortableColumn property="geslacht" title="${message(code: 'hond.geslacht.label', default: 'Geslacht')}" />                            
-                            <g:sortableColumn property="kleur" title="${message(code: 'hond.kleur.label', default: 'Kleur')}" />
-                            <g:sortableColumn property="gecastreerd" title="${message(code: 'hond.gecastreerd.label', default: 'Gecastreerd')}" />
-                            <g:sortableColumn property="leeftijd" title="${message(code: 'hond.leeftijd.label', default: 'Leeftijd')}" />
-                            <g:sortableColumn property="klant" title="${message(code: 'hond.klant.label', default: 'Klant')}" />                  
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${hondInstanceList}" status="i" var="hondInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">                        
-                            <td><g:link action="show" id="${hondInstance.id}">${fieldValue(bean: hondInstance, field: "id")}</g:link></td>                        
-                            <td>${fieldValue(bean: hondInstance, field: "naam")}</td>                        
-                            <td>${fieldValue(bean: hondInstance, field: "ras")}</td>                        
-                            <td>${fieldValue(bean: hondInstance, field: "geslacht")}</td>
-                            <td>${fieldValue(bean: hondInstance, field: "kleur")}</td>
-                            <td>${fieldValue(bean: hondInstance, field: "gecastreerd")}</td>
-                            <td>${fieldValue(bean: hondInstance, field: "leeftijd")}</td>
-                            <td>${fieldValue(bean: hondInstance, field: "klant")}</td>                                                    
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
-            </div>
-            <div class="paginateButtons">
-                <g:paginate total="${hondInstanceTotal}" />
-            </div>
-        </div>
+            <!-- table tag will hold our grid -->
+            <table id="hond_list" class="scroll jqTable" cellpadding="0" cellspacing="0"></table>
+            <!-- pager will hold our paginator -->
+            <div id="hond_list_pager" class="scroll" style="text-align:center;"></div>
+
+            <script type="text/javascript">
+            var lastSelectedId;
+            
+            /* when the page has finished loading.. execute the following */
+            $(document).ready(function () {
+
+                // set on click events for non toolbar buttons
+                $("#btnAdd").click(function(){
+                  $("#hond_list").jqGrid("editGridRow","new",
+                     {addCaption:'Creeer nieuwe hond',
+                     afterSubmit:afterSubmitEvent,
+                     savekey:[true,13]});
+                });
+
+                $("#btnEdit").click(function(){
+                   var gr = $("#hond_list").jqGrid('getGridParam','selrow');
+                   if( gr != null )
+                     $("#hond_list").jqGrid('editGridRow',gr,
+                     {closeAfterEdit:true,
+                      afterSubmit:afterSubmitEvent
+                     });
+                   else
+                     alert("Selecteer een regel voorbewerken");
+                });
+
+                $("#btnDelete").click(function(){
+                  var gr = $("#hond_list").jqGrid('getGridParam','selrow');
+                  if( gr != null )
+                    $("#hond_list").jqGrid('delGridRow',gr,
+                     {afterSubmit:afterSubmitEvent});
+                  else
+                    alert("Selecteer regel voor verwijderen!");
+                });
+                
+
+                $("#hond_list").jqGrid({
+                  url:'jq_hond_list',
+                  editurl:'jq_edit_hond',
+                  datatype: "json",
+                  colNames:['Naam','Ras','Geslacht','Gecastreerd','Kleur','Leeftijd','Klant','Id'],
+                  colModel:[
+                    {name:'naam',
+                     editable:true,
+                     editrules:{required:true},
+                     cellurl:'jq_edit_hond'
+                    },
+                    {name:'Ras',
+                        editable:true,
+                        editrules:{required:true}
+                    },
+                    {name:'Geslacht',
+                        editable:true,
+                        editrules:{required:true}
+                     }, 
+                     {name:'Gecastreerd',hidden:true,
+                         editable:true,
+                         editrules:{required:true}
+                     },
+                     {name:'Kleur',
+                         editable:true,hidden:true,
+                         editrules:{required:true}
+                     }, 
+                     {name:'Leeftijd',
+                         editable:true,
+                         editrules:{required:true}
+                     }, 
+                     {name:'Klant',
+                         editable:true,
+                         editrules:{required:true}
+                     },  
+                    {name:'id',hidden:true}
+                  ],
+                  rowNum:2,
+                  rowList:[1,2,3,4],
+                  pager:'#hond_list_pager',
+                  viewrecords: true,
+                  gridview: true
+
+                }).navGrid('#hond_list_pager',
+                    {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
+                    {closeAfterEdit:true,
+                     afterSubmit:afterSubmitEvent
+                    },                                   // edit options
+                    {addCaption:'Creeer nieuwe hond',
+                     afterSubmit:afterSubmitEvent,
+                     savekey:[true,13]},            // add options
+                    {afterSubmit:afterSubmitEvent}  // delete options
+                );
+
+
+                $("#hond_list").jqGrid('filterToolbar',{autosearch:true});
+            });
+
+            function afterSubmitEvent(response, postdata) {
+                var success = true;
+                console.log ('here')
+                var json = eval('(' + response.responseText + ')');
+                var message = json.message;
+
+                if(json.state == 'FAIL') {
+                    success = false;
+                } else {
+                  $('#message').html(message);
+                  $('#message').show().fadeOut(10000);  // 10 second fade
+                }
+
+                var new_id = json.id
+                return [success,message,new_id];
+            }
+            </script>
+           </div>
+      </div>
     </body>
 </html>

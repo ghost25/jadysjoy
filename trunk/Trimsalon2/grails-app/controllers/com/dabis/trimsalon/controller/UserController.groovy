@@ -5,6 +5,7 @@ import com.dabis.trimsalon.model.Klant
 import com.dabis.trimsalon.model.Hond
 import com.dabis.trimsalon.model.Afspraak
 import com.dabis.trimsalon.model.Calendar
+import grails.converters.JSON
 
 class UserController {
 	
@@ -197,4 +198,100 @@ class UserController {
 				redirect(action: "list")
 			}
 		}
+		
+		// return JSON list of user
+		def jq_user_list = {
+				def sortIndex = params.sidx ?: 'naam'
+				def sortOrder  = params.sord ?: 'asc'
+		  
+				def maxRows = Integer.valueOf(params.rows)
+				def currentPage = Integer.valueOf(params.page) ?: 1
+		  
+				def rowOffset = currentPage == 1 ? 0 : (currentPage - 1) * maxRows
+				
+				def user = User.createCriteria().list(max:maxRows, offset:rowOffset) {
+					
+								// first name case insensitive where the field begins with the search term
+								if (params.login)
+									ilike('login',params.login + '%')
+								
+								if (params.password)
+									ilike('password',params.password + '%')
+									
+								if (params.naam)
+									ilike('naam',params.naam + '%')
+									
+								if (params.role)
+									ilike('role',params.role + '%')
+								
+								// set the order and direction
+								order(sortIndex, sortOrder).ignoreCase()
+						  }
+				
+				def totalRows = user.totalCount
+				def numberOfPages = Math.ceil(totalRows / maxRows)
+		  
+				def jsonCells = user.collect {
+					 [cell: [it.login,
+						 it.password,
+						 it.naam,
+						 it.role
+						], id: it.id]
+				  }
+				  def jsonData= [rows: jsonCells,page:currentPage,records:totalRows,total:numberOfPages]
+				  render jsonData as JSON
+		}
+		
+		def jq_edit_user = {
+			def user = null
+			def message = ""
+			def state = "FAIL"
+			def id
+	  
+			// determine our action
+			switch (params.oper) {
+			  case 'add':
+				// add instruction sent
+				user = new User(params)
+				if (! user.hasErrors() && user.save()) {
+				  message = "Gebruiker ${user.naam} toegevoegd"
+				  id = user.id
+				  state = "OK"
+				} else {
+				  message = "Kan gebruiker niet opslaan"
+				}
+	  
+				break;
+			  case 'del':
+				// check exists
+				user = User.get(params.id)
+				if (user) {
+				  // delete user
+				  user.delete()
+				  message = "Gebruiker ${user.naam} verwijderd"
+				  state = "OK"
+				}
+				break;
+			  default:
+				// default edit action
+				// first retrieve the user by its ID
+				user = User.get(params.id)
+				if (user) {
+				  // set the properties according to passed in parameters
+				  user.properties = params
+				  if (! user.hasErrors() && user.save()) {
+					message = "Gebruiker ${user.naam} bijgewerkt"
+					id = user.id
+					state = "OK"
+				  } else {
+					message = "Kan de gebruiker niet bijwerken"
+				  }
+				}
+				break;
+			}
+	  
+			def response = [message:message,state:state,id:id]
+	  
+			render response as JSON
+		  }
 	}

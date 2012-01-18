@@ -154,7 +154,7 @@ class KlantController {
 			klant = Klant.get(params.id)
 			if (klant) {
 			  // delete klant
-			  customer.delete()
+			  klant.delete()
 			  message = "Klant ${klant.naam} verwijderd"
 			  state = "OK"
 			}

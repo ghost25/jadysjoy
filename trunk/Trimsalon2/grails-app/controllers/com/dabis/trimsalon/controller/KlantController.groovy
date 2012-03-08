@@ -129,6 +129,40 @@ class KlantController {
 			  render jsonData as JSON
 	}
 	
+	// return JSON sublist of klant
+	def jq_klant_sublist = {
+		def klant = null
+		def message = ""
+		def state = "FAIL"
+		def id
+		
+			klant = Klant.get(params.id) 
+			
+			if (klant){
+				
+							// first name case insensitive where the field begins with the search term
+									
+							if (params.email)
+								ilike('email',params.email + '%')
+								
+							if (params.opmerkingen)
+								ilike('opmerkingen',params.opmerkingen + '%')
+								
+							if (params.dateCreated)
+								ilike('dateCreated',params.dateCreated + '%')										
+							
+					  }
+	  
+			def jsonCells = klant.collect {
+				 [cell: [it.email,
+					 it.opmerkingen,
+					 it.dateCreated				 
+					], id: it.id]
+			  }
+			  def jsonData= [rows: jsonCells]
+			  render jsonData as JSON
+	}
+	
 	def jq_edit_klant = {
 		def klant = null
 		def message = ""

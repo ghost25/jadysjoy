@@ -79,21 +79,24 @@
                   url:'jq_inkomsten_list',
                   editurl:'jq_edit_inkomsten',
                   datatype: "json",
-                  colNames:['Afspraak','Betaald op','Betaald','Id'],
+                  colNames:['Afspraak','Betaald','Betaald op','Id'],
                   colModel:[
                     {name:'afspraak',
                      editable:true,
                      editrules:{required:true},
-                     cellurl:'jq_edit_inkomsten'
-                    },
-                    {name:'dateCreated',
-                        editable:true,
-                        editrules:{required:true}
-                    },
+                     cellurl:'jq_edit_inkomsten',
+                     width: 300
+                    },                 
                     {name:'betaald',
                         editable:true,
-                        editrules:{required:true}
-                     }, 
+                        editrules:{required:true},
+                        width: 150
+                     },
+                    {name:'dateCreated',
+                        editable:true,
+                        editrules:{required:true},
+                        width: 150
+                    }, 
                     {name:'id',hidden:true}
                   ],
                   rowNum:2,

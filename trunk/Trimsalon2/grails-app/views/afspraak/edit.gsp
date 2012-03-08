@@ -36,7 +36,7 @@
                                   <label for="omschrijving"><g:message code="afspraak.omschrijving.label" default="Omschrijving" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'omschrijving', 'errors')}">
-                                    <g:textField name="omschrijving" value="${afspraakInstance?.omschrijving}" />
+                                    <g:textField name="omschrijving" value="${afspraakInstance?.omschrijving}"  style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -90,7 +90,7 @@
                                   <label for="opmerkingen"><g:message code="afspraak.opmerkingen.label" default="Opmerkingen" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: afspraakInstance, field: 'opmerkingen', 'errors')}">
-                                    <g:textField name="opmerkingen" value="${afspraakInstance?.opmerkingen}" />
+                                    <g:textField name="opmerkingen" value="${afspraakInstance?.opmerkingen}"  style='width: 500px;'/>
                                 </td>
                             </tr>
                         

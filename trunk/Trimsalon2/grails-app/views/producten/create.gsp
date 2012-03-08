@@ -33,7 +33,7 @@
                                     <label for="naam"><g:message code="producten.naam.label" default="Naam" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productenInstance, field: 'naam', 'errors')}">
-                                    <g:textField name="naam" value="${productenInstance?.naam}" />
+                                    <g:textField name="naam" value="${productenInstance?.naam}"  style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -42,7 +42,7 @@
                                     <label for="omschrijving"><g:message code="producten.omschrijving.label" default="Omschrijving" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productenInstance, field: 'omschrijving', 'errors')}">
-                                    <g:textField name="omschrijving" value="${productenInstance?.omschrijving}" />
+                                    <g:textField name="omschrijving" value="${productenInstance?.omschrijving}"  style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -51,7 +51,7 @@
                                     <label for="ras"><g:message code="producten.ras.label" default="Ras" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productenInstance, field: 'ras', 'errors')}">
-                                    <g:textField name="ras" value="${productenInstance?.ras}" />
+                                    <g:textField name="ras" value="${productenInstance?.ras}"  style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -60,7 +60,7 @@
                                     <label for="prijsExbtw"><g:message code="producten.prijsExbtw.label" default="Prijs Exbtw" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productenInstance, field: 'prijsExbtw', 'errors')}">
-                                    <g:textField name="prijsExbtw" value="${fieldValue(bean: productenInstance, field: 'prijsExbtw')}" />
+                                    <g:textField name="prijsExbtw" value="${fieldValue(bean: productenInstance, field: 'prijsExbtw')}"  style='width: 100px;'/>
                                 </td>
                             </tr>
                         
@@ -69,7 +69,7 @@
                                     <label for="voorraad"><g:message code="producten.voorraad.label" default="Voorraad" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productenInstance, field: 'voorraad', 'errors')}">
-                                    <g:textField name="voorraad" value="${fieldValue(bean: productenInstance, field: 'voorraad')}" />
+                                    <g:textField name="voorraad" value="${fieldValue(bean: productenInstance, field: 'voorraad')}"  style='width: 100px;'/>
                                 </td>
                             </tr>
                         

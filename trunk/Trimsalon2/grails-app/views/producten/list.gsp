@@ -82,27 +82,33 @@
                     {name:'naam',
                      editable:true,
                      editrules:{required:true},
-                     cellurl:'jq_edit_producten'
+                     cellurl:'jq_edit_producten',
+                     width: 150
                     },
                     {name:'omschrijving',
                         editable:true,
-                        editrules:{required:true}
+                        editrules:{required:true},
+                        width: 300
                     },
                     {name:'ras',
                         editable:true,
-                        editrules:{required:true}
+                        editrules:{required:true},
+                        width: 150
                      }, 
                      {name:'prijsExbtw',hidden:true,
                          editable:true,
-                         editrules:{required:true}
+                         editrules:{required:true},
+                         width: 150
                      },
                      {name:'prijs',
                          editable:true,
-                         editrules:{required:true}
+                         editrules:{required:true},
+                         width: 80
                      },
                      {name:'voorraad',
                          editable:true,
-                         editrules:{required:true}
+                         editrules:{required:true},
+                         width: 80
                      },  
                     {name:'id',hidden:true}
                   ],

@@ -77,32 +77,37 @@
                   url:'jq_opmerking_list',
                   editurl:'jq_edit_opmerking',
                   datatype: "json",
-                  colNames:['Hond','Advies','Gedrag','Medischekenmerken','Gemaakt op'],
+                  colNames:['Hond','Advies','Gedrag','Medischekenmerken','Gemaakt op','Id'],
                   colModel:[
                     {name:'hond',
                      editable:true,
-                     editrules:{required:true}
+                     editrules:{required:true},
+                     width: 150
                     },
                     {name:'advies',
                         editable:true,
-                        editrules:{required:true}
+                        editrules:{required:true},
+                        width: 150
                     },
                     {name:'gedrag',
                         editable:true,
-                        editrules:{required:true}
+                        editrules:{required:true},
+                        width: 150
                      }, 
                      {name:'medischeKenmerken',
                          editable:true,
-                         editrules:{required:true}
+                         editrules:{required:true},
+                         width: 150
                      }, 
                      {name:'dateCreated',
                          editable:true,
-                         editrules:{required:true}
+                         editrules:{required:true},
+                         width: 150
                      }, 
                     {name:'id',hidden:true}
                   ],
                   rowNum:2,
-                  rowList:[1,2,3,4,5],
+                  rowList:[1,2,3,4,5,6],
                   pager:'#opmerking_list_pager',
                   viewrecords: true,
                   gridview: true

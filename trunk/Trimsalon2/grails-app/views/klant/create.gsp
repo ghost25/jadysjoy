@@ -34,7 +34,7 @@
                                     <label for="naam"><g:message code="klant.naam.label" default="Naam" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'naam', 'errors')}">
-                                    <g:textField name="naam" value="${klantInstance?.naam}" />
+                                    <g:textField name="naam" value="${klantInstance?.naam}" style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -43,7 +43,7 @@
                                     <label for="adres"><g:message code="klant.adres.label" default="Adres" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'adres', 'errors')}">
-                                    <g:textField name="adres" value="${klantInstance?.adres}" />
+                                    <g:textField name="adres" value="${klantInstance?.adres}" style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -52,7 +52,7 @@
                                     <label for="huisnummer"><g:message code="klant.huisnummer.label" default="Huisnummer" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'huisnummer', 'errors')}">
-                                    <g:textField name="huisnummer" value="${klantInstance?.huisnummer}" />
+                                    <g:textField name="huisnummer" value="${klantInstance?.huisnummer}" style='width: 100px;' />
                                 </td>
                             </tr>
                         
@@ -61,7 +61,7 @@
                                     <label for="postcode"><g:message code="klant.postcode.label" default="Postcode" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'postcode', 'errors')}">
-                                    <g:textField name="postcode" value="${klantInstance?.postcode}" />
+                                    <g:textField name="postcode" value="${klantInstance?.postcode}" style='width: 100px;'/>
                                 </td>
                             </tr>
                         
@@ -70,7 +70,7 @@
                                     <label for="woonplaats"><g:message code="klant.woonplaats.label" default="Woonplaats" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'woonplaats', 'errors')}">
-                                    <g:textField name="woonplaats" value="${klantInstance?.woonplaats}" />
+                                    <g:textField name="woonplaats" value="${klantInstance?.woonplaats}" style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -79,7 +79,7 @@
                                     <label for="telefoon"><g:message code="klant.telefoon.label" default="Telefoon" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'telefoon', 'errors')}">
-                                    <g:textField name="telefoon" value="${fieldValue(bean: klantInstance, field: 'telefoon')}" />
+                                    <g:textField name="telefoon" value="${fieldValue(bean: klantInstance, field: 'telefoon')}" style='width: 100px;' />
                                 </td>
                             </tr>
                         
@@ -88,7 +88,7 @@
                                     <label for="email"><g:message code="klant.email.label" default="Email" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'email', 'errors')}">
-                                    <g:textField name="email" value="${klantInstance?.email}" />
+                                    <g:textField name="email" value="${klantInstance?.email}" style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -97,7 +97,7 @@
                                     <label for="opmerkingen"><g:message code="klant.opmerkingen.label" default="Opmerkingen" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: klantInstance, field: 'opmerkingen', 'errors')}">
-                                    <g:textField name="opmerkingen" value="${klantInstance?.opmerkingen}" />
+                                    <g:textField name="opmerkingen" value="${klantInstance?.opmerkingen}" style='width: 500px;'/>
                                 </td>
                             </tr>
                         

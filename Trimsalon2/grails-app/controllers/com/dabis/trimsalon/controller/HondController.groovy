@@ -91,20 +91,11 @@ class HondController {
 									ilike('naam',params.naam + '%')
 								
 								if (params.ras)
-									ilike('ras',params.ras + '%')
+									ilike('ras',params.ras + '%')	
 									
 								if (params.geslacht)
 									ilike('geslacht',params.geslacht + '%')
-									
-								if (params.gecastreerd)
-									ilike('gecastreerd',params.gecastreerd + '%')
-									
-								if (params.kleur)
-									ilike('kleur',params.kleur + '%')
-									
-								if (params.leeftijd)
-									ilike('leeftijd',params.leeftijd + '%')
-									
+								
 								if (params.klant)
 									ilike('klant',params.klant + '%')
 								
@@ -118,13 +109,45 @@ class HondController {
 				def jsonCells = hond.collect {
 					 [cell: [it.naam,
 						 it.ras,
-						 it.geslacht,
-						 it.kleur,
-						 it.leeftijd,
+						 it.geslacht,						 
 						 it.klant
 						], id: it.id]
 				  }
 				  def jsonData= [rows: jsonCells,page:currentPage,records:totalRows,total:numberOfPages]
+				  render jsonData as JSON
+		}
+		
+		// return JSON sublist of hond
+		def jq_hond_sublist = {
+			def hond = null
+			def message = ""
+			def state = "FAIL"
+			def id
+			
+				hond = Hond.get(params.id)
+				
+				if (hond){
+					
+								// first name case insensitive where the field begins with the search term																	
+									
+								if (params.gecastreerd)
+									ilike('gecastreerd',params.gecastreerd + '%')
+									
+								if (params.kleur)
+									ilike('kleur',params.kleur + '%')
+									
+								if (params.leeftijd)
+									ilike('leeftijd',params.leeftijd + '%')
+								
+						  }
+		  
+				def jsonCells = hond.collect {
+					 [cell: [it.gecastreerd,
+						 it.kleur,
+						 it.leeftijd,						 
+						], id: it.id]
+				  }
+				  def jsonData= [rows: jsonCells]
 				  render jsonData as JSON
 		}
 		

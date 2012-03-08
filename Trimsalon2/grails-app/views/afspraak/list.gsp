@@ -77,52 +77,51 @@
                   url:'jq_afspraak_list',
                   editurl:'jq_edit_afspraak',
                   datatype: "json",
-                  colNames:['Omschrijving','Begindatum','Einddatum','Product','Hond','Ophalen','Opmerking','Afgehandeld','Gebruiker','Id'],
+                  colNames:['Omschrijving','Begindatum','Einddatum','Product','Hond','Ophalen','Id'],
                   colModel:[
-                    {name:'omschrijving',
+                    {name:'omschrijving',hidden:true,
                      editable:true,
                      editrules:{required:true},
                      cellurl:'jq_edit_afspraak'
                     },
                     {name:'begindatum',
                         editable:true,
-                        editrules:{required:true}
+                        editrules:{required:true},
+                        width: 150
                     },
-                    {name:'einddatum',hidden:true,
+                    {name:'einddatum',
                         editable:true,
-                        editrules:{required:true}
+                        editrules:{required:true},
+                        width: 150
                      }, 
                      {name:'producten',
                          editable:true,
-                         editrules:{required:true}
+                         editrules:{required:true},
+                         width: 150
                      },
                      {name:'hond',
                          editable:false,
-                         editrules:{required:true}
+                         editrules:{required:true},
+                         width: 150
                      }, 
                      {name:'ophalen',
                          editable:true,
-                         editrules:{required:true}
-                     }, 
-                     {name:'opmerkingen',hidden:true,
-                         editable:true,
-                         editrules:{required:true}
-                     },
-                     {name:'afgehandeld',hidden:true,
-                         editable:true,
-                         editrules:{required:true}
-                     },
-                     {name:'user',hidden:true,
-                         editable:false,
-                         editrules:{required:true}
-                     },    
+                         editrules:{required:true},
+                         width: 150
+                     },                       
                     {name:'id',hidden:true}
                   ],
                   rowNum:2,
-                  rowList:[1,2,3,4,5,6,7,8,9],
+                  rowList:[1,2,3,4,5,6,7],
                   pager:'#afspraak_list_pager',
                   viewrecords: true,
-                  gridview: true
+                  gridview: true,
+              	multiselect: false,
+            	subGrid : true,
+            	subGridUrl: 'jq_afspraak_sublist',
+                subGridModel: [{ name  : ['Opmerkingen','Afgehandeld','User'], 
+                                width : [90,30,25] } 
+                ]
 
                 }).navGrid('#afspraak_list_pager',
                     {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?

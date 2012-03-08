@@ -83,15 +83,18 @@
                     {name:'omschrijving',
                      editable:true,
                      editrules:{required:true},
-                     cellurl:'jq_edit_uitgaven'
+                     cellurl:'jq_edit_uitgaven',
+                     width: 400
                     },
                     {name:'prijsExbtw',
                         editable:true,
-                        editrules:{required:true}
+                        editrules:{required:true},
+                        width: 150
                     },
                     {name:'prijs',
                         editable:true,
-                        editrules:{required:true}
+                        editrules:{required:true},
+                        width: 150
                      },                     
                     {name:'id',hidden:true}
                   ],

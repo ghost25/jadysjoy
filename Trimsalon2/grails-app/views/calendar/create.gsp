@@ -33,7 +33,7 @@
                                     <label for="name"><g:message code="calendar.name.label" default="Name" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: calendarInstance, field: 'name', 'errors')}">
-                                    <g:textField name="name" value="${calendarInstance?.name}" />
+                                    <g:textField name="name" value="${calendarInstance?.name}"  style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -42,7 +42,7 @@
                                     <label for="color"><g:message code="calendar.color.label" default="Color" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: calendarInstance, field: 'color', 'errors')}">
-                                    <g:textField name="color" value="${calendarInstance?.color}" />
+                                    <g:textField name="color" value="${calendarInstance?.color}"  style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -51,7 +51,7 @@
                                     <label for="textColor"><g:message code="calendar.textColor.label" default="Text Color" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: calendarInstance, field: 'textColor', 'errors')}">
-                                    <g:textField name="textColor" value="${calendarInstance?.textColor}" />
+                                    <g:textField name="textColor" value="${calendarInstance?.textColor}"  style='width: 500px;'/>
                                 </td>
                             </tr>
                         

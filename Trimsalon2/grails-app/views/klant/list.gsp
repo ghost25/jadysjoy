@@ -5,7 +5,7 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'klant.label', default: 'Klant')}" />
     <title><g:message code="default.list.label" args="[entityName]" /></title>
-
+    <g:javascript src="grid.subgrid.js" />
   </head> 
   <body> 
     <div class="nav">
@@ -80,51 +80,54 @@
                   url:'jq_klant_list',
                   editurl:'jq_edit_klant',
                   datatype: "json",
-                  colNames:['Naam','Adres','Huisnr','Postcode','Woonplaats','Telefoon','Email','Omerkingen','Id'],
+                  colNames:['Naam','Adres','Huisnr','Postcode','Woonplaats','Telefoon','Id'],
                   colModel:[
                     {name:'naam',
                      editable:true,
                      editrules:{required:true},
-                     cellurl:'jq_edit_klant'
+                     cellurl:'jq_edit_klant',
+                     width: 150
                     },
                     {name:'adres',
                         editable:true,
-                        editrules:{required:true}
+                        editrules:{required:true},
+                        width: 200
                     },
                     {name:'huisnummer',
                         editable:true,
                         editoptions:{size:4},
-                        editrules:{required:true,integer:true}
+                        editrules:{required:true,integer:true},
+                        width: 60
                      }, 
                      {name:'postcode',hidden:true,
                          editable:true,
-                         editrules:{required:true}
+                         editrules:{required:true},
+                         width: 100
                      }, 
                     {name:'woonplaats',
                      editable:true,
-                     editrules:{required:true}
+                     editrules:{required:true},
+                     width: 200
                     },
                     {name:'telefoon',
                       editable:true,
                       editoptions:{size:10},
-                      editrules:{required:true,integer:true}
-                    },
-                    {name:'email',hidden:true,                    
-                     editable:true,
-                     editoptions:{size:30},
-                     editrules:{required:true,email:true}
-                    },
-                    {name:'opmerkingen',hidden:true,
-                        editable:true,
-                        editrules:{required:true}
+                      editrules:{required:true,integer:true},
+                      width: 100
                     },
                     {name:'id',hidden:true}
                   ],
                   rowNum:2,
-                  rowList:[1,2,3,4,5,6,7,8,9],
+                  rowList:[1,2,3,4,5,6,7],
                   pager:'#klant_list_pager',
                   viewrecords: true,
-                  gridview: true
+                  gridview: true,
+	              	multiselect: false,
+	            	subGrid : true,
+	            	subGridUrl: 'jq_klant_sublist',
+	                subGridModel: [{ name  : ['Email','Opmerkingen','Aangemaakt'], 
+	                                width : [30,90,25] } 
+	                ]
 
                 }).navGrid('#klant_list_pager',
                     {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?

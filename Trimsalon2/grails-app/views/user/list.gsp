@@ -84,19 +84,23 @@
                     {name:'login',
                      editable:true,
                      editrules:{required:true},
-                     cellurl:'jq_edit_user'
+                     cellurl:'jq_edit_user',
+                     width: 150
                     },
                     {name:'password',
                         editable:true,
-                        editrules:{required:true}
+                        editrules:{required:true},
+                        width: 150
                     },
                     {name:'naam',
                         editable:true,
-                        editrules:{required:true}
+                        editrules:{required:true},
+                        width: 300
                      }, 
                      {name:'role',
                          editable:true,
-                         editrules:{required:true}
+                         editrules:{required:true},
+                         width: 150
                      }, 
                     {name:'id',hidden:true}
                   ],

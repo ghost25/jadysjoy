@@ -260,17 +260,8 @@ class AfspraakController {
 								ilike('hond',params.hond + '%')
 								
 							if (params.ophalen)
-								ilike('ophalen',params.ophalen + '%')
-								
-							if (params.opmerkingen)
-								ilike('opmerkingen',params.opmerkingen + '%')
-								
-							if (params.afgehandeld)
-								ilike('afgehandeld',params.afgehandeld + '%')
-								
-							if (params.user)
-								ilike('user',params.user + '%')						
-							
+								ilike('ophalen',params.ophalen + '%')								
+																			
 							// set the order and direction
 							order(sortIndex, sortOrder).ignoreCase()
 					  }
@@ -284,13 +275,44 @@ class AfspraakController {
 					 it.einddatum,
 					 it.producten,
 					 it.hond,
-					 it.ophalen,
-					 it.opmerkingen,
+					 it.ophalen					
+					], id: it.id]
+			  }
+			  def jsonData= [rows: jsonCells,page:currentPage,records:totalRows,total:numberOfPages]
+			  render jsonData as JSON
+	}
+	
+	// return JSON sublist of afspraak
+	def jq_afspraak_sublist = {
+		def afspraak = null
+		def message = ""
+		def state = "FAIL"
+		def id
+		
+			afspraak = Afspraak.get(params.id)
+			
+			if (afspraak){
+				
+							// first name case insensitive where the field begins with the search term
+									
+							if (params.opmerkingen)
+								ilike('opmerkingen',params.opmerkingen + '%')
+								
+							if (params.afgehandeld)
+								ilike('afgehandeld',params.afgehandeld + '%')
+								
+							if (params.user)
+								ilike('user',params.user + '%')
+							
+					  }
+	  
+			def jsonCells = afspraak.collect {
+				 [cell: [it.opmerkingen,
 					 it.afgehandeld,
 					 it.user
 					], id: it.id]
 			  }
-			  def jsonData= [rows: jsonCells,page:currentPage,records:totalRows,total:numberOfPages]
+			  def jsonData= [rows: jsonCells]
 			  render jsonData as JSON
 	}
 	

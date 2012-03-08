@@ -37,7 +37,7 @@
                                   <label for="naam"><g:message code="hond.naam.label" default="Naam" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: hondInstance, field: 'naam', 'errors')}">
-                                    <g:textField name="naam" value="${hondInstance?.naam}" />
+                                    <g:textField name="naam" value="${hondInstance?.naam}"  style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -46,7 +46,7 @@
                                   <label for="ras"><g:message code="hond.ras.label" default="Ras" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: hondInstance, field: 'ras', 'errors')}">
-                                    <g:textField name="ras" value="${hondInstance?.ras}" />
+                                    <g:textField name="ras" value="${hondInstance?.ras}"  style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -73,7 +73,7 @@
                                   <label for="kleur"><g:message code="hond.kleur.label" default="Kleur" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: hondInstance, field: 'kleur', 'errors')}">
-                                    <g:textField name="kleur" value="${hondInstance?.kleur}" />
+                                    <g:textField name="kleur" value="${hondInstance?.kleur}"  style='width: 500px;'/>
                                 </td>
                             </tr>
                         
@@ -82,7 +82,7 @@
                                   <label for="leeftijd"><g:message code="hond.leeftijd.label" default="Leeftijd" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: hondInstance, field: 'leeftijd', 'errors')}">
-                                    <g:textField name="leeftijd" value="${fieldValue(bean: hondInstance, field: 'leeftijd')}" />
+                                    <g:textField name="leeftijd" value="${fieldValue(bean: hondInstance, field: 'leeftijd')}"  style='width: 100px;'/>
                                 </td>
                             </tr>
                         

@@ -77,36 +77,28 @@
                   url:'jq_hond_list',
                   editurl:'jq_edit_hond',
                   datatype: "json",
-                  colNames:['Naam','Ras','Geslacht','Gecastreerd','Kleur','Leeftijd','Klant','Id'],
+                  colNames:['Naam','Ras','Geslacht','Klant','Id'],
                   colModel:[
                     {name:'naam',
                      editable:true,
                      editrules:{required:true},
-                     cellurl:'jq_edit_hond'
+                     cellurl:'jq_edit_hond',
+                     width: 150
                     },
                     {name:'Ras',
                         editable:true,
-                        editrules:{required:true}
+                        editrules:{required:true},
+                        width: 150
                     },
                     {name:'Geslacht',
                         editable:true,
-                        editrules:{required:true}
-                     }, 
-                     {name:'Gecastreerd',hidden:true,
-                         editable:true,
-                         editrules:{required:true}
-                     },
-                     {name:'Kleur',
-                         editable:true,hidden:true,
-                         editrules:{required:true}
-                     }, 
-                     {name:'Leeftijd',
-                         editable:true,
-                         editrules:{required:true}
-                     }, 
+                        editrules:{required:true},
+                        width: 60
+                     },                     
                      {name:'Klant',
                          editable:true,
-                         editrules:{required:true}
+                         editrules:{required:true},
+                         width: 350
                      },  
                     {name:'id',hidden:true}
                   ],
@@ -114,7 +106,13 @@
                   rowList:[1,2,3,4],
                   pager:'#hond_list_pager',
                   viewrecords: true,
-                  gridview: true
+                  gridview: true,
+                  multiselect: false,
+	            	subGrid : true,
+	            	subGridUrl: 'jq_hond_sublist',
+	                subGridModel: [{ name  : ['Gecastreerd','Kleur','Leeftijd'], 
+	                                width : [10,20,8] } 
+	                ]
 
                 }).navGrid('#hond_list_pager',
                     {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?

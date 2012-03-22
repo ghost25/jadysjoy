@@ -80,33 +80,37 @@
                   colNames:['Naam','Omschrijving','Ras','Prijs Exbtw','Prijs Inbtw','Voorraad','Id'],
                   colModel:[
                     {name:'naam',
-                     editable:true,
+                     editable:false,
                      editrules:{required:true},
                      cellurl:'jq_edit_producten',
-                     width: 150
+                     width: 150,
+                     formatter:'showlink', 
+                     formatoptions:{baseLinkUrl:'show'}
                     },
                     {name:'omschrijving',
-                        editable:true,
+                    	editable:false,
                         editrules:{required:true},
                         width: 300
                     },
                     {name:'ras',
-                        editable:true,
+                    	editable:false,
                         editrules:{required:true},
                         width: 150
                      }, 
                      {name:'prijsExbtw',hidden:true,
-                         editable:true,
+                    	 editable:false,
                          editrules:{required:true},
-                         width: 150
+                         width: 150,
+                         formatter:'currency',formatoptions:{prefix:"&euro;"}                     
                      },
                      {name:'prijs',
-                         editable:true,
+                    	 editable:false,
                          editrules:{required:true},
-                         width: 80
+                         width: 80,
+                         formatter:'currency',formatoptions:{prefix:"&euro;"}                         
                      },
                      {name:'voorraad',
-                         editable:true,
+                    	 editable:false,
                          editrules:{required:true},
                          width: 80
                      },  
@@ -119,15 +123,13 @@
                   gridview: true
 
                 }).navGrid('#producten_list_pager',
-                    {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
-                    {closeAfterEdit:true,
-                     afterSubmit:afterSubmitEvent
-                    },                                   // edit options
-                    {addCaption:'Creeer nieuwe producten',
-                     afterSubmit:afterSubmitEvent,
-                     savekey:[true,13]},            // add options
-                    {afterSubmit:afterSubmitEvent}  // delete options
-                );
+                    {add:false,edit:true,del:true,search:false,refresh:true})      // which buttons to show?
+                    .navButtonAdd('#producten_list_pager',{
+                  	   caption:"Toevoegen", 
+                  	   buttonicon:"ui-icon-add", 
+                  	   onClickButton: function(){ window.location.href = '${createLink(controller:'producten',action:'create')}'},  
+                  	   position:"last"
+                  	})
 
 
                 $("#producten_list").jqGrid('filterToolbar',{autosearch:true});

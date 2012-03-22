@@ -82,7 +82,9 @@
                     {name:'hond',
                      editable:true,
                      editrules:{required:true},
-                     width: 150
+                     width: 150,
+                     formatter:'showlink', 
+                     formatoptions:{baseLinkUrl:'show'}
                     },
                     {name:'advies',
                         editable:true,
@@ -113,15 +115,13 @@
                   gridview: true
 
                 }).navGrid('#opmerking_list_pager',
-                    {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
-                    {closeAfterEdit:true,
-                     afterSubmit:afterSubmitEvent
-                    },                                   // edit options
-                    {addCaption:'Creeer nieuwe opmerking',
-                     afterSubmit:afterSubmitEvent,
-                     savekey:[true,13]},            // add options
-                    {afterSubmit:afterSubmitEvent}  // delete options
-                );
+                    {add:false,edit:true,del:true,search:false,refresh:true})      // which buttons to show?
+                    .navButtonAdd('#opmerking_list_pager',{
+                  	   caption:"Toevoegen", 
+                  	   buttonicon:"ui-icon-add", 
+                  	   onClickButton: function(){ window.location.href = '${createLink(controller:'opmerking',action:'create')}'},  
+                  	   position:"last"
+                  	})
 
 
                 $("#opmerking_list").jqGrid('filterToolbar',{autosearch:true});

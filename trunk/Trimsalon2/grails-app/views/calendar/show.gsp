@@ -161,6 +161,7 @@
 		  },	
 	  events:${include(controller:"calendar", action:"json", id:calendarInstance?.id)}
 	</fullcal:calendar>
-	</div>	
+	</div>
+	<p>&nbsp;</p>	
 </body>
 </html>

@@ -83,34 +83,36 @@
                   colNames:['Naam','Adres','Huisnr','Postcode','Woonplaats','Telefoon','Id'],
                   colModel:[
                     {name:'naam',
-                     editable:true,
+                     editable:false,
                      editrules:{required:true},
                      cellurl:'jq_edit_klant',
-                     width: 150
+                     width: 150,
+                     formatter:'showlink', 
+                     formatoptions:{baseLinkUrl:'show'}
                     },
                     {name:'adres',
-                        editable:true,
+                    	editable:false,
                         editrules:{required:true},
                         width: 200
                     },
                     {name:'huisnummer',
-                        editable:true,
+                    	editable:false,
                         editoptions:{size:4},
                         editrules:{required:true,integer:true},
                         width: 60
                      }, 
                      {name:'postcode',hidden:true,
-                         editable:true,
+                    	 editable:false,
                          editrules:{required:true},
                          width: 100
                      }, 
                     {name:'woonplaats',
-                     editable:true,
+                     editable:false,
                      editrules:{required:true},
                      width: 200
                     },
                     {name:'telefoon',
-                      editable:true,
+                      editable:false,
                       editoptions:{size:10},
                       editrules:{required:true,integer:true},
                       width: 100
@@ -130,17 +132,13 @@
 	                ]
 
                 }).navGrid('#klant_list_pager',
-                    {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
-                    {closeAfterEdit:true,
-                     afterSubmit:afterSubmitEvent
-                    },                                   // edit options
-                    {addCaption:'Creeer nieuwe klant',
-                     afterSubmit:afterSubmitEvent,
-                     savekey:[true,13]},            // add options
-                    {afterSubmit:afterSubmitEvent}  // delete options
-                );
-
-
+                    {add:false,edit:false,del:true,search:false,refresh:true}) 
+                    .navButtonAdd('#klant_list_pager',{
+                    	   caption:"Toevoegen", 
+                    	   buttonicon:"ui-icon-add", 
+                    	   onClickButton: function(){ window.location.href = '${createLink(controller:'klant',action:'create')}'},  
+                    	   position:"last"
+                    	})
                 $("#klant_list").jqGrid('filterToolbar',{autosearch:true});
             });
 

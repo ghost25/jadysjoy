@@ -81,20 +81,24 @@
                   colNames:['Omschrijving','Prijs Exbtw','Prijs Inbtw','Id'],
                   colModel:[
                     {name:'omschrijving',
-                     editable:true,
+                     editable:false,
                      editrules:{required:true},
                      cellurl:'jq_edit_uitgaven',
-                     width: 400
+                     width: 400,
+                     formatter:'showlink', 
+                     formatoptions:{baseLinkUrl:'show'}
                     },
                     {name:'prijsExbtw',
-                        editable:true,
+                    	editable:false,
                         editrules:{required:true},
-                        width: 150
+                        width: 150,
+                        formatter:'currency',formatoptions:{prefix:"&euro;"}
                     },
                     {name:'prijs',
-                        editable:true,
+                    	editable:false,
                         editrules:{required:true},
-                        width: 150
+                        width: 150,
+                        formatter:'currency',formatoptions:{prefix:"&euro;"}
                      },                     
                     {name:'id',hidden:true}
                   ],
@@ -105,15 +109,13 @@
                   gridview: true
 
                 }).navGrid('#uitgaven_list_pager',
-                    {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
-                    {closeAfterEdit:true,
-                     afterSubmit:afterSubmitEvent
-                    },                                   // edit options
-                    {addCaption:'Creeer nieuwe uitgaven',
-                     afterSubmit:afterSubmitEvent,
-                     savekey:[true,13]},            // add options
-                    {afterSubmit:afterSubmitEvent}  // delete options
-                );
+                    {add:false,edit:true,del:true,search:false,refresh:true})      // which buttons to show?
+                    .navButtonAdd('#uitgaven_list_pager',{
+                  	   caption:"Toevoegen", 
+                  	   buttonicon:"ui-icon-add", 
+                  	   onClickButton: function(){ window.location.href = '${createLink(controller:'uitgaven',action:'create')}'},  
+                  	   position:"last"
+                  	})
 
 
                 $("#uitgaven_list").jqGrid('filterToolbar',{autosearch:true});

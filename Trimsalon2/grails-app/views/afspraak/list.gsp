@@ -80,22 +80,24 @@
                   colNames:['Omschrijving','Begindatum','Einddatum','Product','Hond','Ophalen','Id'],
                   colModel:[
                     {name:'omschrijving',hidden:true,
-                     editable:true,
+                     editable:false,
                      editrules:{required:true},
-                     cellurl:'jq_edit_afspraak'
+                     cellurl:'jq_edit_afspraak',
+                     formatter:'showlink', 
+                     formatoptions:{baseLinkUrl:'show'}
                     },
                     {name:'begindatum',
-                        editable:true,
+                    	editable:false,
                         editrules:{required:true},
                         width: 150
                     },
                     {name:'einddatum',
-                        editable:true,
+                    	editable:false,
                         editrules:{required:true},
                         width: 150
                      }, 
                      {name:'producten',
-                         editable:true,
+                    	 editable:false,
                          editrules:{required:true},
                          width: 150
                      },
@@ -107,7 +109,9 @@
                      {name:'ophalen',
                          editable:true,
                          editrules:{required:true},
-                         width: 150
+                         width: 80,
+                         align:'center',
+                         formatter:'checkbox'
                      },                       
                     {name:'id',hidden:true}
                   ],
@@ -124,15 +128,13 @@
                 ]
 
                 }).navGrid('#afspraak_list_pager',
-                    {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
-                    {closeAfterEdit:true,
-                     afterSubmit:afterSubmitEvent
-                    },                                   // edit options
-                    {addCaption:'Creeer nieuwe afspraak',
-                     afterSubmit:afterSubmitEvent,
-                     savekey:[true,13]},            // add options
-                    {afterSubmit:afterSubmitEvent}  // delete options
-                );
+                    {add:false,edit:false,del:true,search:false,refresh:true})      // which buttons to show?
+                .navButtonAdd('#afspraak_list_pager',{
+             	   caption:"Toevoegen", 
+             	   buttonicon:"ui-icon-add", 
+             	   onClickButton: function(){ window.location.href = '${createLink(controller:'afspraak',action:'create')}'},  
+             	   position:"last"
+             	})
 
 
                 $("#afspraak_list").jqGrid('filterToolbar',{autosearch:true});

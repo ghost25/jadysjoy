@@ -82,23 +82,25 @@
                   colNames:['Loginnaam','Wachtwoord','Naam','Rol','Id'],
                   colModel:[
                     {name:'login',
-                     editable:true,
+                     editable:false,
                      editrules:{required:true},
                      cellurl:'jq_edit_user',
-                     width: 150
+                     width: 150,
+                     formatter:'showlink', 
+                     formatoptions:{baseLinkUrl:'show'}
                     },
                     {name:'password',
-                        editable:true,
+                    	editable:false,
                         editrules:{required:true},
                         width: 150
                     },
                     {name:'naam',
-                        editable:true,
+                    	editable:false,
                         editrules:{required:true},
                         width: 300
                      }, 
                      {name:'role',
-                         editable:true,
+                    	 editable:false,
                          editrules:{required:true},
                          width: 150
                      }, 
@@ -111,15 +113,13 @@
                   gridview: true
 
                 }).navGrid('#user_list_pager',
-                    {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
-                    {closeAfterEdit:true,
-                     afterSubmit:afterSubmitEvent
-                    },                                   // edit options
-                    {addCaption:'Creeer nieuwe user',
-                     afterSubmit:afterSubmitEvent,
-                     savekey:[true,13]},            // add options
-                    {afterSubmit:afterSubmitEvent}  // delete options
-                );
+                    {add:false,edit:true,del:true,search:false,refresh:true})      // which buttons to show?
+                    .navButtonAdd('#user_list_pager',{
+                  	   caption:"Toevoegen", 
+                  	   buttonicon:"ui-icon-add", 
+                  	   onClickButton: function(){ window.location.href = '${createLink(controller:'user',action:'create')}'},  
+                  	   position:"last"
+                  	})
 
 
                 $("#user_list").jqGrid('filterToolbar',{autosearch:true});

@@ -82,18 +82,21 @@
                   colNames:['Afspraak','Betaald','Betaald op','Id'],
                   colModel:[
                     {name:'afspraak',
-                     editable:true,
+                     editable:false,
                      editrules:{required:true},
                      cellurl:'jq_edit_inkomsten',
-                     width: 300
+                     width: 300,
+                     formatter:'showlink', 
+                     formatoptions:{baseLinkUrl:'show'}
                     },                 
                     {name:'betaald',
                         editable:true,
                         editrules:{required:true},
-                        width: 150
+                        width: 80,
+                        formatter:'checkbox'
                      },
                     {name:'dateCreated',
-                        editable:true,
+                        editable:false,
                         editrules:{required:true},
                         width: 150
                     }, 
@@ -106,15 +109,13 @@
                   gridview: true
 
                 }).navGrid('#inkomsten_list_pager',
-                    {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
-                    {closeAfterEdit:true,
-                     afterSubmit:afterSubmitEvent
-                    },                                   // edit options
-                    {addCaption:'Creeer nieuwe inkomsten',
-                     afterSubmit:afterSubmitEvent,
-                     savekey:[true,13]},            // add options
-                    {afterSubmit:afterSubmitEvent}  // delete options
-                );
+                    {add:false,edit:true,del:true,search:false,refresh:true})      // which buttons to show?
+                    .navButtonAdd('#inkomsten_list_pager',{
+                 	   caption:"Toevoegen", 
+                 	   buttonicon:"ui-icon-add", 
+                 	   onClickButton: function(){ window.location.href = '${createLink(controller:'inkomsten',action:'create')}'},  
+                 	   position:"last"
+                 	})
 
 
                 $("#inkomsten_list").jqGrid('filterToolbar',{autosearch:true});

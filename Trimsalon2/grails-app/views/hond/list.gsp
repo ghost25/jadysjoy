@@ -80,23 +80,25 @@
                   colNames:['Naam','Ras','Geslacht','Klant','Id'],
                   colModel:[
                     {name:'naam',
-                     editable:true,
+                     editable:false,
                      editrules:{required:true},
                      cellurl:'jq_edit_hond',
-                     width: 150
+                     width: 150,
+                     formatter:'showlink', 
+                     formatoptions:{baseLinkUrl:'show'}
                     },
                     {name:'Ras',
-                        editable:true,
+                    	editable:false,
                         editrules:{required:true},
                         width: 150
                     },
                     {name:'Geslacht',
-                        editable:true,
+                    	editable:false,
                         editrules:{required:true},
                         width: 60
                      },                     
                      {name:'Klant',
-                         editable:true,
+                    	 editable:false,
                          editrules:{required:true},
                          width: 350
                      },  
@@ -115,15 +117,13 @@
 	                ]
 
                 }).navGrid('#hond_list_pager',
-                    {add:true,edit:true,del:true,search:false,refresh:true},      // which buttons to show?
-                    {closeAfterEdit:true,
-                     afterSubmit:afterSubmitEvent
-                    },                                   // edit options
-                    {addCaption:'Creeer nieuwe hond',
-                     afterSubmit:afterSubmitEvent,
-                     savekey:[true,13]},            // add options
-                    {afterSubmit:afterSubmitEvent}  // delete options
-                );
+                    {add:false,edit:false,del:true,search:false,refresh:true})      // which buttons to show?
+                    .navButtonAdd('#hond_list_pager',{
+                 	   caption:"Toevoegen", 
+                 	   buttonicon:"ui-icon-add", 
+                 	   onClickButton: function(){ window.location.href = '${createLink(controller:'hond',action:'create')}'},  
+                 	   position:"last"
+                 	})
 
 
                 $("#hond_list").jqGrid('filterToolbar',{autosearch:true});
